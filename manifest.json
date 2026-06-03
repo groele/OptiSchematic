@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "光学工具集 — Optical Toolkit",
+  "version": "1.0.0",
+  "description": "专业光学设计与仿真工具集，包含透镜计算、高斯光束、波长换算、光谱模拟与实验光路图设计。",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "打开光学工具集"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "sidePanel"
+  ]
+}

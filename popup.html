@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      width: 280px;
+      padding: 16px;
+      margin: 0;
+      background: #F5F5F7;
+      color: #1D1D1F;
+    }
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 12px;
+      color: #6E6E73;
+      margin: 0 0 16px 0;
+      line-height: 1.5;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border: none;
+      background: #0071E3;
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      box-sizing: border-box;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #0077ED;
+    }
+    .btn.secondary {
+      background: white;
+      color: #0071E3;
+      border: 1px solid #0071E3;
+    }
+    .btn.secondary:hover {
+      background: #F5F5F7;
+    }
+  </style>
+</head>
+<body>
+  <h3>光学工具集</h3>
+  <p>专业级光学计算与光路仿真分析平台。您可以将工具箱加载为侧边栏，以便并排查阅文献。</p>
+  <button id="open-side" class="btn">在侧边栏中打开</button>
+  <a href="index.html" target="_blank" id="open-tab" class="btn secondary">在独立网页中打开</a>
+  <script src="popup.js"></script>
+</body>
+</html>

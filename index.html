@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光学工具集 — Optical Toolkit</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <script>
+    (() => {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+      } else if (theme === 'light') {
+        document.documentElement.classList.add('light-theme');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <button class="hamburger" aria-label="打开菜单">☰</button>
+    <span style="font-weight:600;font-size:15px">光学工具集</span>
+    <div style="width:36px"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-logo" onclick="App.showWelcome(); return false;">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="20" stroke="#0071E3" stroke-width="3"/>
+            <circle cx="32" cy="32" r="16" stroke="#0071E3" stroke-width="1.5" opacity="0.5"/>
+            <line x1="4" y1="32" x2="16" y2="32" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+            <line x1="4" y1="22" x2="16" y2="28" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <line x1="4" y1="42" x2="16" y2="36" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <line x1="48" y1="32" x2="60" y2="32" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="54" cy="32" r="2.5" fill="#FF6B35"/>
+          </svg>
+          <div class="sidebar-logo-text">
+            <h1>光学工具集</h1>
+            <span>Optical Toolkit</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-title">快速换算通道</div>
+
+        <a href="#wavelength" class="nav-item" data-tool="wavelength">
+          <span class="nav-icon">⚡</span>
+          <span>波长与能量换算</span>
+        </a>
+
+        <a href="#intensity" class="nav-item" data-tool="intensity">
+          <span class="nav-icon">💡</span>
+          <span>光强/光谱换算器</span>
+        </a>
+
+        <a href="#lens" class="nav-item" data-tool="lens">
+          <span class="nav-icon">🔍</span>
+          <span>透镜计算器</span>
+        </a>
+
+        <div class="divider" style="margin: 12px 0; border-top: 1px solid var(--border-light)"></div>
+
+        <div class="nav-section-title">光谱与光路</div>
+
+        <a href="#raman" class="nav-item" data-tool="raman">
+          <span class="nav-icon">🔬</span>
+          <span>Raman 光谱</span>
+        </a>
+
+        <a href="#pl" class="nav-item" data-tool="pl">
+          <span class="nav-icon">💡</span>
+          <span>PL 光致发光</span>
+        </a>
+
+        <a href="#shg" class="nav-item" data-tool="shg">
+          <span class="nav-icon">🔆</span>
+          <span>SHG 二次谐波</span>
+        </a>
+
+        <a href="#gaussian" class="nav-item" data-tool="gaussian">
+          <span class="nav-icon">📡</span>
+          <span>高斯光束分析</span>
+        </a>
+
+        <div class="nav-section-title">原理与仪器</div>
+
+        <a href="#lasers" class="nav-item" data-tool="lasers">
+          <span class="nav-icon">⚡</span>
+          <span>激光器原理</span>
+        </a>
+
+        <a href="#spectrometer" class="nav-item" data-tool="spectrometer">
+          <span class="nav-icon">🌈</span>
+          <span>光谱仪原理</span>
+        </a>
+
+        <a href="#setups" class="nav-item" data-tool="setups">
+          <span class="nav-icon">🧪</span>
+          <span>高级光路与参考</span>
+        </a>
+
+        <div class="divider" style="margin: 12px 0; border-top: 1px solid var(--border-light)"></div>
+
+        <div class="nav-section-title">系统操作</div>
+
+        <a href="#" class="nav-item" onclick="App.showWelcome(); return false;">
+          <span class="nav-icon">🧩</span>
+          <span>所有专业工具总览</span>
+        </a>
+
+        <a href="index.html" target="_blank" class="nav-item" id="sidebar-open-tab">
+          <span class="nav-icon">↗️</span>
+          <span>在独立窗口打开</span>
+        </a>
+
+        <!-- Sidebar Quick Converter Widget -->
+        <div class="sidebar-quick-converter" style="margin-top: 16px;">
+          <div class="nav-section-title" style="margin-top:0;padding:4px 0 6px 0">快速换算 / Quick Calc</div>
+          <div class="quick-conv-card">
+            <div class="quick-conv-row">
+              <div class="quick-conv-field">
+                <label for="quick-wl">波长 (nm)</label>
+                <input type="number" id="quick-wl" value="532" step="any" min="0.01">
+              </div>
+              <div class="quick-conv-field">
+                <label for="quick-ev">能量 (eV)</label>
+                <input type="number" id="quick-ev" value="2.331" step="any" min="0.001">
+              </div>
+            </div>
+            <div class="quick-conv-row">
+              <div class="quick-conv-field">
+                <label for="quick-thz">频率 (THz)</label>
+                <input type="number" id="quick-thz" value="563.5" step="any" min="0.01">
+              </div>
+              <div class="quick-conv-field">
+                <label for="quick-wavenum">波数 (cm⁻¹)</label>
+                <input type="number" id="quick-wavenum" value="18797" step="any" min="1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="theme-switcher-wrapper">
+          <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="切换主题">
+            <span class="theme-icon">🌓</span>
+            <span class="theme-text">切换主题</span>
+          </button>
+        </div>
+        <div style="margin-top: 8px;">
+          Optical Toolkit v1.0<br>
+          Pure JS · No Backend Required
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="tool-content">
+      <!-- Content rendered by app.js -->
+    </main>
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/utils.js"></script>
+  <script src="js/diagrams.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/tools/lens.js"></script>
+  <script src="js/tools/gaussian.js"></script>
+  <script src="js/tools/wavelength.js"></script>
+  <script src="js/tools/intensity.js"></script>
+  <script src="js/tools/lasers.js"></script>
+  <script src="js/tools/raman.js"></script>
+  <script src="js/tools/pl.js"></script>
+  <script src="js/tools/setups.js"></script>
+  <script src="js/tools/shg.js"></script>
+  <script src="js/tools/spectrometer.js"></script>
+</body>
+</html>
