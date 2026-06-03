@@ -36,7 +36,11 @@
 
   const TOOLTIPS = {
 
+    'rm-rayleigh': '瑞利散射 (Rayleigh Scattering)\n弹性散射过程：散射光子能量等于入射光子能量 (hν_s = hν_0)。\n物理机制：分子吸收光子到达虚拟能级后，退激发回到最初的振动基态 (v=0)，不发生能量交换，释放相同波长的光子。\n特点：拉曼测量中极强的背景信号，通常需要通过高截止比边缘/陷波滤波器滤除。',
 
+    'rm-stokes': '斯托克斯散射 (Stokes Raman Scattering)\n非弹性红移散射：散射光子能量低于入射光子能量 (hν_s = hν_0 - hν_v)。\n物理机制：处于振动基态 (v=0) 的分子受激跃迁到虚拟能级，随后退激发至高振动激发态 (v=1)。多余的能量转移为分子晶格振动能量，使得散射光子能量降低而红移。\n应用：常温下基态分子数较多，Stokes 信号最强，是拉曼测量分析的主要信号。',
+
+    'rm-antistokes': '反斯托克斯散射 (Anti-Stokes Raman Scattering)\n非弹性蓝移散射：散射光子能量高于入射光子能量 (hν_s = hν_0 + hν_v)。\n物理机制：处于振动激发态 (v=1) 的分子受激跃迁至虚拟能级后，退激发回振动基态 (v=0)。散射光子额外获取了分子的振动能，能量增加而蓝移。\n应用：强度极弱，其与 Stokes 的比值由玻尔兹曼热分布决定，常用作光学温度计监测局部温度。',
 
     // Tab 1: Conventional Raman
 
@@ -182,7 +186,7 @@
 
 
 
-    currentTab: 'conventional',
+    currentTab: 'principle',
 
 
 
@@ -204,7 +208,9 @@
 
           <div class="toggle-group" id="raman-tabs">
 
-            <button class="toggle-btn active" data-tab="conventional">常规 Raman</button>
+            <button class="toggle-btn active" data-tab="principle">Raman 原理</button>
+
+            <button class="toggle-btn" data-tab="conventional">常规 Raman</button>
 
             <button class="toggle-btn" data-tab="polarization">偏振分辨 Raman</button>
 
@@ -222,7 +228,73 @@
 
         <div class="dashboard-wide-stage">
 
-          <div class="tab-panel" id="tab-conventional">
+          <!-- Tab 0: Raman Principle -->
+
+          <div class="tab-panel" id="tab-principle">
+
+            <div class="card-title" style="margin-bottom:8px"><span class="icon">🔬</span> Raman 散射物理原理</div>
+
+            <div class="help-text" style="margin-bottom:16px">
+
+              拉曼散射（Raman Scattering）是光子与物质分子发生非弹性碰撞时产生的散射过程。入射光子与分子的振动或转动能级发生能量交换，使得散射光的频率发生改变，其频率偏移量（Raman位移）直接对应分子的振动模式。
+
+            </div>
+
+            <div style="display:grid;grid-template-columns:320px 1fr;gap:20px">
+
+              <div class="dashboard-control" style="padding:0">
+
+                <div class="card" style="box-shadow:none;border:none;padding:0;background:transparent">
+
+                  <div class="card-title" style="font-size:13px"><span class="icon">⚙️</span> 散射过程简述</div>
+
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent);margin-bottom:12px">
+
+                    <strong>散射三种类型：</strong><br>
+
+                    1. <b>瑞利散射 (Rayleigh)</b>：弹性散射，光子能量不变 ($h\nu_R = h\nu_0$)；<br>
+
+                    2. <b>斯托克斯散射 (Stokes)</b>：非弹性红移，分子获得能量 ($h\nu_S = h\nu_0 - h\nu_v$)；<br>
+
+                    3. <b>反斯托克斯 (Anti-Stokes)</b>：非弹性蓝移，光子获得能量 ($h\nu_{AS} = h\nu_0 + h\nu_v$)。
+
+                  </div>
+
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent)">
+
+                    <strong>强度比值与温度关系：</strong><br>
+
+                    <div style="font-family:var(--font-mono);font-size:12px;background:var(--bg-card);padding:6px;border-radius:4px;margin:6px 0;text-align:center;border:1px solid var(--border);color:var(--accent)">
+
+                      I_AS / I_S ∝ exp(-hν_v / (k_B T))
+
+                    </div>
+
+                    <span style="font-size:10px;color:var(--text-tertiary)">由于常温下激发态分子数极少，Anti-Stokes 强度远弱于 Stokes。其强度比值服从玻尔兹曼分布，可用于非接触式局部温度传感。</span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="dashboard-stage" style="gap:12px">
+
+                <div class="card" style="padding:10px;box-shadow:none;border:none;padding:0;background:transparent">
+
+                   <div id="raman-principle-diagram"></div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="raman-principle-text"></div>
+
+          </div>
+
+          <div class="tab-panel" id="tab-conventional" style="display:none">
 
             <div class="card-title" style="margin-bottom:8px"><span class="icon">🔬</span> 常规 Raman 光谱光路</div>
 
@@ -474,7 +546,7 @@
 
       this.bindEvents();
 
-      this.switchTab('conventional');
+      this.switchTab(this.currentTab);
 
     },
 
@@ -559,75 +631,46 @@
 
     switchTab(tab) {
 
-
-
       this.currentTab = tab;
 
+      // Update active button state in the tab group
+      document.querySelectorAll('#raman-tabs .toggle-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tab);
+      });
 
-
-      ['conventional', 'polarization', 'confocal', 'compare'].forEach(t => {
-
-
+      ['principle', 'conventional', 'polarization', 'confocal', 'compare'].forEach(t => {
 
         const el = document.getElementById(`tab-${t}`);
 
-
-
         if (el) el.style.display = t === tab ? '' : 'none';
-
-
 
       });
 
 
 
-
-
-
-
       const footer = document.getElementById('raman-footer');
-
-
 
       if (footer) {
 
-
-
         footer.style.display = tab === 'compare' ? 'none' : 'grid';
 
-
-
       }
-
-
-
-
 
 
 
       switch (tab) {
 
-
+        case 'principle': this.renderPrinciple(); break;
 
         case 'conventional': this.renderConventional(); break;
 
-
-
         case 'polarization': this.renderPolarization(); break;
-
-
 
         case 'confocal': this.renderConfocal(); break;
 
-
-
         case 'compare': this.renderCompare(); break;
 
-
-
       }
-
-
 
     },
 
@@ -1371,6 +1414,203 @@
 
 
 
+    renderPrinciple() {
+      const W = 1200, H = 500;
+      const svg = `
+      <svg viewBox="0 0 ${W} ${H}" id="raman-principle-export" style="width:100%;display:block;margin:0 auto">
+        <defs>
+          <marker id="rm-arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#34C759"/></marker>
+          <marker id="rm-arr-o" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF5E00"/></marker>
+          <marker id="rm-arr-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0071E3"/></marker>
+          <marker id="rm-arr-p" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#AF52DE"/></marker>
+          <filter id="raman-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <pattern id="breadboard-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+            <circle cx="12.5" cy="12.5" r="1.2" fill="var(--text-tertiary)" opacity="0.15"/>
+          </pattern>
+        </defs>
+        <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
+        <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
+
+        <!-- Left Side: Microscopic molecular model & light path -->
+        <rect x="30" y="30" width="700" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-dasharray="4,4" opacity="0.5"/>
+        <text x="380" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">微观散射模型 Microscopic Scattering Model</text>
+        
+        <!-- Incident laser wave -->
+        <path d="M 60 250 Q 80 230, 100 250 T 140 250 T 180 250 T 220 250" fill="none" stroke="#34C759" stroke-width="4" opacity="0.3" filter="url(#raman-glow)"/>
+        <path d="M 60 250 Q 80 230, 100 250 T 140 250 T 180 250 T 220 250" fill="none" stroke="#34C759" stroke-width="2" marker-end="url(#rm-arr-g)"/>
+        <text x="140" y="215" font-size="12" fill="#34C759" font-weight="700" text-anchor="middle">入射激光 Laser (hν₀)</text>
+        <text x="140" y="230" font-size="10" fill="var(--text-secondary)" text-anchor="middle">波长: 532 nm</text>
+
+        <!-- Rayleigh Group -->
+        <g class="svg-hover-box" data-tip="rm-rayleigh" cursor="pointer">
+          <!-- Molecule Rayleigh -->
+          <circle cx="290" cy="140" r="10" fill="#34C759" opacity="0.8"/>
+          <circle cx="330" cy="140" r="10" fill="#34C759" opacity="0.8"/>
+          <path d="M 298 140 Q 301 135, 304 140 T 310 140 T 316 140 T 322 140" fill="none" stroke="var(--text-primary)" stroke-width="2"/>
+          <text x="310" y="115" font-size="11" fill="var(--text-primary)" font-weight="700" text-anchor="middle">Rayleigh (v=0)</text>
+          
+          <!-- Scattered Rayleigh light -->
+          <path d="M 350 140 Q 375 125, 400 140 T 450 140 T 500 140 T 550 140" fill="none" stroke="#34C759" stroke-width="4" opacity="0.3" filter="url(#raman-glow)"/>
+          <path d="M 350 140 Q 375 125, 400 140 T 450 140 T 500 140 T 550 140" fill="none" stroke="#34C759" stroke-width="2" marker-end="url(#rm-arr-g)"/>
+          <text x="460" y="115" font-size="11" fill="#34C759" font-weight="700" text-anchor="middle">弹性散射 hν_R = hν₀</text>
+        </g>
+
+        <!-- Stokes Group -->
+        <g class="svg-hover-box" data-tip="rm-stokes" cursor="pointer">
+          <!-- Molecule Stokes -->
+          <circle cx="290" cy="250" r="12" fill="#FF5E00" opacity="0.8"/>
+          <circle cx="330" cy="250" r="12" fill="#FF5E00" opacity="0.8"/>
+          <path d="M 298 250 Q 302 242, 306 250 T 314 250 T 322 250" fill="none" stroke="var(--text-primary)" stroke-width="2"/>
+          <path d="M 272 250 L 262 250" stroke="#FF5E00" stroke-width="1.5" marker-end="url(#rm-arr-o)"/>
+          <path d="M 348 250 L 358 250" stroke="#FF5E00" stroke-width="1.5" marker-end="url(#rm-arr-o)"/>
+          <text x="310" y="222" font-size="11" fill="var(--text-primary)" font-weight="700" text-anchor="middle">Stokes (v=0 → v=1)</text>
+
+          <!-- Scattered Stokes light -->
+          <path d="M 350 250 Q 380 230, 410 250 T 470 250 T 530 250 T 590 250" fill="none" stroke="#FF5E00" stroke-width="4" opacity="0.3" filter="url(#raman-glow)"/>
+          <path d="M 350 250 Q 380 230, 410 250 T 470 250 T 530 250 T 590 250" fill="none" stroke="#FF5E00" stroke-width="2" marker-end="url(#rm-arr-o)"/>
+          <text x="490" y="222" font-size="11" fill="#FF5E00" font-weight="700" text-anchor="middle">红移散射 hν_S = hν₀ - hν_v</text>
+        </g>
+
+        <!-- Anti-Stokes Group -->
+        <g class="svg-hover-box" data-tip="rm-antistokes" cursor="pointer">
+          <!-- Molecule Anti-Stokes -->
+          <circle cx="290" cy="360" r="10" fill="#0071E3" opacity="0.8"/>
+          <circle cx="330" cy="360" r="10" fill="#0071E3" opacity="0.8"/>
+          <path d="M 298 360 Q 301 355, 304 360 T 310 360 T 316 360 T 322 360" fill="none" stroke="var(--text-primary)" stroke-width="2"/>
+          <path d="M 276 360 L 282 360" stroke="#0071E3" stroke-width="1.5" marker-end="url(#rm-arr-b)"/>
+          <path d="M 344 360 L 338 360" stroke="#0071E3" stroke-width="1.5" marker-end="url(#rm-arr-b)"/>
+          <text x="310" y="335" font-size="11" fill="var(--text-primary)" font-weight="700" text-anchor="middle">Anti-Stokes (v=1 → v=0)</text>
+
+          <!-- Scattered Anti-Stokes light -->
+          <path d="M 350 360 Q 370 350, 390 360 T 430 360 T 470 360 T 510 360" fill="none" stroke="#0071E3" stroke-width="4" opacity="0.3" filter="url(#raman-glow)"/>
+          <path d="M 350 360 Q 370 350, 390 360 T 430 360 T 470 360 T 510 360" fill="none" stroke="#0071E3" stroke-width="2" marker-end="url(#rm-arr-b)"/>
+          <text x="460" y="335" font-size="11" fill="#0071E3" font-weight="700" text-anchor="middle">蓝移散射 hν_AS = hν₀ + hν_v</text>
+        </g>
+        
+        <!-- Background light paths lines to show coupling -->
+        <path d="M 220 250 L 270 140" stroke="#34C759" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+        <path d="M 220 250 L 270 250" stroke="#34C759" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+        <path d="M 220 250 L 270 360" stroke="#34C759" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+        <!-- Right Side: Jablonski Energy Diagram -->
+        <rect x="760" y="30" width="410" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="965" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">能级跃迁图 Jablonski Diagram</text>
+
+        <!-- Virtual States -->
+        <line x1="800" y1="120" x2="1140" y2="120" stroke="#AF52DE" stroke-width="1" stroke-dasharray="5,4" opacity="0.8"/>
+        <text x="1145" y="123" font-size="10" fill="#AF52DE">虚拟能级 Virtual State (E₀ + hν₀)</text>
+        
+        <!-- Ground State Vib levels -->
+        <line x1="800" y1="360" x2="1140" y2="360" stroke="var(--text-primary)" stroke-width="2"/>
+        <text x="1145" y="364" font-size="10" fill="var(--text-primary)" font-weight="700">振动基态 v = 0</text>
+
+        <line x1="800" y1="300" x2="1140" y2="300" stroke="var(--text-secondary)" stroke-width="1.5"/>
+        <text x="1145" y="304" font-size="10" fill="var(--text-secondary)">振动激发态 v = 1</text>
+        
+        <path d="M 1110 360 L 1110 300" stroke="var(--text-primary)" stroke-width="1" marker-end="url(#rm-arr-p)"/>
+        <text x="1120" y="335" font-size="9" fill="var(--text-primary)">ΔE = hν_v</text>
+
+        <!-- Transitions -->
+        <!-- Rayleigh transitions -->
+        <g class="svg-hover-box" data-tip="rm-rayleigh" cursor="pointer">
+          <line x1="850" y1="360" x2="850" y2="120" stroke="#34C759" stroke-width="2.5" marker-end="url(#rm-arr-g)"/>
+          <line x1="870" y1="120" x2="870" y2="360" stroke="#34C759" stroke-width="2" stroke-dasharray="2,2" marker-end="url(#rm-arr-g)"/>
+          <text x="835" y="240" font-size="11" fill="#34C759" font-weight="700" text-anchor="middle">hν₀</text>
+          <text x="888" y="240" font-size="11" fill="#34C759" font-weight="700" text-anchor="middle">hν₀</text>
+          <text x="860" y="390" font-size="12" fill="var(--text-primary)" text-anchor="middle" font-weight="700">Rayleigh</text>
+          <text x="860" y="405" font-size="10" fill="var(--text-secondary)" text-anchor="middle">弹性散射</text>
+        </g>
+
+        <!-- Stokes transitions -->
+        <g class="svg-hover-box" data-tip="rm-stokes" cursor="pointer">
+          <line x1="960" y1="360" x2="960" y2="120" stroke="#34C759" stroke-width="2.5" marker-end="url(#rm-arr-g)"/>
+          <line x1="980" y1="120" x2="980" y2="300" stroke="#FF5E00" stroke-width="2.5" marker-end="url(#rm-arr-o)"/>
+          <text x="945" y="240" font-size="11" fill="#34C759" font-weight="700" text-anchor="middle">hν₀</text>
+          <text x="1008" y="220" font-size="11" fill="#FF5E00" font-weight="700" text-anchor="middle">hν₀ - hν_v</text>
+          <text x="970" y="390" font-size="12" fill="var(--text-primary)" text-anchor="middle" font-weight="700">Stokes</text>
+          <text x="970" y="405" font-size="10" fill="var(--text-secondary)" text-anchor="middle">非弹性 (红移)</text>
+        </g>
+
+        <!-- Anti-Stokes transitions -->
+        <g class="svg-hover-box" data-tip="rm-antistokes" cursor="pointer">
+          <line x1="1060" y1="300" x2="1060" y2="120" stroke="#34C759" stroke-width="2.5" marker-end="url(#rm-arr-g)"/>
+          <line x1="1080" y1="120" x2="1080" y2="360" stroke="#0071E3" stroke-width="2.5" marker-end="url(#rm-arr-b)"/>
+          <text x="1042" y="220" font-size="11" fill="#34C759" font-weight="700" text-anchor="middle">hν₀</text>
+          <text x="1108" y="240" font-size="11" fill="#0071E3" font-weight="700" text-anchor="middle">hν₀ + hν_v</text>
+          <text x="1070" y="390" font-size="12" fill="var(--text-primary)" text-anchor="middle" font-weight="700">Anti-Stokes</text>
+          <text x="1070" y="405" font-size="10" fill="var(--text-secondary)" text-anchor="middle">非弹性 (蓝移)</text>
+        </g>
+
+        <!-- Export button -->
+        <g cursor="pointer" onclick="DIAGRAMS.exportSVG(document.getElementById('raman-principle-export'), 'raman-principle.svg')">
+          <rect x="${W - 110}" y="45" width="85" height="24" rx="12" fill="var(--bg-primary)" stroke="var(--border)"/>
+          <text x="${W - 67}" y="61" font-size="10" fill="var(--accent)" text-anchor="middle" font-weight="600">💾 导出 SVG</text>
+        </g>
+      </svg>`;
+
+      document.getElementById('raman-principle-diagram').innerHTML = svg;
+      this._attachTooltips();
+      
+      document.getElementById('raman-principle-text').innerHTML = `
+        <div style="margin-top:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 极化率的经典电磁理论解释
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p>当外加电场 E = E₀ cos(ω₀t) 作用于分子时，分子产生感应偶极矩 P = α E。其中 α 为分子的极化率张量。</p>
+                <p>若分子存在振动模式，其法坐标振动为 q = q₀ cos(ω_v t)，极化率 α 可泰勒展开为：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  α = α₀ + (∂α/∂q)₀ q + ...
+                </div>
+                <p>代入感应偶极矩公式，展开可得：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;line-height:1.6;color:var(--text-primary);border:1px solid var(--border)">
+                  P = α₀E₀ cos(ω₀t) <span style="color:var(--text-tertiary)">[Rayleigh]</span><br>
+                  + ½ (∂α/∂q)₀ q₀E₀ cos(ω₀ - ω_v)t <span style="color:#FF5E00;font-weight:600">[Stokes]</span><br>
+                  + ½ (∂α/∂q)₀ q₀E₀ cos(ω₀ + ω_v)t <span style="color:#0071E3;font-weight:600">[Anti-Stokes]</span>
+                </div>
+                <p><strong>拉曼活性选择定则 (Raman Active Selection Rule)：</strong></p>
+                <p>要使某种分子振动产生拉曼散射，其振动过程中分子极化率的改变量必须不为零，即 <strong>(∂α/∂q)₀ ≠ 0</strong>。</p>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 量子能级跃迁与玻尔兹曼统计
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p><strong>量子解释：</strong>拉曼散射是非弹性散射过程。当入射光子 (能量为 hν₀) 与分子碰撞时，若分子被激发至高振动的虚拟能级，随后跃迁退激：</p>
+                <ul style="padding-left:18px;margin:6px 0">
+                  <li>分子退激到原振动状态：发射 hν₀ 光子（瑞利散射）；</li>
+                  <li>分子退激到振动激发态 v=1：发射 <span style="color:#FF5E00;font-weight:600">h(ν₀ - ν_v)</span> 光子，红移（斯托克斯散射）；</li>
+                  <li>若分子原处于 v=1 振动激发态，退激至 v=0：发射 <span style="color:#0071E3;font-weight:600">h(ν₀ + ν_v)</span> 光子，蓝移（反斯托克斯散射）。</li>
+                </ul>
+                <p><strong>玻尔兹曼分布与温度传感：</strong></p>
+                <p>常温下，分子处于各振动能级的比率由玻尔兹曼分布决定：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  N(v=1) / N(v=0) = exp(-hν_v / (k_B T))
+                </div>
+                <p>因此 Stokes 与 Anti-Stokes 强度的比值可用于非接触式温度测量：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--text-primary);border:1px solid var(--border)">
+                  I_AS / I_S = [(ν₀ + ν_v)/(ν₀ - ν_v)]⁴ × exp(-hν_v / (k_B T))
+                </div>
+                <p>此技术在微电子器件和二维晶体局域原位温度监测中有着广泛应用。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      this._renderComponents('principle');
+      this._renderNotes('principle');
+    },
+
     renderConventional() {
       const W = 1200, H = 550;
       const polState = (x, y, label, desc, color) => `
@@ -1417,13 +1657,13 @@
         <text x="250" y="77" font-size="9" fill="#AEAEB2" text-anchor="middle">非偏振</text>
 
         <!-- DM reflects Laser beam down vertically -->
-        <line x1="400" y1="140" x2="400" y2="380" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#rm-glow)"/>
-        <line x1="400" y1="140" x2="400" y2="380" stroke="#FF3B30" stroke-width="2" marker-end="url(#rm-arr-r)"/>
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#rm-glow)"/>
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="2" marker-end="url(#rm-arr-r)"/>
         <text x="412" y="210" font-size="10.5" fill="#FF3B30" font-weight="600">同轴激发</text>
 
         <!-- Raman backscattered beam (Vertical, Sample up to DM) -->
-        <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" opacity="0.3" filter="url(#rm-glow)"/>
-        <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="3.5" stroke-dasharray="7,4" marker-end="url(#rm-arr-o)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" opacity="0.3" filter="url(#rm-glow)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="3.5" stroke-dasharray="7,4" marker-end="url(#rm-arr-o)"/>
         <text x="455" y="290" font-size="11" fill="#FF5E00" text-anchor="middle" font-weight="600">Raman 散射 λₛ</text>
 
         <!-- Raman Scattered Beam in detection arm (Solid blue line, style unified with Polarization Raman) -->
@@ -1441,7 +1681,7 @@
 
         <!-- === Raman Physics Principle Box === -->
         <rect x="520" y="220" width="300" height="170" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
-        <text x="540" y="245" font-size="13" fill="var(--text-primary)" font-weight="700">Raman 散射物理过程</text>
+        <text x="520" y="245" font-size="13" fill="var(--text-primary)" font-weight="700">Raman 散射物理过程</text>
 
         <circle cx="550" cy="275" r="10" fill="#FF3B30" opacity="0.1"/><text x="550" y="279" font-size="11" fill="#FF3B30" text-anchor="middle" font-weight="700">1</text>
         <text x="570" y="279" font-size="11" fill="var(--text-primary)" font-weight="600">瑞利散射 (Rayleigh) - 弹性</text>
@@ -1456,13 +1696,13 @@
         <text x="570" y="373" font-size="10" fill="var(--text-secondary)">激发态分子释放能量，散射光能量升高 (强度弱)</text>
 
         <!-- === Components === -->
-        ${this._box(50, 100, 110, 80, '激发激光器', '#FF3B30', 'Laser Source', 'rm-laser')}
+        ${this._box(50, 100, 110, 80, '激光器', '#FF3B30', 'Laser Source', 'rm-laser')}
         ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'Dichroic Mirror', 'rm-dm')}
-        ${this._box(350, 295, 100, 70, '显微物镜', '#0071E3', 'Objective', 'rm-obj')}
-        ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample Stage', 'rm-sample')}
-        ${this._box(520, 100, 110, 80, '陷波/边缘', '#AF52DE', '滤波器', 'rm-notch')}
+        ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'rm-obj')}
+        ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample Stage', 'rm-sample')}
+        ${this._box(520, 100, 110, 80, '陷波滤波器', '#AF52DE', '陷波滤波器', 'rm-notch')}
         ${this._box(680, 100, 100, 80, '收集透镜', '#0071E3', 'Collection', 'rm-collect')}
-        ${this._box(840, 100, 110, 80, '长通滤波器', '#FF5E00', 'LP Filter', 'rm-lpfilter')}
+        ${this._box(840, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'rm-lpfilter')}
         ${this._box(1000, 90, 130, 100, '光谱仪', '#1D1D1F', '+ CCD 检测器', 'rm-spectro')}
 
         <!-- === Polarization state annotations (y=480) === -->
@@ -1530,28 +1770,30 @@
           <line x1="300" y1="140" x2="340" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
           <line x1="300" y1="140" x2="340" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
           
-          <line x1="400" y1="140" x2="400" y2="380" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="400" y1="140" x2="400" y2="380" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
+          <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
           
-          <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" stroke-dasharray="7,4" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#pr-arr-g)"/>
+          <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" stroke-dasharray="7,4" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#pr-arr-g)"/>
           
           <line x1="400" y1="140" x2="800" y2="140" stroke="#0071E3" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
           <line x1="400" y1="140" x2="800" y2="140" stroke="#0071E3" stroke-width="2.5" marker-end="url(#pr-arr-g)"/>
 
           <!-- === Optical components === -->
-          ${this._box(40, 100, 110, 80, '激光', '#FF3B30', 'Laser Source', 'pr-laser')}
-          ${this._box(190, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'pr-polarizer')}
-          ${this._box(340, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'pr-dm')}
-          ${this._box(350, 210, 100, 70, '半波片', '#AF52DE', 'HWP λ/2', 'pr-hwp')}
-          ${this._box(350, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'pr-obj')}
-          ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample', 'pr-sample')}
+          ${this._box(40, 100, 110, 80, '激光器', '#FF3B30', 'Laser Source', 'pr-laser')}
+          ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'pr-polarizer')}
+          ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'pr-dm')}
+          ${this._box(350, 200, 100, 45, '半波片 HWP', '#AF52DE', 'HWP λ/2', 'pr-hwp')}
+          ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'pr-obj')}
+          ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample', 'pr-sample')}
           ${this._box(500, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'pr-lpfilter')}
-          ${this._box(650, 100, 110, 80, '检偏 A', '#0071E3', isPara ? '设为 0°' : '设为 90°', 'pr-analyzer')}
+          ${this._box(650, 100, 110, 80, '检偏器 A', '#0071E3', isPara ? '设为 0°' : '设为 90°', 'pr-analyzer')}
           ${this._box(800, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'pr-spectro')}
 
           <!-- Diagonal line on dichroic mirror -->
-          <line x1="365" y1="175" x2="435" y2="85" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
+          <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
 
 
 
@@ -1559,17 +1801,16 @@
           <line x1="240" y1="90" x2="240" y2="110" stroke="#AF52DE" stroke-width="2"/>
           <text x="240" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">↕ 线偏振</text>
           
-          <line x1="380" y1="225" x2="390" y2="245" stroke="#AF52DE" stroke-width="2"/>
-          <text x="415" y="240" font-size="9" fill="#AF52DE" text-anchor="start">↗ 旋转</text>
+          
           
           <line x1="700" y1="90" x2="700" y2="110" stroke="#0071E3" stroke-width="2"/>
           <text x="700" y="80" font-size="9" fill="#0071E3" text-anchor="middle">选择 ${isPara ? 'I_VV' : 'I_VH'}</text>
 
           <!-- Highlight Overlays for Active Modules -->
           <!-- HWP Highlight Box (操作执行模块) -->
-          <rect x="346" y="206" width="108" height="78" rx="8" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
-          <rect x="346" y="190" width="108" height="15" rx="3" fill="#FF5E00"/>
-          <text x="400" y="201" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
+          <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
+          <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF5E00"/>
+          <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
 
           <!-- Analyzer A Highlight Box -->
           <rect x="646" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
@@ -1582,9 +1823,9 @@
           ${polState(140, 482, '非偏振', '激光', '#AEAEB2')}
           ${polState(250, 482, '↕ 线偏振', '起偏器 P', '#AF52DE')}
           ${polState(360, 482, '经 DM', '反射', '#AF52DE')}
-          ${polState(470, 482, '↗ 旋转', '经 HWP', '#AF52DE')}
+          ${polState(470, 482, '线偏振 (θ)', '经 HWP', '#AF52DE')}
           ${polState(590, 482, '部分偏振', 'Raman发射(上行)', '#FF5E00')}
-          ${polState(710, 482, '反向旋转', '经 HWP', '#FF5E00')}
+          ${polState(710, 482, '恢复 ↕', '经 HWP', '#FF5E00')}
           ${polState(820, 482, '经 DM', '透射', '#FF5E00')}
           ${polState(930, 482, isPara ? 'I_VV (0°)' : 'I_VH (90°)', '检偏器 A', '#0071E3')}
           ${polState(1060, 482, '退偏比 ρ', '计算获得', 'var(--text-primary)')}
@@ -1600,16 +1841,24 @@
       } else {
         // Circular polarization setup
         let q1Angle = '+45°';
-        let q2Angle = '+45°';
         let pType = 'σ⁺';
         let dType = 'σ⁺';
+        let analyzerAngle = '0°';
+        let calcGroupHtml = '';
+        if (pType === 'σ⁺') {
+          calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁺</b> 圆偏振光激发下，本配置 <b>σ⁺σ⁺</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^+\\sigma^+}$）与 <b>σ⁺σ⁻</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^+\\sigma^-}$）组成<b>同一对照组</b>。利用公式计算手性度/圆偏振度：<br>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
+        } else {
+          calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁻</b> 圆偏振光激发下，本配置 <b>σ⁻σ⁻</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^-\\sigma^-}$）与 <b>σ⁻σ⁺</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^-\\sigma^+}$）组成<b>同一对照组</b>。利用公式计算手性度/圆偏振度：<br>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
+        }
         
         if (subconfig === 'circ-pm') {
-          q1Angle = '+45°'; q2Angle = '-45°'; pType = 'σ⁺'; dType = 'σ⁻';
+          q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
         } else if (subconfig === 'circ-mp') {
-          q1Angle = '-45°'; q2Angle = '+45°'; pType = 'σ⁻'; dType = 'σ⁺';
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
         } else if (subconfig === 'circ-mm') {
-          q1Angle = '-45°'; q2Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻';
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
         }
 
         svg = `
@@ -1638,65 +1887,63 @@
           <text x="855" y="49" font-size="13" fill="#0071E3" text-anchor="middle" font-weight="700">发射与偏振检测光路 (PR-Raman)</text>
 
           <!-- === Beam Lines === -->
-          <line x1="150" y1="140" x2="180" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="290" y1="140" x2="320" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="430" y1="140" x2="460" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <!-- Laser to P -->
+          <line x1="150" y1="140" x2="190" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="150" y1="140" x2="190" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
           
-          <!-- P to QWP1 to DM -->
-          <line x1="150" y1="140" x2="460" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
+          <!-- P to DM -->
+          <line x1="300" y1="140" x2="340" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="300" y1="140" x2="340" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
           
-          <!-- DM down to Objective to Sample -->
-          <line x1="520" y1="140" x2="520" y2="380" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="520" y1="140" x2="520" y2="380" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
+          <!-- DM down to HWP to Objective to Sample -->
+          <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="400" y1="140" x2="400" y2="395" stroke="#FF3B30" stroke-width="2" marker-end="url(#pr-arr-r)"/>
           
-          <!-- Sample PL up -->
-          <line x1="520" y1="380" x2="520" y2="140" stroke="#FF5E00" stroke-width="7.5" stroke-dasharray="7,4" opacity="0.35" filter="url(#pr-glow)"/>
-          <line x1="520" y1="380" x2="520" y2="140" stroke="#FF5E00" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#pr-arr-g)"/>
+          <!-- Sample Raman up -->
+          <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" stroke-dasharray="7,4" opacity="0.35" filter="url(#pr-glow)"/>
+          <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#pr-arr-g)"/>
           
-          <!-- DM straight through LP to QWP2 to A to Spectro -->
-          <line x1="520" y1="140" x2="1040" y2="140" stroke="#0071E3" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
-          <line x1="520" y1="140" x2="1040" y2="140" stroke="#0071E3" stroke-width="2.5" marker-end="url(#pr-arr-g)"/>
+          <!-- DM straight through LP to A to Spectro -->
+          <line x1="400" y1="140" x2="800" y2="140" stroke="#0071E3" stroke-width="8" opacity="0.3" filter="url(#pr-glow)"/>
+          <line x1="400" y1="140" x2="800" y2="140" stroke="#0071E3" stroke-width="2.5" marker-end="url(#pr-arr-g)"/>
 
           <!-- === Optical components === -->
-          ${this._box(40, 100, 110, 80, '激光', '#FF3B30', 'Laser Source', 'pr-laser')}
-          ${this._box(180, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'pr-polarizer')}
-          ${this._box(320, 100, 110, 80, 'QWP 1', '#AF52DE', `快轴 ${q1Angle}`, 'tra-qwp')}
-          ${this._box(460, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'pr-dm')}
-          ${this._box(470, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'pr-obj')}
-          ${this._box(460, 380, 120, 70, '样品', '#34C759', 'Sample', 'pr-sample')}
-          ${this._box(620, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'pr-lpfilter')}
-          ${this._box(760, 100, 110, 80, 'QWP 2', '#0071E3', `快轴 ${q2Angle}`, 'tra-qwp')}
-          ${this._box(900, 100, 110, 80, '检偏 A', '#0071E3', '固定 90°', 'pr-analyzer')}
-          ${this._box(1040, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'pr-spectro')}
+          ${this._box(40, 100, 110, 80, '激光器', '#FF3B30', 'Laser Source', 'pr-laser')}
+          ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'pr-polarizer')}
+          ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'pr-dm')}
+          ${this._box(350, 200, 100, 45, '1/4波片 QWP', '#AF52DE', `快轴 ${q1Angle}`, 'tra-qwp')}
+          ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'pr-obj')}
+          ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample', 'pr-sample')}
+          ${this._box(500, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'pr-lpfilter')}
+          ${this._box(650, 100, 110, 80, '检偏器 A', '#0071E3', `转至 ${analyzerAngle}`, 'pr-analyzer')}
+          ${this._box(800, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'pr-spectro')}
 
           <!-- Diagonal line on dichroic mirror -->
-          <line x1="485" y1="175" x2="555" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
+          <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
 
           <!-- Polarization annotations -->
-          <line x1="230" y1="90" x2="230" y2="110" stroke="#AF52DE" stroke-width="2"/>
-          <text x="230" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">↕ 线偏振</text>
+          <line x1="240" y1="90" x2="240" y2="110" stroke="#AF52DE" stroke-width="2"/>
+          <text x="240" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">↕ 线偏振</text>
           
-          <circle cx="370" cy="100" r="6" fill="none" stroke="#AF52DE" stroke-width="1.5"/>
-          <polygon points="378,100 375,97 375,103" fill="#AF52DE" transform="rotate(${q1Angle === '+45°' ? 0 : 180}, 370, 100)"/>
-          <text x="370" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">${pType} 圆偏振</text>
+          <circle cx="465" cy="255" r="6" fill="none" stroke="#AF52DE" stroke-width="1.5"/>
+          <polygon points="473,255 470,252 470,258" fill="#AF52DE" transform="rotate(${q1Angle === '+45°' ? 0 : 180}, 465, 255)"/>
+          <text x="480" y="258" font-size="9" fill="#AF52DE" text-anchor="start">${pType} 圆偏振</text>
           
-          <line x1="860" y1="90" x2="860" y2="110" stroke="#0071E3" stroke-width="2"/>
-          <text x="860" y="80" font-size="9" fill="#0071E3" text-anchor="middle">圆→线</text>
+          <line x1="630" y1="90" x2="630" y2="110" stroke="#0071E3" stroke-width="2"/>
+          <text x="630" y="80" font-size="9" fill="#0071E3" text-anchor="middle">圆→线</text>
 
           <!-- Highlight Overlays for Active Modules -->
-          <!-- QWP 1 Highlight Box (操作执行模块) -->
-          <rect x="316" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
-          <rect x="316" y="80" width="118" height="15" rx="3" fill="#FF5E00"/>
-          <text x="375" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q1Angle} (操作执行)</text>
-
-          <!-- QWP 2 Highlight Box (操作执行模块) -->
-          <rect x="756" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
-          <rect x="756" y="80" width="118" height="15" rx="3" fill="#FF5E00"/>
-          <text x="815" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q2Angle} (操作执行)</text>
+          <!-- QWP Highlight Box (操作执行模块) -->
+          <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
+          <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF5E00"/>
+          <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q1Angle} (操作执行)</text>
 
           <!-- Analyzer Highlight Box -->
-          <rect x="896" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
-          <text x="955" y="91" font-size="9" fill="#8E8E93" text-anchor="middle" font-weight="700">⚙️ 固定 90°</text>
+          <rect x="646" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
+          <rect x="646" y="80" width="118" height="15" rx="3" fill="#FF5E00"/>
+          <text x="705" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${analyzerAngle} (操作执行)</text>
 
           <!-- === Polarization timeline-style state annotations at the bottom === -->
           <rect x="30" y="475" width="${W - 60}" height="50" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
@@ -1704,20 +1951,22 @@
           
           ${polState(140, 482, '非偏振', '激光', '#AEAEB2')}
           ${polState(250, 482, '↕ 线偏振', '起偏器 P', '#AF52DE')}
-          ${polState(360, 482, `${pType} 圆偏振`, 'QWP 1', '#AF52DE')}
-          ${polState(470, 482, `${pType} 激发`, '经物镜', '#0071E3')}
+          ${polState(360, 482, '经 DM', '反射', '#AF52DE')}
+          ${polState(470, 482, `下行: ${pType}圆偏`, 'QWP λ/4', '#AF52DE')}
           ${polState(590, 482, '部分偏振', 'Raman发射', '#FF5E00')}
-          ${polState(710, 482, '去除激发光', 'LP 滤波', '#FF5E00')}
-          ${polState(820, 482, '圆→线转换', 'QWP 2', '#0071E3')}
-          ${polState(930, 482, `I(${pType}, ${dType})`, '检偏器 A', '#0071E3')}
+          ${polState(710, 482, '圆→线转换', 'QWP λ/4', '#FF5E00')}
+          ${polState(820, 482, '经 DM', '透射', '#FF5E00')}
+          ${polState(930, 482, `I(${pType}, ${dType})`, `检偏器 A (${analyzerAngle})`, '#0071E3')}
           ${polState(1060, 482, '手性分析', '计算拉曼偏振', 'var(--text-primary)')}
         </svg>`;
 
         guideHtml = `
           <strong>圆偏振拉曼测量指南 (${pType}${dType} 配置)：</strong><br>
-          1. <b>入射端（转动）：</b>起偏器 P 固定在 0°。手动旋转激发端 <span style="color:#FF5E00;font-weight:700">QWP 1</span> 至 <b>${q1Angle}</b>，产生 <b>${pType}</b> 圆偏振激发光。<br>
-          2. <b>探测端（转动）：</b>将收集端 <span style="color:#FF5E00;font-weight:700">QWP 2</span> 手动旋转至 <b>${q2Angle}</b>，检偏器 A 固定在 <b>90°</b>，从而提取 <b>${dType}</b> 的拉曼圆偏振分量。<br>
-          3. <b>操作执行：</b>实验前需要手动调节旋转激发端 <span style="color:#FF5E00;font-weight:700">QWP 1 (${q1Angle})</span> 和收集端 <span style="color:#FF5E00;font-weight:700">QWP 2 (${q2Angle})</span> 的快轴角度。
+          1. <b>入射端：</b>起偏器 P 固定在 0°（水平线偏振）。<br>
+          2. <b>第一步调节（QWP）：</b>手动旋转双通路复用的 <span style="color:#FF5E00;font-weight:700">QWP λ/4</span>，将其快轴角设为 <b>${q1Angle}</b>。此时激发光通过 QWP 转换为 <b>${pType}</b> 圆偏振光作用于样品。<br>
+          3. <b>第二步调节（检偏器）：</b>样品反射的圆偏振拉曼信号经过相同的 QWP 后，由于双通复用，会被转换回线偏振。在透射端调节 <span style="color:#FF5E00;font-weight:700">检偏器 A</span> 至 <b>${analyzerAngle}</b>，从而选择检测 <b>${dType}</b> 的拉曼信号分量。<br>
+          4. <b>实验特点：</b>无需在探测端额外放置第二块 1/4 波片，通过在激发 and 收集的共用光路（二向色镜与物镜之间）中放置单一 QWP，并配合检偏器 A 旋转选择偏振方向，即可实现完整的圆偏振拉曼 / 手性选择定则测量。<br>
+        ${calcGroupHtml}
         `;
       }
 
@@ -1838,7 +2087,7 @@
         <text x="600" y="373" font-size="10" fill="var(--text-secondary)">通过限制收集深度，实现高对比度 3D 拉曼成像 mapping</text>
 
         <!-- === Components === -->
-        ${this._box(50, 100, 110, 80, '激发激光器', '#FF3B30', 'Laser Source', 'cr-laser')}
+        ${this._box(50, 100, 110, 80, '激光器', '#FF3B30', 'Laser Source', 'cr-laser')}
         ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'Dichroic Mirror', 'cr-dm')}
         ${this._box(350, 295, 100, 70, '高 NA 物镜', '#0071E3', 'Objective', 'cr-objective')}
         ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample Stage', 'cr-sample')}
@@ -1846,7 +2095,7 @@
         ${this._box(620, 100, 100, 80, '聚焦透镜 L1', '#0071E3', 'Focus Lens', 'rm-collect')}
         ${this._box(740, 100, 80, 80, '共焦针孔', '#AF52DE', 'Pinhole', 'cr-pinhole')}
         ${this._box(840, 100, 100, 80, '准直透镜 L2', '#0071E3', 'Collimation', 'rm-collect')}
-        ${this._box(950, 100, 110, 80, '长通滤光片', '#FF5E00', 'LP Filter', 'cr-lpfilter')}
+        ${this._box(950, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'cr-lpfilter')}
         ${this._box(1060, 90, 130, 100, '光谱仪', '#1D1D1F', '+ CCD 检测器', 'cr-spectro')}
 
         <!-- 3D XYZ Piezo Scanning Stage Coordinate Overlay -->
@@ -2536,6 +2785,26 @@
 
 
 
+        principle: [
+
+
+
+          { name: '瑞利散射 (Rayleigh)', id: 'rm-rayleigh' },
+
+
+
+          { name: '斯托克斯散射 (Stokes)', id: 'rm-stokes' },
+
+
+
+          { name: '反斯托克斯散射 (Anti-Stokes)', id: 'rm-antistokes' }
+
+
+
+        ],
+
+
+
         conventional: [
 
 
@@ -2544,7 +2813,7 @@
 
 
 
-          { name: '陷波/边缘滤波器', id: 'rm-notch' },
+          { name: '陷波滤波器', id: 'rm-notch' },
 
 
 
@@ -2556,7 +2825,7 @@
 
 
 
-          { name: '长通滤波器', id: 'rm-lpfilter' },
+          { name: '长通 LP', id: 'rm-lpfilter' },
 
 
 
@@ -2596,7 +2865,7 @@
 
 
 
-          { name: '长通滤波器', id: 'pr-lpfilter' },
+          { name: '长通 LP', id: 'pr-lpfilter' },
 
 
 
@@ -2624,7 +2893,7 @@
 
 
 
-          { name: '长工作距离物镜', id: 'cr-objective' },
+          { name: '显微物镜', id: 'cr-objective' },
 
 
 
@@ -2648,7 +2917,7 @@
 
 
 
-          { name: '长通滤波器', id: 'cr-lpfilter' },
+          { name: '长通 LP', id: 'cr-lpfilter' },
 
 
 
@@ -2721,6 +2990,17 @@
       const notes = {
 
 
+
+        principle: `
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            <p style="margin-bottom:10px"><strong>拉曼散射物理机制要点：</strong></p>
+            <ul style="padding-left:18px;margin-bottom:12px;list-style-type:disc">
+              <li><strong>振动活性：</strong>拉曼散射要求分子极化率发生变化 ($\partial\alpha/\partial q \neq 0$)，而红外吸收要求瞬态偶极矩发生变化 ($\partial\mu/\partial q \neq 0$)。两者具有互补对称性。</li>
+              <li><strong>光强波长依赖：</strong>拉曼散射强度正比于激发光频率的四次方 ($I_R \propto \nu^4 \propto \lambda^{-4}$)。蓝绿光激发效率高，但可能激发强荧光背景；红外光激发效率低，但荧光小。</li>
+              <li><strong>偏振对称性：</strong>极化率张量的对称性决定了拉曼散射光的偏振方向。通过检测平行或垂直偏振的拉曼光谱，可推导晶格振动模式的对称性群表示。</li>
+            </ul>
+          </div>
+        `,
 
         conventional: `
 

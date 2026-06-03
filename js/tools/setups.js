@@ -60,7 +60,40 @@
     'mi-mirror1': '定镜 M1 (Reference Mirror)\n高精度反射镜（平面度 λ/10 或更高），表面镀金属或介质高反膜，作为参考光路的静态基准面',
     'mi-mirror2': '动镜 M2 (Scanning Mirror)\n高精度反射镜，安装在位移台和 PZT 上。其微小的物理位移 (Δd) 会改变探测臂的光程，引起干涉相位差 Δφ = 4π·Δd/λ',
     'mi-pzt': '压电陶瓷位移器 (PZT)\n安装在动镜后方，提供纳米级的精密位移，用于光干涉的相位调制、主动稳相或进行傅里叶调制扫描',
-    'mi-detector': '干涉屏 / 探测器 CCD\n接收来自两臂返回光线汇合后的干涉图案（等厚或等倾干涉圆环/直条纹）。结合采集系统可实现光谱分析或微位移测量'
+    'mi-detector': '干涉屏 / 探测器 CCD\n接收来自两臂返回光线汇合后的干涉图案（等厚或等倾干涉圆环/直条纹）。结合采集系统可实现光谱分析或微位移测量',
+    
+    // MOKE
+    'mok-laser': '连续激光器\n用于克尔旋转探测的超稳定CW激光器\n典型：532nm或632.8nm波长，具备极高功率稳定度与超低相对强度噪声 (RIN)',
+    'mok-polarizer': '起偏器 P\n高消光比线偏振片（如 Glan-Thompson 棱镜）\n将激光纯化为消光比优于 10⁻⁵ ~ 10⁻⁶ 的超高纯度线偏振光',
+    'mok-pem': '光弹调制器 (PEM)\n利用压电晶体周期性调制石英晶体双折射，产生高频偏振状态调制 (如 50 kHz)\n通常调制在 λ/4 延迟量，使克尔旋转与椭圆度分别在倍频和基频交流信号中呈现，方便锁相分离',
+    'mok-cryo': '低温强磁场恒温器\n提供低温 (1.5K~300K) 及大范围外加磁场 (±9T)\n光学窗口需采用超低热应力消应力石英镜片，严防杂散应力双折射改变反射光的椭圆偏振状态',
+    'mok-sample': '被测样品\n放置在极低温与强外加磁场焦点，反射光在纵向、极向或横向克尔效应作用下产生偏振面微小旋转 (θ_K) 或椭圆度 (η_K) 变化',
+    'mok-hwp': '半波片 HWP\n用于微调反射光偏振方向，将偏振轴旋转 45° 注入偏振分束镜\n使平衡探测器两端处于完美电信号平衡点',
+    'mok-pbs': '偏振分束镜 (PBS)\n典型：Wollaston 分束棱镜，以 45° 对准原始偏振，将光等分为偏振方向相互垂直的两束正交分量，并分别投射至平衡探测器的 A 和 B 探测器上',
+    'mok-balanced': '平衡探测器 (Balanced Detector)\n包含两路匹配的光电二极管，直接输出 A - B 光电流差分信号\n抑制共模噪声（如激光抖动），将探测噪声压低至散粒噪声极限（Shot Noise Limit）',
+    'mok-lockin': '锁相放大器\n从平衡探测器中读取 A - B 差分微弱交流信号\n以 PEM 的调制参考频率进行基频 (f) 与倍频 (2f) 相干解调，同步提取克尔椭圆度与克尔旋转角',
+
+    // Fabry-Perot
+    'fp-laser': '可调谐窄线宽激光器\n频率连续可调的高相干光源\n通常为外腔半导体激光器 (ECDL)，具备 kHz 级窄线宽，适于超高精细度腔共振匹配',
+    'fp-isolator': '光学隔离器 (Isolator)\n由法拉第旋转磁体与正交起偏器构成单向导通器件\n防止共振腔的高反反射光漏回激光器，保障激光二极管免受光反馈导致频率失锁与强跳模',
+    'fp-lens': '模式匹配透镜组\n由双透镜或三透镜系统构成，用于将自由空间高斯光束的空间束腰、发散角与共振腔的横向基模 (TEM₀₀) 的本征曲率完全吻合匹配，使耦合效率最大化',
+    'fp-mirror1': '输入镜 M1\n腔的第一个高反射镜片，平面或凹面镜，反射率 R 通常 > 99.9%\n与输出镜 M2 共同确立腔内的驻波能量分布',
+    'fp-mirror2': '输出镜 M2\n腔的第二个高反射镜片，与 M1 共同构成谐振腔，反射率 R 通常 > 99.9%\n腔长满足共振条件时输出高透射谐振 Airy 梳状共振峰',
+    'fp-pzt': '压电陶瓷 PZT\n贴合在镜片后面，依靠施加电压产生的微米/纳米级位移精密改变腔长 d\n可用于高速频率扫描或结合控制器锁定腔长',
+    'fp-pd': '光电探测器 (PD)\n用于采集共振腔透射的光功率信号，将其转化为电压信号\n为腔长锁定算法（如 PDH 锁定或侧边锁定）提供误差反馈源',
+    'fp-controller': '腔长控制器 (Servo Controller)\n采集透射/反射差分信号（PDH误差信号），进行高速 PID 运算\n输出反馈电压作用于 PZT，使腔长与激光频率保持绝对同步，消除外界温漂与振动干扰',
+
+    // Ultrafast
+    'uf-laser': '飞秒放大器\n提供极高峰值功率与高重频飞秒脉冲（如 800nm, 100fs, 1kHz ~ 100kHz）\n为整个超快非线性偏振光谱系统提供相干种子源',
+    'uf-bs': '分束镜 BS\n将大功率飞秒脉冲分束为激发光通道 (Pump，高能量) 与探测光通道 (Probe，弱光)\n二者通常按 9:1 或 8:2 分幅，保证探测脉冲不引入额外激发',
+    'uf-opa': '光学参量 OPA\n基于非线性晶体参量放大与下转换机制\n将固定波长飞秒脉冲调谐至宽范围的可见至红外波长，以选择性激发样品的特定能级跃迁',
+    'uf-chopper': '光学斩波器\n对泵浦通道（激发脉冲）进行周期性机械开闭遮挡（如重频的一半）\n使探测器能够逐对获取激发(on)和未激发(off)的探测光谱，以精确求取瞬态吸收差 ΔA',
+    'uf-delay': '电动延迟线\n高精度电动平移台，带动反射镜移动\n用于产生激发泵浦脉冲与探测脉冲之间的皮秒至飞秒级相对延时\n行程 150mm 对应约 1ns 的光学时域延迟窗口',
+    'uf-wlc': '白光产生晶体\n典型为蓝宝石 (Sapphire) 或 YAG 晶体\n利用强超短脉冲的自相位调制 (SPM) 等非线性效应产生超连续白光 (WLC) 探测脉冲',
+    'uf-sample': '被测样品\n泵浦与探测白光在样品表面实现时空重叠，泵浦光激发非平衡载流子\n探测白光收集样品激发态由于漂白、受激辐射或激发态吸收引起的透射光谱变化',
+    'uf-spectrograph': '成像光谱仪\n内部含有反射式全息衍射光栅\n将透射样品的白光脉冲沿水平方向进行波长空间色散，投射至线阵探测器靶面上',
+    'uf-sensor': '线阵传感器\n高速线阵图像传感器 (CCD/CMOS)\n用于高速捕获色散后的探测白光光谱，具备与激光器重频同步的采集触发接口',
+    'uf-daq': '高速采集卡 (DAQ Card)\n配合线阵传感器读出时序进行高动态范围 A/D 转换\n实时完成吸光度差值计算：ΔA = -log₁₀(I_on / I_off)，是超快光谱系统的核心电气采集终端'
   };
 
   const tool = {
@@ -80,6 +113,9 @@
             <button class="toggle-btn" data-tab="insitu">原位电学 PL</button>
             <button class="toggle-btn" data-tab="zscan">Z-Scan 非线性扫描</button>
             <button class="toggle-btn" data-tab="michelson">迈克尔逊干涉仪</button>
+            <button class="toggle-btn" data-tab="moke">MOKE 磁光克尔</button>
+            <button class="toggle-btn" data-tab="fp">Fabry-Pérot 共振腔</button>
+            <button class="toggle-btn" data-tab="ultrafast">超快瞬态吸收</button>
           </div>
         </div>
 
@@ -137,6 +173,33 @@
               <strong>鼠标悬停在元件上可查看详细物理机制与设计要点。</strong>
             </div>
             <div id="michelson-diagram"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-moke" style="display:none">
+            <div class="card-title" style="margin-bottom:8px"><span class="icon">🧲</span> MOKE 磁光克尔效应测量光路</div>
+            <div class="help-text" style="margin-bottom:16px">
+              磁光克尔效应 (MOKE) 用于探测磁性样品的磁化状态与自旋偏振特性。利用高频偏振调制（如 PEM）与平衡光电差分探测，实现微弧度（μrad）级的极微弱偏振旋转高灵敏度检测。
+              <strong>鼠标悬停在元件上可查看详细物理机制与设计要点。</strong>
+            </div>
+            <div id="moke-diagram"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-fp" style="display:none">
+            <div class="card-title" style="margin-bottom:8px"><span class="icon">🪞</span> Fabry-Pérot 共振腔光谱测试光路</div>
+            <div class="help-text" style="margin-bottom:16px">
+              法布里-珀罗 (Fabry-Pérot) 共振腔利用高反射率双镜面之间的多次往返干涉，实现超窄透射共振（Airy 梳）。常用于激光窄线宽滤波及利用误差解调伺服锁定腔长。
+              <strong>鼠标悬停在元件上可查看详细物理机制与设计要点。</strong>
+            </div>
+            <div id="fp-diagram"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-ultrafast" style="display:none">
+            <div class="card-title" style="margin-bottom:8px"><span class="icon">⚡</span> 超快瞬态吸收光谱测试光路 (Transient Absorption)</div>
+            <div class="help-text" style="margin-bottom:16px">
+              超快瞬态吸收 (TA) 光谱通过一束强飞秒泵浦脉冲激发材料，并利用另一束延迟可调的超连续相干白光探测激发态的瞬态吸光度变化 ΔA，完成超快激发态动力学的时域与光谱并行演化表征。
+              <strong>鼠标悬停在元件上可查看详细物理机制与设计要点。</strong>
+            </div>
+            <div id="ultrafast-diagram"></div>
           </div>
         </div>
 
@@ -218,7 +281,7 @@
 
     switchSetup(tab) {
       this.currentSetup = tab;
-      ['trpl', 'pump-probe', 'magneto', 'insitu', 'zscan', 'michelson'].forEach(t => {
+      ['trpl', 'pump-probe', 'magneto', 'insitu', 'zscan', 'michelson', 'moke', 'fp', 'ultrafast'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if (el) el.style.display = t === tab ? '' : 'none';
       });
@@ -230,6 +293,9 @@
         case 'insitu': this.renderInsitu(); break;
         case 'zscan': this.renderZScan(); break;
         case 'michelson': this.renderMichelson(); break;
+        case 'moke': this.renderMoke(); break;
+        case 'fp': this.renderFP(); break;
+        case 'ultrafast': this.renderUltrafast(); break;
       }
     },
 
@@ -489,23 +555,23 @@
         <!-- Beams (Double-layer volumetric glow) -->
         <!-- Laser to ND -->
         <line x1="140" y1="125" x2="180" y2="125" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="140" y1="125" x2="180" y2="125" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-te)"/>
+        <line x1="140" y1="125" x2="180" y2="125" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
 
         <!-- ND to Sample -->
         <line x1="270" y1="125" x2="380" y2="125" stroke="#AF52DE" stroke-width="8" opacity="0.2" filter="url(#te-glow)"/>
-        <line x1="270" y1="125" x2="380" y2="125" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-te)"/>
+        <line x1="270" y1="125" x2="380" y2="125" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
 
         <!-- Sample to Collector -->
         <line x1="460" y1="125" x2="560" y2="125" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="460" y1="125" x2="560" y2="125" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-ts)"/>
+        <line x1="460" y1="125" x2="560" y2="125" stroke="#34C759" stroke-width="2" marker-end="url(#arr-ts)"/>
 
         <!-- Collector to Filter -->
         <line x1="650" y1="125" x2="690" y2="125" stroke="#34C759" stroke-width="6" opacity="0.2" filter="url(#te-glow)"/>
-        <line x1="650" y1="125" x2="690" y2="125" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-ts)"/>
+        <line x1="650" y1="125" x2="690" y2="125" stroke="#34C759" stroke-width="1.8" marker-end="url(#arr-ts)"/>
 
         <!-- Filter to Detector -->
         <line x1="780" y1="125" x2="820" y2="125" stroke="#0071E3" stroke-width="6" opacity="0.2" filter="url(#te-glow)"/>
-        <line x1="780" y1="125" x2="820" y2="125" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-td)"/>
+        <line x1="780" y1="125" x2="820" y2="125" stroke="#0071E3" stroke-width="1.8" marker-end="url(#arr-td)"/>
 
         <!-- Detector to TCSPC (Stop signal) -->
         <line x1="865" y1="160" x2="865" y2="230" stroke="#0071E3" stroke-width="2" stroke-dasharray="4,2"/>
@@ -562,32 +628,32 @@
         <!-- Beams (Double-layer volumetric glow) -->
         <!-- Laser to BS -->
         <line x1="140" y1="110" x2="200" y2="110" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="140" y1="110" x2="200" y2="110" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-pp)"/>
+        <line x1="140" y1="110" x2="200" y2="110" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-pp)"/>
         
         <!-- === Pump beam path (upper route) === -->
         <!-- BS to Chopper -->
         <line x1="260" y1="110" x2="330" y2="110" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="260" y1="110" x2="330" y2="110" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-pp)"/>
+        <line x1="260" y1="110" x2="330" y2="110" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-pp)"/>
         <text x="295" y="70" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">泵浦光 (Pump - 强激发)</text>
         
         <!-- Chopper to Sample -->
         <line x1="395" y1="110" x2="480" y2="110" stroke="#FF3B30" stroke-width="6" opacity="0.25" filter="url(#te-glow)"/>
-        <line x1="395" y1="110" x2="480" y2="110" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-pp)"/>
+        <line x1="395" y1="110" x2="480" y2="110" stroke="#FF3B30" stroke-width="1.8" marker-end="url(#arr-pp)"/>
 
         <!-- === Probe beam path (lower route) === -->
         <!-- From BS down to Delay Line -->
         <line x1="230" y1="140" x2="230" y2="200" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="230" y1="140" x2="230" y2="200" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-probe)"/>
+        <line x1="230" y1="140" x2="230" y2="200" stroke="#0071E3" stroke-width="1.8" marker-end="url(#arr-probe)"/>
         <text x="215" y="175" font-size="10" fill="var(--text-secondary)" text-anchor="end" font-weight="700">探测光 (Probe)</text>
         
         <!-- From Delay Line up to Sample -->
         <path d="M 350 230 L 510 230 L 510 160" fill="none" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
-        <path d="M 350 230 L 510 230 L 510 160" fill="none" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-probe)"/>
+        <path d="M 350 230 L 510 230 L 510 160" fill="none" stroke="#0071E3" stroke-width="1.8" marker-end="url(#arr-probe)"/>
         
         <!-- === Combined Detection path === -->
         <!-- Probe reflecting from Sample to PD -->
         <line x1="560" y1="110" x2="680" y2="110" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="560" y1="110" x2="680" y2="110" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-probe)"/>
+        <line x1="560" y1="110" x2="680" y2="110" stroke="#0071E3" stroke-width="1.8" marker-end="url(#arr-probe)"/>
         <text x="620" y="70" font-size="10" fill="var(--text-secondary)" text-anchor="middle">透射/反射探测信号</text>
 
         <!-- PD electrical line down to Lock-in -->
@@ -640,15 +706,15 @@
         <!-- Volumetric lasers -->
         <!-- Laser to Polarizer -->
         <line x1="130" y1="130" x2="190" y2="130" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="130" y1="130" x2="190" y2="130" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-mag)"/>
+        <line x1="130" y1="130" x2="190" y2="130" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-mag)"/>
         
         <!-- Polarizer to Cryostat window -->
         <line x1="280" y1="130" x2="400" y2="130" stroke="#AF52DE" stroke-width="6" opacity="0.25" filter="url(#te-glow)"/>
-        <line x1="280" y1="130" x2="400" y2="130" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-mag)"/>
+        <line x1="280" y1="130" x2="400" y2="130" stroke="#AF52DE" stroke-width="1.8" marker-end="url(#arr-mag)"/>
 
         <!-- Inside Cryostat: focusing beam to sample -->
         <line x1="400" y1="130" x2="490" y2="130" stroke="#AF52DE" stroke-width="3" opacity="0.2" filter="url(#te-glow)"/>
-        <line x1="400" y1="130" x2="490" y2="130" stroke="#FFFFFF" stroke-width="1" />
+        <line x1="400" y1="130" x2="490" y2="130" stroke="#AF52DE" stroke-width="1" />
         
         <!-- Magnetic field line indicator (around sample) -->
         <rect x="440" y="55" width="120" height="20" rx="4" fill="#FF9500" opacity="0.1"/>
@@ -659,12 +725,12 @@
         <rect x="460" y="160" width="80" height="20" rx="3" fill="#FF9500" opacity="0.3"/>
 
         <!-- Emission back or through Cryostat right window -->
-        <line x1="540" y1="130" x2="600" y2="130" stroke="#34C759" stroke-width="3" opacity="0.2"/>
-        <line x1="540" y1="130" x2="600" y2="130" stroke="#FFFFFF" stroke-width="1" />
+        <line x1="540" y1="130" x2="630" y2="130" stroke="#34C759" stroke-width="3" opacity="0.2"/>
+        <line x1="540" y1="130" x2="630" y2="130" stroke="#34C759" stroke-width="1" />
         
         <!-- Right Cryostat window to Spectrometer -->
         <line x1="630" y1="130" x2="780" y2="130" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="630" y1="130" x2="780" y2="130" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-magsig)"/>
+        <line x1="630" y1="130" x2="780" y2="130" stroke="#34C759" stroke-width="2" marker-end="url(#arr-magsig)"/>
         <text x="705" y="75" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">低温强磁场 PL 发射</text>
 
         <!-- Components -->
@@ -718,25 +784,25 @@
         <!-- Volumetric lasers -->
         <!-- Laser to DM -->
         <line x1="140" y1="120" x2="270" y2="120" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="140" y1="120" x2="270" y2="120" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-ins)"/>
+        <line x1="140" y1="120" x2="270" y2="120" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-ins)"/>
         
         <!-- DM reflects down to LWD Objective -->
         <line x1="300" y1="120" x2="300" y2="175" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="300" y1="120" x2="300" y2="175" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-ins)"/>
+        <line x1="300" y1="120" x2="300" y2="175" stroke="#FF3B30" stroke-width="1.8" marker-end="url(#arr-ins)"/>
         
         <!-- Objective to Sample inside Stage -->
         <line x1="300" y1="215" x2="300" y2="250" stroke="#FF3B30" stroke-width="4" opacity="0.2"/>
-        <line x1="300" y1="215" x2="300" y2="250" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <line x1="300" y1="215" x2="300" y2="250" stroke="#FF3B30" stroke-width="1.2" stroke-dasharray="4,2"/>
 
         <!-- Signal PL goes back up to DM -->
         <line x1="300" y1="250" x2="300" y2="215" stroke="#34C759" stroke-width="4" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="300" y1="250" x2="300" y2="215" stroke="#FFFFFF" stroke-width="1.2"/>
+        <line x1="300" y1="250" x2="300" y2="215" stroke="#34C759" stroke-width="1.2"/>
         <line x1="300" y1="175" x2="300" y2="120" stroke="#34C759" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="300" y1="175" x2="300" y2="120" stroke="#FFFFFF" stroke-width="1.8"/>
+        <line x1="300" y1="175" x2="300" y2="120" stroke="#34C759" stroke-width="1.8"/>
         
         <!-- DM transmits to Spectrometer -->
         <line x1="330" y1="120" x2="450" y2="120" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="330" y1="120" x2="450" y2="120" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-inssig)"/>
+        <line x1="330" y1="120" x2="450" y2="120" stroke="#34C759" stroke-width="2" marker-end="url(#arr-inssig)"/>
 
         <!-- Electrical Source Meter connection wires to probes inside Stage -->
         <path d="M 760 215 L 700 215 L 700 250 H 600" fill="none" stroke="#FF9500" stroke-width="2" />
@@ -798,25 +864,25 @@
         <!-- Beams (Double-layer volumetric glow representing Gauss Waist) -->
         <!-- Laser to Attenuator -->
         <line x1="140" y1="155" x2="180" y2="155" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="140" y1="155" x2="180" y2="155" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="140" y1="155" x2="180" y2="155" stroke="#FF3B30" stroke-width="2"/>
 
         <!-- Attenuator to Focus Lens -->
         <line x1="270" y1="155" x2="300" y2="155" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="270" y1="155" x2="300" y2="155" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="270" y1="155" x2="300" y2="155" stroke="#FF3B30" stroke-width="2"/>
 
         <!-- Converging beam from lens to waist -->
         <polygon points="380,140 380,170 500,157 500,153" fill="#FF3B30" opacity="0.25" filter="url(#te-glow)"/>
-        <polygon points="380,140 380,170 500,157 500,153" fill="#FFFFFF" opacity="0.12"/>
+        <polygon points="380,140 380,170 500,157 500,153" fill="#FF3B30" opacity="0.12"/>
         <line x1="380" y1="155" x2="500" y2="155" stroke="#FF3B30" stroke-width="2" stroke-dasharray="4,2"/>
 
         <!-- Diverging beam from waist to Aperture -->
         <polygon points="500,153 500,157 650,180 650,130" fill="#FF3B30" opacity="0.25" filter="url(#te-glow)"/>
-        <polygon points="500,153 500,157 650,180 650,130" fill="#FFFFFF" opacity="0.12"/>
+        <polygon points="500,153 500,157 650,180 650,130" fill="#FF3B30" opacity="0.12"/>
         <line x1="500" y1="155" x2="650" y2="155" stroke="#FF3B30" stroke-width="2" stroke-dasharray="4,2"/>
 
         <!-- Through Aperture to Detector -->
         <line x1="730" y1="155" x2="790" y2="155" stroke="#FF3B30" stroke-width="6" opacity="0.25" filter="url(#te-glow)"/>
-        <line x1="730" y1="155" x2="790" y2="155" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-pp)"/>
+        <line x1="730" y1="155" x2="790" y2="155" stroke="#FF3B30" stroke-width="1.8" marker-end="url(#arr-pp)"/>
 
         <!-- Annotation labels shifted above to prevent text overlaps -->
         <text x="500" y="75" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">高斯焦点光束束腰 (Waist)</text>
@@ -871,31 +937,31 @@
         <!-- Beams (Double-layer volumetric glow) -->
         <!-- Laser to Expander -->
         <line x1="140" y1="175" x2="180" y2="175" stroke="#FF3B30" stroke-width="4" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="140" y1="175" x2="180" y2="175" stroke="#FFFFFF" stroke-width="1.5"/>
+        <line x1="140" y1="175" x2="180" y2="175" stroke="#FF3B30" stroke-width="1.5"/>
 
         <!-- Expanded beam to Beam Splitter (BS) -->
         <polygon points="270,170 270,180 340,195 340,155" fill="#FF3B30" opacity="0.2" filter="url(#te-glow)"/>
-        <polygon points="270,170 270,180 340,195 340,155" fill="#FFFFFF" opacity="0.1"/>
+        <polygon points="270,170 270,180 340,195 340,155" fill="#FF3B30" opacity="0.1"/>
         <line x1="270" y1="175" x2="340" y2="175" stroke="#FF3B30" stroke-width="2" stroke-dasharray="3,3"/>
         <text x="305" y="145" font-size="10" fill="var(--text-secondary)" text-anchor="middle">扩束平行光</text>
 
         <!-- Horizontal Arm: BS to Moving Mirror M2 -->
         <line x1="380" y1="175" x2="680" y2="175" stroke="#FF3B30" stroke-width="12" opacity="0.25" filter="url(#te-glow)"/>
-        <line x1="380" y1="175" x2="680" y2="175" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="380" y1="175" x2="680" y2="175" stroke="#FF3B30" stroke-width="2"/>
         <text x="530" y="152" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">动镜探测臂 d₂</text>
         <!-- Reflected path back to BS -->
         <line x1="680" y1="175" x2="380" y2="175" stroke="#FF3B30" stroke-width="6" opacity="0.15"/>
 
         <!-- Vertical Arm: BS to Reference Mirror M1 -->
         <line x1="375" y1="135" x2="375" y2="75" stroke="#FF3B30" stroke-width="12" opacity="0.25" filter="url(#te-glow)"/>
-        <line x1="375" y1="135" x2="375" y2="75" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="375" y1="135" x2="375" y2="75" stroke="#FF3B30" stroke-width="2"/>
         <text x="395" y="105" font-size="10.5" fill="var(--text-secondary)" text-anchor="start" font-weight="700">定镜参考臂 d₁</text>
         <!-- Reflected path back to BS -->
         <line x1="375" y1="75" x2="375" y2="135" stroke="#FF3B30" stroke-width="6" opacity="0.15"/>
 
         <!-- Downward Arm: BS to Detector (Combined interference beam) -->
         <line x1="375" y1="215" x2="375" y2="285" stroke="#FF9500" stroke-width="14" opacity="0.3" filter="url(#te-glow)"/>
-        <line x1="375" y1="215" x2="375" y2="285" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-insorange)"/>
+        <line x1="375" y1="215" x2="375" y2="285" stroke="#FF9500" stroke-width="2" marker-end="url(#arr-insorange)"/>
         <text x="395" y="250" font-size="11" fill="#FF9500" font-weight="700" text-anchor="start">相干干涉信号 (d₁ - d₂)</text>
 
         <!-- Scanning movement indicator under M2 -->
@@ -920,9 +986,283 @@
       this._renderNotesContent('michelson');
     },
 
+    renderMoke() {
+      const W = 1100, H = 340;
+      const svg = `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block;margin:0 auto">
+        <defs>
+          <pattern id="breadboard-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+            <circle cx="12.5" cy="12.5" r="1.2" fill="var(--text-tertiary)" opacity="0.15"/>
+          </pattern>
+          <filter id="te-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <marker id="arr-te" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF3B30"/></marker>
+          <marker id="arr-td" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0071E3"/></marker>
+          <marker id="arr-ts" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#34C759"/></marker>
+          <marker id="arr-tsync" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF9500"/></marker>
+        </defs>
+        <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
+        <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
+
+        <!-- Beams -->
+        <!-- Laser to Polarizer -->
+        <line x1="140" y1="125" x2="180" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="140" y1="125" x2="180" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Polarizer to PEM -->
+        <line x1="270" y1="125" x2="300" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="270" y1="125" x2="300" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- PEM to Mirror 1 -->
+        <line x1="390" y1="125" x2="435" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="390" y1="125" x2="435" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Mirror 1 reflects down-right to Sample -->
+        <line x1="435" y1="125" x2="525" y2="215" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="435" y1="125" x2="525" y2="215" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Sample reflects up-right to Mirror 2 -->
+        <line x1="555" y1="215" x2="645" y2="125" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="555" y1="215" x2="645" y2="125" stroke="#0071E3" stroke-width="2" marker-end="url(#arr-td)"/>
+
+        <!-- Mirror 2 reflects horizontally right to HWP -->
+        <line x1="645" y1="125" x2="700" y2="125" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="645" y1="125" x2="700" y2="125" stroke="#0071E3" stroke-width="2" marker-end="url(#arr-td)"/>
+
+        <!-- HWP to PBS -->
+        <line x1="790" y1="125" x2="820" y2="125" stroke="#0071E3" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="790" y1="125" x2="820" y2="125" stroke="#0071E3" stroke-width="2" marker-end="url(#arr-td)"/>
+
+        <!-- PBS splits into two paths to Balanced Detector -->
+        <!-- Path 1 (straight) -->
+        <line x1="910" y1="120" x2="940" y2="120" stroke="#0071E3" stroke-width="4" opacity="0.2"/>
+        <line x1="910" y1="120" x2="940" y2="120" stroke="#0071E3" stroke-width="1.2" marker-end="url(#arr-td)"/>
+        <!-- Path 2 (deflected up) -->
+        <line x1="910" y1="130" x2="940" y2="145" stroke="#0071E3" stroke-width="4" opacity="0.2"/>
+        <line x1="910" y1="130" x2="940" y2="145" stroke="#0071E3" stroke-width="1.2" marker-end="url(#arr-td)"/>
+
+        <!-- Balanced Detector output to Lock-in Amp -->
+        <line x1="995" y1="160" x2="995" y2="230" stroke="#0071E3" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+        <!-- PEM Reference sync wire down to y=285, then right to Lock-in Amp -->
+        <path d="M 345 160 L 345 285 L 940 285" fill="none" stroke="#FF9500" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-tsync)"/>
+
+        <!-- Silver Mirrors -->
+        <line x1="422" y1="138" x2="448" y2="112" stroke="#8E8E93" stroke-width="3.5"/> <!-- Mirror 1 -->
+        <line x1="632" y1="112" x2="658" y2="138" stroke="#8E8E93" stroke-width="3.5"/> <!-- Mirror 2 -->
+
+        <!-- Text Annotations -->
+        <text x="280" y="65" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">线偏振光激发</text>
+        <text x="800" y="65" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">磁光克尔偏振检测</text>
+        <text x="642" y="275" font-size="10" fill="#FF9500" text-anchor="middle" font-weight="600">PEM 参考同步解调信号 (Reference f/2f)</text>
+
+        <!-- Components -->
+        ${this._box(30, 90, 110, 70, '连续激光器', '#FF3B30', 'CW Laser', 'mok-laser')}
+        ${this._box(180, 90, 90, 70, '起偏器 P', '#AF52DE', 'Polarizer', 'mok-polarizer')}
+        ${this._box(300, 90, 90, 70, '光弹调制器', '#FF9500', 'PEM Modulator', 'mok-pem')}
+        ${this._box(470, 160, 140, 90, '低温强磁场', '#FF9500', 'Electromagnet', 'mok-cryo')}
+        
+        <!-- Sample inside magnet with hover tooltip -->
+        <g class="svg-hover-box" data-tip="mok-sample" cursor="pointer">
+          <rect x="525" y="200" width="30" height="30" rx="4" fill="var(--bg-primary)" stroke="#34C759" stroke-width="1.5"/>
+          <text x="540" y="218" font-size="9.5" fill="#34C759" text-anchor="middle" font-weight="700">样品</text>
+        </g>
+
+        ${this._box(700, 90, 90, 70, '半波片 HWP', '#AF52DE', 'Compensator', 'mok-hwp')}
+        ${this._box(820, 90, 90, 70, '偏振分束镜', '#AF52DE', 'PBS Wollaston', 'mok-pbs')}
+        ${this._box(940, 80, 110, 80, '平衡探测器', '#0071E3', 'Balanced Detector', 'mok-balanced')}
+        ${this._box(940, 220, 110, 70, '锁相放大器', '#FF9500', 'Lock-in Amp', 'mok-lockin')}
+      </svg>`;
+
+      document.getElementById('moke-diagram').innerHTML = svg;
+      this._attachTooltips();
+      this._renderComponentsList('moke');
+      this._renderNotesContent('moke');
+    },
+
+    renderFP() {
+      const W = 1100, H = 340;
+      const svg = `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block;margin:0 auto">
+        <defs>
+          <pattern id="breadboard-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+            <circle cx="12.5" cy="12.5" r="1.2" fill="var(--text-tertiary)" opacity="0.15"/>
+          </pattern>
+          <filter id="te-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <marker id="arr-te" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF3B30"/></marker>
+          <marker id="arr-ts" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#34C759"/></marker>
+          <marker id="arr-tsync" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF9500"/></marker>
+        </defs>
+        <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
+        <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
+
+        <!-- Beams -->
+        <!-- Laser to Isolator -->
+        <line x1="140" y1="125" x2="175" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="140" y1="125" x2="175" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Isolator to Lens -->
+        <line x1="270" y1="125" x2="300" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="270" y1="125" x2="300" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Lens to Mirror 1 -->
+        <line x1="390" y1="125" x2="440" y2="125" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="390" y1="125" x2="440" y2="125" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Resonant Cavity beam (Mirror 1 to Mirror 2) -->
+        <line x1="460" y1="125" x2="630" y2="125" stroke="#FF9500" stroke-width="14" opacity="0.4" filter="url(#te-glow)"/>
+        <line x1="460" y1="125" x2="630" y2="125" stroke="#FF9500" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Transmitted mode path to PD -->
+        <line x1="680" y1="125" x2="790" y2="125" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="680" y1="125" x2="790" y2="125" stroke="#34C759" stroke-width="2" marker-end="url(#arr-ts)"/>
+
+        <!-- Feedback electrical lines -->
+        <!-- PD output to controller -->
+        <line x1="840" y1="160" x2="840" y2="230" stroke="#0071E3" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- Controller back to PZT -->
+        <path d="M 790 265 L 665 265 L 665 165" fill="none" stroke="#FF9500" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-tsync)"/>
+
+        <!-- Mirrors layout annotation -->
+        <text x="545" y="70" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">腔内多次往返多束干涉共振增强</text>
+        <text x="722" y="280" font-size="10" fill="#FF9500" text-anchor="middle" font-weight="600">腔长锁定 PZT 反馈环路 (Servo Control)</text>
+
+        <!-- Components -->
+        ${this._box(30, 90, 110, 70, '可调谐激光器', '#FF3B30', 'Tunable Laser', 'fp-laser')}
+        ${this._box(175, 90, 95, 70, '光学隔离器', '#AF52DE', 'Optical Isolator', 'fp-isolator')}
+        ${this._box(300, 90, 90, 70, '模式匹配透镜', '#0071E3', 'Matching Lens', 'fp-lens')}
+
+        <!-- FP Cavity mirrors -->
+        <!-- Mirror 1 (planar) -->
+        <g class="svg-hover-box" data-tip="fp-mirror1" cursor="pointer">
+          <rect x="440" y="75" width="20" height="100" rx="3" fill="#D1D1D6" stroke="#AF52DE" stroke-width="1.5"/>
+          <path d="M 455 80 L 455 170" stroke="#0071E3" stroke-width="2.5" opacity="0.8"/>
+          <text x="450" y="60" font-size="10" fill="var(--text-primary)" text-anchor="middle" font-weight="700">输入镜 M1</text>
+        </g>
+
+        <!-- Mirror 2 & PZT on scanning stage -->
+        <g class="svg-hover-box" data-tip="fp-mirror2" cursor="pointer">
+          <rect x="630" y="75" width="20" height="100" rx="3" fill="#D1D1D6" stroke="#AF52DE" stroke-width="1.5"/>
+          <path d="M 635 80 L 635 170" stroke="#0071E3" stroke-width="2.5" opacity="0.8"/>
+          <text x="640" y="60" font-size="10" fill="var(--text-primary)" text-anchor="middle" font-weight="700">输出镜 M2</text>
+        </g>
+        
+        ${this._box(650, 85, 30, 80, 'PZT', '#FF9500', 'Piezo', 'fp-pzt')}
+        ${this._box(790, 90, 100, 70, '光电探测器', '#0071E3', 'Photodetector', 'fp-pd')}
+        ${this._box(790, 230, 110, 70, '腔长控制器', '#FF9500', 'Lock Controller', 'fp-controller')}
+      </svg>`;
+
+      document.getElementById('fp-diagram').innerHTML = svg;
+      this._attachTooltips();
+      this._renderComponentsList('fp');
+      this._renderNotesContent('fp');
+    },
+
+    renderUltrafast() {
+      const W = 1100, H = 340;
+      const svg = `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block;margin:0 auto">
+        <defs>
+          <pattern id="breadboard-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+            <circle cx="12.5" cy="12.5" r="1.2" fill="var(--text-tertiary)" opacity="0.15"/>
+          </pattern>
+          <filter id="te-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <marker id="arr-te" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#AF52DE"/></marker>
+          <marker id="arr-td" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0071E3"/></marker>
+          <marker id="arr-ts" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#34C759"/></marker>
+          <marker id="arr-tsync" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF9500"/></marker>
+          <marker id="arr-pump" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FF3B30"/></marker>
+        </defs>
+        <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
+        <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
+
+        <!-- Beams -->
+        <!-- Laser to BS -->
+        <line x1="140" y1="125" x2="160" y2="125" stroke="#AF52DE" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="140" y1="125" x2="160" y2="125" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
+
+        <!-- Pump Path (Top) -->
+        <!-- Up from BS -->
+        <line x1="195" y1="125" x2="195" y2="47" stroke="#AF52DE" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="195" y1="125" x2="195" y2="47" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
+        <!-- Into OPA -->
+        <line x1="195" y1="47" x2="270" y2="47" stroke="#AF52DE" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="195" y1="47" x2="270" y2="47" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
+        <!-- Out of OPA to Chopper -->
+        <line x1="390" y1="47" x2="420" y2="47" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="390" y1="47" x2="420" y2="47" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-pump)"/>
+        <!-- Chopper down-right to Sample -->
+        <line x1="510" y1="47" x2="615" y2="135" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="510" y1="47" x2="615" y2="135" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-pump)"/>
+
+        <!-- Probe Path (Bottom) -->
+        <!-- Straight through BS, then down to Delay Line -->
+        <path d="M 230 125 L 245 125 L 245 230" fill="none" stroke="#AF52DE" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <path d="M 230 125 L 245 125 L 245 230" fill="none" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
+        <!-- Delay Line to WLC Crystal -->
+        <line x1="390" y1="230" x2="430" y2="230" stroke="#AF52DE" stroke-width="6" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="390" y1="230" x2="430" y2="230" stroke="#AF52DE" stroke-width="2" marker-end="url(#arr-te)"/>
+        <!-- WLC out: Supercontinuum white light (Red, Green, Blue parallel lines) up-right to Sample -->
+        <line x1="520" y1="225" x2="615" y2="140" stroke="#FF3B30" stroke-width="1.5" opacity="0.8" marker-end="url(#arr-pump)"/>
+        <line x1="520" y1="230" x2="615" y2="145" stroke="#34C759" stroke-width="1.5" opacity="0.8" marker-end="url(#arr-ts)"/>
+        <line x1="520" y1="235" x2="615" y2="150" stroke="#0071E3" stroke-width="1.5" opacity="0.8" marker-end="url(#arr-td)"/>
+        
+        <!-- Probe transmission: through Sample to Spectrograph -->
+        <line x1="660" y1="145" x2="710" y2="145" stroke="#FF9500" stroke-width="8" opacity="0.3" filter="url(#te-glow)"/>
+        <line x1="660" y1="145" x2="710" y2="145" stroke="#FF9500" stroke-width="2" marker-end="url(#arr-tsync)"/>
+
+        <!-- Dispersed paths inside Spectrograph to Sensor -->
+        <line x1="810" y1="130" x2="860" y2="110" stroke="#FF3B30" stroke-width="1.2"/>
+        <line x1="810" y1="135" x2="860" y2="130" stroke="#34C759" stroke-width="1.2"/>
+        <line x1="810" y1="140" x2="860" y2="150" stroke="#0071E3" stroke-width="1.2"/>
+
+        <!-- Sensor electrical connection to DAQ card -->
+        <line x1="905" y1="170" x2="905" y2="230" stroke="#0071E3" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+        <!-- Text Annotations -->
+        <text x="350" y="80" font-size="10" fill="var(--text-secondary)" text-anchor="middle">激发泵浦脉冲 (可变波长)</text>
+        <text x="475" y="275" font-size="10" fill="var(--text-secondary)" text-anchor="middle">超连续飞秒白光探测脉冲 (WLC)</text>
+
+        <!-- Components -->
+        ${this._box(30, 90, 110, 70, '飞秒放大器', '#AF52DE', 'fs Amplifier', 'uf-laser')}
+        ${this._box(160, 90, 70, 70, '分束镜 BS', '#AF52DE', 'Beam Splitter', 'uf-bs')}
+        ${this._box(270, 15, 120, 65, '光学参量 OPA', '#FF3B30', 'Pump Tuner', 'uf-opa')}
+        ${this._box(420, 15, 90, 65, '光学斩波器', '#FF9500', 'Chopper', 'uf-chopper')}
+        ${this._box(260, 190, 130, 80, '电动延迟线', '#FF9500', 'Delay Line', 'uf-delay')}
+        ${this._box(430, 195, 90, 70, '白光产生晶体', '#AF52DE', 'WLC Crystal', 'uf-wlc')}
+        ${this._box(615, 105, 90, 80, '被测样品', '#34C759', 'Sample', 'uf-sample')}
+        ${this._box(710, 90, 100, 80, '成像光谱仪', '#0071E3', 'Spectrograph', 'uf-spectrograph')}
+        ${this._box(860, 90, 90, 80, '线阵传感器', '#0071E3', 'Linear Sensor', 'uf-sensor')}
+        ${this._box(860, 230, 100, 70, '高速采集卡', '#FF9500', 'DAQ Card', 'uf-daq')}
+      </svg>`;
+
+      document.getElementById('ultrafast-diagram').innerHTML = svg;
+      this._attachTooltips();
+      this._renderComponentsList('ultrafast');
+      this._renderNotesContent('ultrafast');
+    },
+
     // ==========================================
     // Component List & Experimental Notes
     // ==========================================
+
     _renderComponentsList(setup) {
       const components = {
         trpl: [
@@ -979,6 +1319,39 @@
           { name: '平面动镜 M2 (扫描臂)', id: 'mi-mirror2' },
           { name: '压电微动马达 PZT', id: 'mi-pzt' },
           { name: '干涉观察屏 / CCD', id: 'mi-detector' }
+        ],
+        moke: [
+          { name: '连续激光器', id: 'mok-laser' },
+          { name: '起偏器 P', id: 'mok-polarizer' },
+          { name: '光弹调制器', id: 'mok-pem' },
+          { name: '低温强磁场恒温器', id: 'mok-cryo' },
+          { name: '被测样品', id: 'mok-sample' },
+          { name: '半波片 HWP', id: 'mok-hwp' },
+          { name: '偏振分束镜', id: 'mok-pbs' },
+          { name: '平衡探测器', id: 'mok-balanced' },
+          { name: '锁相放大器', id: 'mok-lockin' }
+        ],
+        fp: [
+          { name: '可调谐激光器', id: 'fp-laser' },
+          { name: '光学隔离器', id: 'fp-isolator' },
+          { name: '模式匹配透镜组', id: 'fp-lens' },
+          { name: '输入镜 M1', id: 'fp-mirror1' },
+          { name: '输出镜 M2', id: 'fp-mirror2' },
+          { name: '压电陶瓷 PZT', id: 'fp-pzt' },
+          { name: '光电探测器', id: 'fp-pd' },
+          { name: '腔长控制器', id: 'fp-controller' }
+        ],
+        ultrafast: [
+          { name: '飞秒放大器', id: 'uf-laser' },
+          { name: '分束镜 BS', id: 'uf-bs' },
+          { name: '光学参量 OPA', id: 'uf-opa' },
+          { name: '光学斩波器', id: 'uf-chopper' },
+          { name: '电动延迟线', id: 'uf-delay' },
+          { name: '白光产生晶体', id: 'uf-wlc' },
+          { name: '被测样品', id: 'uf-sample' },
+          { name: '成像光谱仪', id: 'uf-spectrograph' },
+          { name: '线阵传感器', id: 'uf-sensor' },
+          { name: '高速采集卡', id: 'uf-daq' }
         ]
       };
 
@@ -1076,6 +1449,49 @@
             <ul style="padding-left:20px">
               <li style="color:var(--accent)">机械稳定性与隔震：由于干涉条纹对波长级的光程变化极度敏感，光路必须搭建在防震台上，并避免空气对流扰动引起的相位抖动。</li>
               <li>偏振退偏效应：如果分束镜 BS 对 s 偏振 and p 偏振的反射和透射率不相等（偏振分束），会降低最终干涉条纹的对比度（可见度 V）。</li>
+            </ul>
+          </div>`,
+        moke: `
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            <p style="margin-bottom:10px"><strong>克尔效应测量物理模型：</strong></p>
+            <ul style="padding-left:20px;margin-bottom:12px">
+              <li><strong>复数 Kerr 旋转角：</strong>Φ_K = θ_K + i·η_K。反射偏振角度 θ_K (Kerr 旋转) 对应材料磁化强度的实部，η_K (Kerr 椭圆度) 对应虚部。</li>
+              <li><strong>调制与解调解耦：</strong>PEM 引入高频光弹性双折射，平衡探测信号含有调制基频 (f) 和倍频 (2f) 交流量。f 信号对应极微弱椭圆度 η_K，2f 信号对应 Kerr 旋转角 θ_K，两通道比值直接消除光源起伏与震动干扰。</li>
+            </ul>
+            <p style="margin-bottom:10px"><strong>设计要点：</strong></p>
+            <ul style="padding-left:20px">
+              <li style="color:var(--orange)">超低磁光双折射窗口：恒温器恒温光窗在高低温 and 磁场下极易产生残余热应力双折射。需采用特制平面消应力石英窗口玻璃以防偏振面畸变。</li>
+              <li>精密差分平衡：半波片 and 检偏分束镜 Wollaston 必须精密调谐至差分平衡点（A和B端电信号差值为零），以发挥平衡探测器抑制 RIN 共模噪声的最佳效果。</li>
+            </ul>
+          </div>`,
+        fp: `
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            <p style="margin-bottom:10px"><strong>腔透射与谐振公式：</strong></p>
+            <ul style="padding-left:20px;margin-bottom:12px">
+              <li><strong>精细度 (Finesse)：</strong>F = π·√R / (1 - R)。精细度决定了腔的品质因子 Q 和谐振谱线线宽。若 R = 99.9%，则 F ≈ 3140。</li>
+              <li><strong>自由光谱范围 (FSR)：</strong>Δν_FSR = c / (2d)。相邻两个透射 Airy 峰 的频率间隔。</li>
+            </ul>
+            <p style="margin-bottom:10px"><strong>设计要点：</strong></p>
+            <ul style="padding-left:20px">
+              <li style="color:var(--red)">光隔离器 (Isolator)：在腔前必须插入隔离度 > 35dB 的光学隔离器，防止腔反射的高能量回流至种子源激光器引起频率失锁与强模式跳变。</li>
+              <li>反馈锁定 (Locking)：使用 PDH 方法，通过高频相位调制在反射端探测腔的相干色散反射光信号，反馈控制高压驱动 PZT 锁定腔长，抗机械与热漂移。</li>
+            </ul>
+          </div>`,
+        ultrafast: `
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            <p style="margin-bottom:10px"><strong>瞬态吸光度 (TA) 动力学：</strong></p>
+            <ul style="padding-left:20px;margin-bottom:12px">
+              <li><strong>信号求取：</strong>ΔA(λ, t) = A_excited - A_ground = -log₁₀(I_on(λ, t) / I_off(λ))。</li>
+              <li><strong>瞬态成分：</strong>
+                <br>• <strong>基态漂白 (GSB, 负信号)</strong>：激子占据降低基态吸收；
+                <br>• <strong>受激辐射 (SE, 负信号)</strong>：泵浦探测激子受激辐射增强探测光；
+                <br>• <strong>激发态吸收 (ESA, 正信号)</strong>：光生载流子跃迁到更高激发态。
+              </li>
+            </ul>
+            <p style="margin-bottom:10px"><strong>设计要点：</strong></p>
+            <ul style="padding-left:20px">
+              <li style="color:var(--green)">超连续白光色散补偿：白光在聚焦 and 穿过样品时会产生显著的时间群速度色散（Chirp，不同色光到达样品的时间不同）。需在数据后处理中利用溶剂双光子偏振关联曲线进行色散校正。</li>
+              <li>高速差分噪声压制：高速线阵探测器同步于放大器重频，依靠光电斩波器进行脉冲隔发采集与逐对脉冲相减，以压制 1/f 白光强度漂移抖动噪声。</li>
             </ul>
           </div>`
       };

@@ -16,6 +16,14 @@
 
   const TOOLTIPS = {
 
+    'pl-abs': '光子吸收 (Photon Absorption)\n物理机制：当入射光子能量大于材料带隙 (hν_ex > E_g) 时，电子吸收光子从价带 (VB) 跃迁至导带 (CB)，同时在价带留下带正电的空穴。\n特点：极快的过程（飞秒级），其效率直接决定了光生载流子的初始浓度。',
+
+    'pl-relax': '非辐射热弛豫 (Non-radiative Relaxation / Thermalization)\n物理机制：跃迁到导带深处的电子和价带深处的空穴通过与晶格声子碰撞交换能量，在极短时间内（皮秒级）快速弛豫至导带底（CBM）和价带顶（VBM）。\n特点：该过程释放声子（产生热量），不发射光子，是导致 PL 发射波长相对于激发光红移（斯托克斯位移）的主要原因。',
+
+    'pl-rad': '辐射复合 (Radiative Recombination)\n物理机制：处于导带底的电子与价带顶的空穴由于静电吸引重新结合并释放出能量，以发射光子的形式退激发。\n特点：发射光子能量等于材料带隙能 (hν_PL = E_g)，其发光效率（荧光量子产率）是评估材料光电特性的核心指标。',
+
+    'pl-exciton': '二维激子与三子 (Exciton & Trion in 2D Semiconductors)\n物理机制：在单层 TMDs (如 MoS₂) 中，受二维空间限制与极弱介电屏蔽作用，电子与空穴通过强库仑作用结合，形成束缚态——激子 (Exciton)。其束缚能高达 300~500 meV，远超室温热能 (26 meV)，因此室温下激子发光占主导。\n三子 (Trion)：激子可进一步结合一个多余的电子或空穴，形成带电激子（三子），其发光峰位于激子主峰低能量侧 20~40 meV 处。',
+
     // Tab 1: Regular PL
 
     'pl-laser': 'PL 激发光源\n波长选择：需高于被测材料的带隙能量（E_exc > E_gap）\n常用：UV 325nm (HeCd)、405nm (半导体)、532nm (Nd:YAG)\n功率：0.1~50mW，避免样品损伤和非线性效应\n注意：激光波长应远离 PL 发射峰，便于滤波',
@@ -102,7 +110,9 @@
 
             <div class="toggle-group" id="pl-tabs">
 
-              <button class="toggle-btn active" data-tab="regular">常规 PL</button>
+              <button class="toggle-btn active" data-tab="principle">PL 原理</button>
+
+              <button class="toggle-btn" data-tab="regular">常规 PL</button>
 
               <button class="toggle-btn" data-tab="linear">线偏振 PL</button>
 
@@ -116,9 +126,75 @@
 
 
 
+          <!-- Tab 0: PL Principle -->
+
+          <div class="card tab-panel" id="tab-principle">
+
+            <div class="card-title"><span class="icon">💡</span> PL 光致发光物理原理</div>
+
+            <div class="help-text" style="margin-bottom:16px">
+
+              光致发光（Photoluminescence, PL）是半导体或分子材料吸收能量大于其带隙的光子后，电子从价带激发到导带，经非辐射弛豫后，与空穴发生辐射复合发射光子的物理过程。
+
+            </div>
+
+            <div style="display:grid;grid-template-columns:320px 1fr;gap:20px">
+
+              <div class="dashboard-control" style="padding:0">
+
+                <div class="card" style="box-shadow:none;border:none;padding:0;background:transparent">
+
+                  <div class="card-title" style="font-size:13px"><span class="icon">⚙️</span> 过程简述</div>
+
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent);margin-bottom:12px">
+
+                    <strong>发光三步曲：</strong><br>
+
+                    1. <b>激发吸收</b>：$h\nu_{\text{ex}} > E_g$，激发产生自由电子与空穴；<br>
+
+                    2. <b>非辐射弛豫</b>：载流子释放声子（热）弛豫到导带底/价带顶；<br>
+
+                    3. <b>辐射复合</b>：电子与空穴复合重组释放光子，发射 PL 信号。
+
+                  </div>
+
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent)">
+
+                    <strong>激子能级能量关系：</strong><br>
+
+                    <div style="font-family:var(--font-mono);font-size:12px;background:var(--bg-card);padding:6px;border-radius:4px;margin:6px 0;text-align:center;border:1px solid var(--border);color:var(--accent)">
+
+                      E_PL ≈ E_opt ≈ E_qp - E_b
+
+                    </div>
+
+                    <span style="font-size:10px;color:var(--text-tertiary)">E_qp: 准粒子带隙 (电子带隙)<br>E_opt: 光学带隙 (PL发光能量)<br>E_b: 激子结合能 (束缚能)。单层 TMDs 等二维材料中其值高达 300~500 meV，室温下极稳定。</span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="dashboard-stage" style="gap:12px">
+
+                <div class="card" style="padding:10px;box-shadow:none;border:none;padding:0;background:transparent">
+
+                   <div id="pl-principle-diagram"></div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="pl-principle-text"></div>
+
+          </div>
+
           <!-- Tab 1: Regular PL -->
 
-          <div class="card tab-panel" id="tab-regular">
+          <div class="card tab-panel" id="tab-regular" style="display:none">
 
             <div class="card-title"><span class="icon">💡</span> 常规 PL 光致发光光路</div>
 
@@ -362,7 +438,7 @@
 
       this.bindEvents();
 
-      this.switchTab('regular');
+      this.switchTab(this.currentTab);
 
     },
 
@@ -463,7 +539,12 @@
 
       this.currentTab = tab;
 
-      ['regular', 'linear', 'circular', 'compare'].forEach(t => {
+      // Update active button state in the tab group
+      document.querySelectorAll('#pl-tabs .toggle-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tab);
+      });
+
+      ['principle', 'regular', 'linear', 'circular', 'compare'].forEach(t => {
 
         const el = document.getElementById(`tab-${t}`);
 
@@ -480,6 +561,8 @@
 
 
       switch (tab) {
+
+        case 'principle': this.renderPrinciple(); break;
 
         case 'regular': this.renderRegular(); break;
 
@@ -894,6 +977,212 @@
 
     // ==========================================
 
+    renderPrinciple() {
+      const W = 1200, H = 500;
+      const svg = `
+      <svg viewBox="0 0 ${W} ${H}" id="pl-principle-export" style="width:100%;display:block;margin:0 auto">
+        <defs>
+          <marker id="pl-arr-v" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#8E44AD"/></marker>
+          <marker id="pl-arr-r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#E74C3C"/></marker>
+          <marker id="pl-arr-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3498DB"/></marker>
+          <filter id="pl-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <linearGradient id="cb-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF5E00" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FF9500" stop-opacity="0.1"/>
+          </linearGradient>
+          <linearGradient id="vb-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#0071E3" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#002553" stop-opacity="0.3"/>
+          </linearGradient>
+          <pattern id="breadboard-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+            <circle cx="12.5" cy="12.5" r="1.2" fill="var(--text-tertiary)" opacity="0.15"/>
+          </pattern>
+        </defs>
+        <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
+        <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
+
+        <!-- Left Side: Bandgap Structure & Transitions (Energy Band Model) -->
+        <rect x="30" y="30" width="700" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-dasharray="4,4" opacity="0.5"/>
+        <text x="380" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">半导体的光致发光能带能级模型 Energy Band Model</text>
+
+        <!-- Conduction Band (CB) -->
+        <rect x="80" y="100" width="600" height="60" rx="8" fill="url(#cb-gradient)" stroke="#FF9500" stroke-width="1.5"/>
+        <text x="95" y="135" font-size="12" fill="#FF9500" font-weight="700">导带 Conduction Band (CB)</text>
+        <text x="660" y="118" font-size="10" fill="#FF9500" text-anchor="end">导带底 CBM</text>
+
+        <!-- Valence Band (VB) -->
+        <rect x="80" y="340" width="600" height="60" rx="8" fill="url(#vb-gradient)" stroke="#0071E3" stroke-width="1.5"/>
+        <text x="95" y="375" font-size="12" fill="#0071E3" font-weight="700">价带 Valence Band (VB)</text>
+        <text x="660" y="392" font-size="10" fill="#0071E3" text-anchor="end">价带顶 VBM</text>
+
+        <!-- Band Gap Annotation -->
+        <path d="M 640 160 L 640 340" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="635" y1="160" x2="645" y2="160" stroke="var(--text-secondary)" stroke-width="1"/>
+        <line x1="635" y1="340" x2="645" y2="340" stroke="var(--text-secondary)" stroke-width="1"/>
+        <text x="650" y="255" font-size="12" fill="var(--text-primary)" font-weight="700">禁带宽度 Bandgap (E_g)</text>
+
+        <!-- 1. Photon Absorption -->
+        <g class="svg-hover-box" data-tip="pl-abs" cursor="pointer">
+          <!-- Laser input -->
+          <path d="M 60 270 Q 80 250, 100 270 T 140 270 T 180 270" fill="none" stroke="#AF52DE" stroke-width="4" opacity="0.3" filter="url(#pl-glow)"/>
+          <path d="M 60 270 Q 80 250, 100 270 T 180 270" fill="none" stroke="#AF52DE" stroke-width="2" marker-end="url(#pl-arr-v)"/>
+          <text x="110" y="240" font-size="11" fill="#AF52DE" font-weight="700" text-anchor="middle">激发激光 hν_ex > E_g</text>
+
+          <!-- Upward Transition arrow -->
+          <line x1="200" y1="360" x2="200" y2="140" stroke="#AF52DE" stroke-width="2.5" marker-end="url(#pl-arr-v)"/>
+          <!-- Electron going up -->
+          <circle cx="200" cy="140" r="6" fill="#AF52DE"/>
+          <text x="200" y="137" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="700">-</text>
+          <!-- Hole left behind -->
+          <circle cx="200" cy="360" r="6" fill="#FFFFFF" stroke="#0071E3" stroke-width="2"/>
+          <text x="200" y="363" font-size="9" fill="#0071E3" text-anchor="middle" font-weight="700">+</text>
+
+          <rect x="140" y="180" width="80" height="40" rx="6" fill="#AF52DE" opacity="0.05"/>
+          <text x="180" y="196" font-size="11" fill="#AF52DE" text-anchor="middle" font-weight="700">1. 光子吸收</text>
+          <text x="180" y="210" font-size="9" fill="var(--text-secondary)" text-anchor="middle">电子空穴对产生</text>
+        </g>
+
+        <!-- 2. Non-radiative Relaxation -->
+        <g class="svg-hover-box" data-tip="pl-relax" cursor="pointer">
+          <!-- Electron relaxes horizontally to CBM -->
+          <path d="M 200 140 Q 240 120, 280 140 T 360 140" fill="none" stroke="#FF9500" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pl-arr-r)"/>
+          <!-- Phonon label -->
+          <text x="280" y="115" font-size="10" fill="#FF9500" font-weight="600" text-anchor="middle">声子发射 (热弛豫) ℏΩ</text>
+          
+          <!-- Hole relaxes horizontally to VBM -->
+          <path d="M 200 360 Q 240 380, 280 360 T 360 360" fill="none" stroke="#0071E3" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pl-arr-b)"/>
+          
+          <rect x="250" y="235" width="80" height="40" rx="6" fill="#FF9500" opacity="0.05"/>
+          <text x="290" y="251" font-size="11" fill="#FF9500" text-anchor="middle" font-weight="700">2. 非辐射弛豫</text>
+          <text x="290" y="265" font-size="9" fill="var(--text-secondary)" text-anchor="middle">热化至带边缘</text>
+        </g>
+
+        <!-- 3. Radiative Recombination -->
+        <g class="svg-hover-box" data-tip="pl-rad" cursor="pointer">
+          <!-- Downward arrow -->
+          <line x1="420" y1="140" x2="420" y2="360" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#pl-arr-r)"/>
+          <circle cx="420" cy="140" r="5" fill="#E74C3C"/>
+          <circle cx="420" cy="360" r="5" fill="#FFFFFF" stroke="#E74C3C" stroke-width="1.5"/>
+
+          <!-- PL output photon wave -->
+          <path d="M 425 250 Q 450 235, 475 250 T 525 250 T 575 250" fill="none" stroke="#E74C3C" stroke-width="4" opacity="0.3" filter="url(#pl-glow)"/>
+          <path d="M 425 250 Q 450 235, 475 250 T 575 250" fill="none" stroke="#E74C3C" stroke-width="2" marker-end="url(#pl-arr-r)"/>
+          <text x="500" y="222" font-size="11" fill="#E74C3C" font-weight="700" text-anchor="middle">PL 光致发光 hν_PL ≈ E_g</text>
+
+          <rect x="390" y="180" width="80" height="40" rx="6" fill="#E74C3C" opacity="0.05"/>
+          <text x="430" y="196" font-size="11" fill="#E74C3C" text-anchor="middle" font-weight="700">3. 辐射复合</text>
+          <text x="430" y="210" font-size="9" fill="var(--text-secondary)" text-anchor="middle">发射 PL 光子</text>
+        </g>
+
+        <!-- Right Side: Excitonic Structure in 2D Semiconductors (Bound Exciton Model) -->
+        <rect x="760" y="30" width="410" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="965" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">二维半导体激子模型 Excitonic Model (2D TMDs)</text>
+
+        <!-- Exciton box -->
+        <g class="svg-hover-box" data-tip="pl-exciton" cursor="pointer">
+          <rect x="785" y="80" width="360" height="175" rx="8" fill="var(--bg-primary)" stroke="var(--border)" stroke-width="1"/>
+          
+          <!-- Monolayer MoS2 grid background (conceptually) -->
+          <circle cx="850" cy="170" r="14" fill="#0071E3" opacity="0.8" filter="url(#pl-glow)"/> <!-- Hole -->
+          <text x="850" y="174" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">h⁺</text>
+          <text x="850" y="200" font-size="10" fill="var(--text-secondary)" text-anchor="middle">价带空穴 (Hole)</text>
+
+          <circle cx="1060" cy="170" r="14" fill="#FF9500" opacity="0.8" filter="url(#pl-glow)"/> <!-- Electron -->
+          <text x="1060" y="174" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">e⁻</text>
+          <text x="1060" y="200" font-size="10" fill="var(--text-secondary)" text-anchor="middle">导带电子 (Electron)</text>
+          
+          <!-- Coulomb interaction force curves -->
+          <path d="M 864 165 Q 955 140, 1046 165" fill="none" stroke="#FF3B30" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <path d="M 864 175 Q 955 200, 1046 175" fill="none" stroke="#FF3B30" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="955" y="160" font-size="11" fill="#FF3B30" font-weight="700" text-anchor="middle">强库仑静电引力 (Coulomb Force)</text>
+                    <text x="955" y="180" font-size="12" fill="var(--text-primary)" font-weight="700" text-anchor="middle">中性激子 Exciton (X⁰)</text>
+          <text x="955" y="200" font-size="9.5" fill="var(--accent)" font-weight="700" text-anchor="middle">E_PL (发光) ≈ E_opt (光学带隙) ≈ E_qp (准粒子) - E_b</text>
+          <text x="955" y="218" font-size="9" fill="var(--text-secondary)" text-anchor="middle">(室温 E_b >> k_B T, 激子极度稳定)</text>
+          <text x="955" y="236" font-size="11" fill="var(--text-primary)" font-weight="700" text-anchor="middle">激子束缚能 E_b ≈ 300~500 meV</text>
+        </g>
+
+        <!-- Trion box -->
+        <g class="svg-hover-box" data-tip="pl-exciton" cursor="pointer">
+          <rect x="785" y="270" width="360" height="175" rx="8" fill="var(--bg-primary)" stroke="var(--border)" stroke-width="1"/>
+
+          <!-- Trion schematic -->
+          <circle cx="850" cy="350" r="12" fill="#0071E3" opacity="0.8"/> <!-- Hole -->
+          <text x="850" y="354" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">h⁺</text>
+
+          <circle cx="1060" cy="330" r="12" fill="#FF9500" opacity="0.8"/> <!-- Electron 1 -->
+          <text x="1060" y="334" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">e⁻</text>
+          
+          <circle cx="1030" cy="370" r="12" fill="#FF9500" opacity="0.8"/> <!-- Electron 2 -->
+          <text x="1030" y="374" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">e⁻</text>
+
+          <!-- Coulomb lines -->
+          <path d="M 862 345 Q 945 320, 1048 330" fill="none" stroke="#FF3B30" stroke-width="1" stroke-dasharray="3,3"/>
+          <path d="M 862 355 Q 940 375, 1018 370" fill="none" stroke="#FF3B30" stroke-width="1" stroke-dasharray="3,3"/>
+          <path d="M 1030 358 L 1054 342" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="2,2"/>
+          
+          <text x="955" y="335" font-size="12" fill="var(--text-primary)" font-weight="700" text-anchor="middle">负带电激子/三子 Trion (X⁻)</text>
+          <text x="955" y="355" font-size="10" fill="var(--text-secondary)" text-anchor="middle">多余载流子束缚态</text>
+          <text x="955" y="415" font-size="11" fill="var(--text-primary)" font-weight="700" text-anchor="middle">三子束缚能 E_trion ≈ 20~40 meV</text>
+          <text x="955" y="398" font-size="10" fill="var(--text-secondary)" text-anchor="middle">(带电性使其可受栅压静电调控)</text>
+        </g>
+
+        <!-- Export button -->
+        <g cursor="pointer" onclick="DIAGRAMS.exportSVG(document.getElementById('pl-principle-export'), 'pl-principle.svg')">
+          <rect x="${W - 110}" y="45" width="85" height="24" rx="12" fill="var(--bg-primary)" stroke="var(--border)"/>
+          <text x="${W - 67}" y="61" font-size="10" fill="var(--accent)" text-anchor="middle" font-weight="600">💾 导出 SVG</text>
+        </g>
+      </svg>`;
+
+      document.getElementById('pl-principle-diagram').innerHTML = svg;
+      this._attachTooltips();
+
+      document.getElementById('pl-principle-text').innerHTML = `
+        <div style="margin-top:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 光致发光能带跃迁与带隙物理
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p><strong>能带跃迁机制：</strong></p>
+                <p>半导体材料在激光照射下，当入射光子能量 hν_ex > E_g 时，价带电子被激发到导带高能态。这些非平衡载流子通过散射极快地将能量传递给晶格，退激发到导带底和价带顶（非辐射弛豫）。随后导带底的电子与价带顶的空穴重组，发射出光子，这就是光致发光 (PL)。</p>
+                <p><strong>斯托克斯位移 (Stokes Shift)：</strong></p>
+                <p>由于电子在跃迁后会通过非辐射热弛豫损耗一部分能量给声子，发射出的 PL 光子能量通常低于激发光子能量，这一现象称为斯托克斯位移：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  ΔE = hν_ex - hν_PL > 0
+                </div>
+                <p>PL 峰的能量位置直接对应了材料的直接或间接带隙能量。因此，PL 光谱是表征半导体带隙、确定材料缺陷能级、评估发光效率的关键工具。</p>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 二维 TMDs 中的强激子效应与多体物理
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p><strong>激子效应 (Exciton Effect)：</strong></p>
+                <p>在单层过渡金属硫族化合物 (TMDs，如 MoS₂, WS₂) 中，维度被限制在单原子层内，且周围介质（如空气或 SiO₂ 衬底）的介电屏蔽作用极弱，使得光生的电子与空穴之间库仑相互作用极强，形成束缚态——<strong>中性激子 (X⁰)</strong>。激子发光的实际能量为（PL发光能量 ≈ 光学带隙 ≈ 准粒子带隙 - 激子结合能）：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  E_PL ≈ E_opt ≈ E_qp - E_b
+                </div>
+                <p>其束缚能 E_b 高达 300~500 meV，相比之下体相半导体的激子束缚能仅为数 meV。由于 E_b >> k_B T (室温下约 26 meV)，激子在室温下非常稳定，完全主导了单层材料的发光特性。</p>
+                <p><strong>带电激子 / 三子 (Trion, X⁻ / X⁺)：</strong></p>
+                <p>当材料中存在多余的电子或空穴（如通过静电门压掺杂），激子会与额外的电荷结合形成带电激子（三子）。三子的发光能量通常比中性激子低 20~40 meV，体现了显著的多体多电荷效应。其比例和发光强度极易受到栅极电压的调控，为电控发光器件提供了基础。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      this._renderComponentList('principle');
+    },
+
     renderRegular() {
 
       const W = 1200, H = 550;
@@ -982,29 +1271,29 @@
 
         <!-- DM reflects excitation down to Objective -->
 
-        <line x1="400" y1="140" x2="400" y2="295" stroke="#AF52DE" stroke-width="7" opacity="0.25" filter="url(#pl-glow)"/>
+        <line x1="400" y1="140" x2="400" y2="265" stroke="#AF52DE" stroke-width="7" opacity="0.25" filter="url(#pl-glow)"/>
 
-        <line x1="400" y1="140" x2="400" y2="295" stroke="#AF52DE" stroke-width="2" marker-end="url(#pl-arr-e)"/>
+        <line x1="400" y1="140" x2="400" y2="265" stroke="#AF52DE" stroke-width="2" marker-end="url(#pl-arr-e)"/>
 
 
 
         <!-- Objective to Sample -->
 
-        <line x1="400" y1="365" x2="400" y2="380" stroke="#AF52DE" stroke-width="7" opacity="0.25" filter="url(#pl-glow)"/>
+        <line x1="400" y1="320" x2="400" y2="395" stroke="#AF52DE" stroke-width="7" opacity="0.25" filter="url(#pl-glow)"/>
 
-        <line x1="400" y1="365" x2="400" y2="380" stroke="#AF52DE" stroke-width="2" marker-end="url(#pl-arr-e)"/>
+        <line x1="400" y1="320" x2="400" y2="395" stroke="#AF52DE" stroke-width="2" marker-end="url(#pl-arr-e)"/>
 
 
 
         <!-- PL emission: Sample goes up through Objective and DM -->
 
-        <line x1="400" y1="380" x2="400" y2="365" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.25" filter="url(#pl-glow)"/>
+        <line x1="400" y1="395" x2="400" y2="320" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.25" filter="url(#pl-glow)"/>
 
-        <line x1="400" y1="380" x2="400" y2="365" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#pl-arr-g)"/>
+        <line x1="400" y1="395" x2="400" y2="320" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#pl-arr-g)"/>
 
-        <line x1="400" y1="295" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.25" filter="url(#pl-glow)"/>
+        <line x1="400" y1="265" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.25" filter="url(#pl-glow)"/>
 
-        <line x1="400" y1="295" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3"/>
+        <line x1="400" y1="265" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3"/>
 
 
 
@@ -1030,13 +1319,13 @@
 
         ${this._box(190, 100, 110, 80, 'ND 滤波片', '#FF9500', 'Power Control', 'pl-ndfilter')}
 
-        ${this._box(340, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'pl-dm')}
+        ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'pl-dm')}
 
-        ${this._box(350, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'pl-obj')}
+        ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'pl-obj')}
 
-        ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample', 'pl-sample')}
+        ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample', 'pl-sample')}
 
-        ${this._box(500, 100, 110, 80, '长通滤波器', '#FF9500', 'LP Filter', 'pl-lpfilter')}
+        ${this._box(500, 100, 110, 80, '长通 LP', '#FF9500', 'LP Filter', 'pl-lpfilter')}
 
         ${this._box(650, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'pl-spectro')}
 
@@ -1045,6 +1334,10 @@
         <!-- Diagonal line on dichroic mirror -->
 
         <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+
+        <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
+
+        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
 
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
 
@@ -1288,17 +1581,17 @@
 
         <!-- DM down to HWP to Objective to Sample -->
 
-        <line x1="400" y1="140" x2="400" y2="380" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#lpl-glow)"/>
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#lpl-glow)"/>
 
-        <line x1="400" y1="140" x2="400" y2="380" stroke="#AF52DE" stroke-width="2" marker-end="url(#lpl-arr-e)"/>
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#AF52DE" stroke-width="2" marker-end="url(#lpl-arr-e)"/>
 
         
 
         <!-- Sample PL up through Objective, HWP, DM -->
 
-        <line x1="400" y1="380" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.3" filter="url(#lpl-glow)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.3" filter="url(#lpl-glow)"/>
 
-        <line x1="400" y1="380" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#lpl-arr-g)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#lpl-arr-g)"/>
 
         
 
@@ -1310,21 +1603,21 @@
 
         <!-- === Optical components === -->
 
-        ${this._box(40, 100, 110, 80, '激光', '#AF52DE', 'Laser Source', 'lpl-laser')}
+        ${this._box(40, 100, 110, 80, '激光器', '#AF52DE', 'Laser Source', 'lpl-laser')}
 
-        ${this._box(190, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'lpl-polarizer')}
+        ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'lpl-polarizer')}
 
-        ${this._box(340, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'lpl-dm')}
+        ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'lpl-dm')}
 
-        ${this._box(350, 210, 100, 70, '半波片', '#AF52DE', 'HWP λ/2', 'lpl-hwp')}
+        ${this._box(350, 200, 100, 45, '半波片 HWP', '#AF52DE', 'HWP λ/2', 'lpl-hwp')}
 
-        ${this._box(350, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'lpl-obj')}
+        ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'lpl-obj')}
 
-        ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample', 'lpl-sample')}
+        ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample', 'lpl-sample')}
 
         ${this._box(500, 100, 110, 80, '长通 LP', '#FF9500', 'LP Filter', 'lpl-lpfilter')}
 
-        ${this._box(650, 100, 110, 80, '检偏 A', '#0071E3', isPara ? '设为 0°' : '设为 90°', 'lpl-analyzer')}
+        ${this._box(650, 100, 110, 80, '检偏器 A', '#0071E3', isPara ? '设为 0°' : '设为 90°', 'lpl-analyzer')}
 
         ${this._box(800, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'lpl-spectro')}
 
@@ -1333,6 +1626,10 @@
         <!-- Diagonal line on dichroic mirror -->
 
         <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+
+        <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
+
+        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
 
 
 
@@ -1352,10 +1649,6 @@
 
         <!-- Between HWP and Objective (Rotated) -->
 
-        <line x1="380" y1="225" x2="390" y2="245" stroke="#AF52DE" stroke-width="2"/>
-
-        <text x="415" y="240" font-size="9" fill="#AF52DE" text-anchor="start">↗ 旋转</text>
-
         
 
         <!-- After A -->
@@ -1370,11 +1663,11 @@
 
         <!-- HWP Highlight Box (操作执行模块) -->
 
-        <rect x="346" y="206" width="108" height="78" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
+        <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
 
-        <rect x="346" y="190" width="108" height="15" rx="3" fill="#FF9500"/>
+        <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF9500"/>
 
-        <text x="400" y="201" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
+        <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
 
 
 
@@ -1432,11 +1725,11 @@
 
         ${polState(360, 482, '经 DM', '反射', '#AF52DE')}
 
-        ${polState(470, 482, '↗ 旋转', '经 HWP', '#AF52DE')}
+        ${polState(470, 482, '线偏振 (θ)', '经 HWP', '#AF52DE')}
 
         ${polState(590, 482, '部分偏振', 'PL发射(上行)', '#34C759')}
 
-        ${polState(710, 482, '反向旋转', '经 HWP', '#34C759')}
+        ${polState(710, 482, '恢复 ↕', '经 HWP', '#34C759')}
 
         ${polState(820, 482, '经 DM', '透射', '#34C759')}
 
@@ -1530,33 +1823,43 @@
 
       const subconfig = document.querySelector('#pl-circular-subconfig .active')?.dataset.sub || 'circ-pp';
 
-      
-
       let q1Angle = '+45°';
-
-      let q2Angle = '+45°';
 
       let pType = 'σ⁺';
 
       let dType = 'σ⁺';
 
-      
+      let analyzerAngle = '0°';
 
-      if (subconfig === 'circ-pm') {
+      let calcGroupHtml = '';
 
-        q1Angle = '+45°'; q2Angle = '-45°'; pType = 'σ⁺'; dType = 'σ⁻';
+      if (pType === 'σ⁺') {
 
-      } else if (subconfig === 'circ-mp') {
+        calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁺</b> 圆偏振光激发下，本配置 <b>σ⁺σ⁺</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^+\\sigma^+}$）与 <b>σ⁺σ⁻</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^+\\sigma^-}$）组成<b>同一对照组</b>。利用公式计算谷极化度/圆偏振度：<br>
 
-        q1Angle = '-45°'; q2Angle = '+45°'; pType = 'σ⁻'; dType = 'σ⁺';
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
 
-      } else if (subconfig === 'circ-mm') {
+      } else {
 
-        q1Angle = '-45°'; q2Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻';
+        calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁻</b> 圆偏振光激发下，本配置 <b>σ⁻σ⁻</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^-\\sigma^-}$）与 <b>σ⁻σ⁺</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^-\\sigma^+}$）组成<b>同一对照组</b>。利用公式计算谷极化度/圆偏振度：<br>
+
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
 
       }
 
+      if (subconfig === 'circ-pm') {
 
+        q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
+
+      } else if (subconfig === 'circ-mp') {
+
+        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
+
+      } else if (subconfig === 'circ-mm') {
+
+        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
+
+      }
 
       const polState = (x, y, label, desc, color) => `
 
@@ -1565,8 +1868,6 @@
         <text x="${x}" y="${y + 15}" font-size="10" fill="${color}" text-anchor="middle" font-weight="700">${label}</text>
 
         <text x="${x}" y="${y + 29}" font-size="8" fill="var(--text-secondary)" text-anchor="middle">${desc}</text>`;
-
-
 
       const svg = `
 
@@ -1624,73 +1925,73 @@
 
         <!-- Laser to P -->
 
-        <line x1="150" y1="140" x2="180" y2="140" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+        <line x1="150" y1="140" x2="190" y2="140" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
 
-        <!-- P to QWP1 -->
-
-        <line x1="290" y1="140" x2="320" y2="140" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
-
-        <!-- QWP1 to DM -->
-
-        <line x1="430" y1="140" x2="460" y2="140" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+        <line x1="150" y1="140" x2="190" y2="140" stroke="#AF52DE" stroke-width="2" marker-end="url(#cpl-arr-e)"/>
 
         
 
-        <!-- DM down to Objective to Sample -->
+        <!-- P to DM -->
 
-        <line x1="520" y1="140" x2="520" y2="310" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+        <line x1="300" y1="140" x2="340" y2="140" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
 
-        <!-- Sample PL up -->
-
-        <line x1="520" y1="310" x2="520" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.3" filter="url(#cpl-glow)"/>
+        <line x1="300" y1="140" x2="340" y2="140" stroke="#AF52DE" stroke-width="2" marker-end="url(#cpl-arr-e)"/>
 
         
 
-        <!-- DM straight through LP to QWP2 to A to Spectro -->
+        <!-- DM down to QWP to Objective to Sample -->
 
-        <line x1="520" y1="140" x2="1040" y2="140" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#AF52DE" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+
+        <line x1="400" y1="140" x2="400" y2="395" stroke="#AF52DE" stroke-width="2" marker-end="url(#cpl-arr-e)"/>
 
         
 
-        <!-- Core lines -->
+        <!-- Sample PL up through Objective, QWP, DM -->
 
-        <line x1="150" y1="140" x2="460" y2="140" stroke="#AF52DE" stroke-width="2" marker-end="url(#cpl-arr-e)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.3" filter="url(#cpl-glow)"/>
 
-        <line x1="520" y1="140" x2="520" y2="310" stroke="#AF52DE" stroke-width="2" marker-end="url(#cpl-arr-e)"/>
+        <line x1="400" y1="395" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#cpl-arr-g)"/>
 
-        <line x1="520" y1="310" x2="520" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#cpl-arr-g)"/>
+        
 
-        <line x1="520" y1="140" x2="1040" y2="140" stroke="#34C759" stroke-width="2.5" marker-end="url(#cpl-arr-g)"/>
+        <!-- DM straight through LP to A to Spectro -->
+
+        <line x1="400" y1="140" x2="800" y2="140" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#cpl-glow)"/>
+
+        <line x1="400" y1="140" x2="800" y2="140" stroke="#34C759" stroke-width="2.5" marker-end="url(#cpl-arr-g)"/>
 
 
 
         <!-- === Optical components === -->
 
-        ${this._box(40, 100, 110, 80, '激光', '#AF52DE', 'Laser Source', 'cpl-laser')}
+        ${this._box(40, 100, 110, 80, '激光器', '#AF52DE', 'Laser Source', 'cpl-laser')}
 
-        ${this._box(180, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'cpl-polarizer')}
+        ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'cpl-polarizer')}
 
-        ${this._box(320, 100, 110, 80, 'QWP 1', '#AF52DE', `快轴 ${q1Angle}`, 'cpl-qwp1')}
+        ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'cpl-dm')}
 
-        ${this._box(460, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'cpl-dm')}
+        ${this._box(350, 200, 100, 45, '1/4波片 QWP', '#AF52DE', `快轴 ${q1Angle}`, 'cpl-qwp1')}
 
-        ${this._box(470, 210, 100, 70, '物镜', '#0071E3', 'Objective', 'cpl-obj')}
+        ${this._box(350, 265, 100, 55, '显微物镜', '#0071E3', 'Objective', 'cpl-obj')}
 
-        ${this._box(460, 310, 120, 70, '样品', '#34C759', 'Sample', 'cpl-sample')}
+        ${this._box(340, 395, 120, 65, '样品', '#34C759', 'Sample', 'cpl-sample')}
 
-        ${this._box(620, 100, 110, 80, '长通 LP', '#FF9500', 'LP Filter', 'cpl-lpfilter')}
+        ${this._box(500, 100, 110, 80, '长通 LP', '#FF9500', 'LP Filter', 'cpl-lpfilter')}
 
-        ${this._box(760, 100, 110, 80, 'QWP 2', '#0071E3', `快轴 ${q2Angle}`, 'cpl-qwp2')}
+        ${this._box(650, 100, 110, 80, '检偏器 A', '#0071E3', `转至 ${analyzerAngle}`, 'cpl-analyzer')}
 
-        ${this._box(900, 100, 110, 80, '检偏 A', '#0071E3', '固定 90°', 'cpl-analyzer')}
-
-        ${this._box(1040, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'cpl-spectro')}
+        ${this._box(800, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'Spectrometer', 'cpl-spectro')}
 
 
 
         <!-- Diagonal line on dichroic mirror -->
 
-        <line x1="485" y1="175" x2="555" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+        <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+
+        <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
+
+        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
 
 
 
@@ -1698,57 +1999,55 @@
 
         <!-- After P -->
 
-        <line x1="230" y1="90" x2="230" y2="110" stroke="#AF52DE" stroke-width="2"/>
+        <line x1="240" y1="90" x2="240" y2="110" stroke="#AF52DE" stroke-width="2"/>
 
-        <text x="230" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">↕ 线偏振</text>
+        <text x="240" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">↕ 线偏振</text>
 
-        <!-- After QWP1 -->
 
-        <circle cx="370" cy="100" r="6" fill="none" stroke="#AF52DE" stroke-width="1.5"/>
 
-        <polygon points="378,100 375,97 375,103" fill="#AF52DE" transform="rotate(${q1Angle === '+45°' ? 0 : 180}, 370, 100)"/>
+        <!-- Excitation Circular Polarization State -->
 
-        <text x="370" y="80" font-size="9" fill="#AF52DE" text-anchor="middle">${pType} 圆偏振</text>
+        <circle cx="465" cy="255" r="6" fill="none" stroke="#AF52DE" stroke-width="1.5"/>
+
+        <polygon points="473,255 470,252 470,258" fill="#AF52DE" transform="rotate(${q1Angle === '+45°' ? 0 : 180}, 465, 255)"/>
+
+        <text x="480" y="258" font-size="9" fill="#AF52DE" text-anchor="start">${pType} 圆偏振</text>
+
+
 
         <!-- Sample Emission -->
 
-        <text x="590" y="240" font-size="10" fill="#34C759" text-anchor="middle" font-weight="600">σ⁺ + σ⁻ 混合发光</text>
+        <text x="490" y="340" font-size="10" fill="#34C759" text-anchor="middle" font-weight="600">σ⁺ + σ⁻ 混合发光</text>
 
-        <!-- After QWP2 -->
 
-        <line x1="860" y1="90" x2="860" y2="110" stroke="#0071E3" stroke-width="2"/>
 
-        <text x="860" y="80" font-size="9" fill="#0071E3" text-anchor="middle">圆→线</text>
+        <!-- After QWP/DM Conversion (Linearized PL) -->
+
+        <line x1="630" y1="90" x2="630" y2="110" stroke="#0071E3" stroke-width="2"/>
+
+        <text x="630" y="80" font-size="9" fill="#0071E3" text-anchor="middle">圆→线</text>
 
 
 
         <!-- Highlight Overlays for Active Modules -->
 
-        <!-- QWP 1 Highlight Box (操作执行模块) -->
+        <!-- QWP Highlight Box (操作执行模块) -->
 
-        <rect x="316" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
+        <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
 
-        <rect x="316" y="80" width="118" height="15" rx="3" fill="#FF9500"/>
+        <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF9500"/>
 
-        <text x="375" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q1Angle} (操作执行)</text>
-
-
-
-        <!-- QWP 2 Highlight Box (操作执行模块) -->
-
-        <rect x="756" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
-
-        <rect x="756" y="80" width="118" height="15" rx="3" fill="#FF9500"/>
-
-        <text x="815" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q2Angle} (操作执行)</text>
+        <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q1Angle} (操作执行)</text>
 
 
 
         <!-- Analyzer Highlight Box -->
 
-        <rect x="896" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <rect x="646" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
 
-        <text x="955" y="91" font-size="9" fill="#8E8E93" text-anchor="middle" font-weight="700">⚙️ 固定 90°</text>
+        <rect x="646" y="80" width="118" height="15" rx="3" fill="#FF9500"/>
+
+        <text x="705" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${analyzerAngle} (操作执行)</text>
 
 
 
@@ -1764,107 +2063,43 @@
 
         ${polState(250, 482, '↕ 线偏振', '起偏器 P', '#AF52DE')}
 
-        ${polState(360, 482, `${pType} 圆偏振`, 'QWP 1', '#AF52DE')}
+        ${polState(360, 482, '经 DM', '反射', '#AF52DE')}
 
-        ${polState(470, 482, `${pType} 激发`, '经物镜', '#0071E3')}
+        ${polState(470, 482, `下行: ${pType}圆偏`, 'QWP λ/4', '#AF52DE')}
 
         ${polState(590, 482, 'σ⁺+σ⁻ 混合', 'PL发射', '#34C759')}
 
-        ${polState(710, 482, '去除激发光', 'LP 滤波', '#FF9500')}
+        ${polState(710, 482, '圆→线转换', 'QWP λ/4', '#34C759')}
 
-        ${polState(820, 482, '圆→线转换', 'QWP 2', '#0071E3')}
+        ${polState(820, 482, '经 DM', '透射', '#34C759')}
 
-        ${polState(930, 482, `I(${pType}, ${dType})`, '检偏器 A', '#0071E3')}
+        ${polState(930, 482, `I(${pType}, ${dType})`, `检偏器 A (${analyzerAngle})`, '#0071E3')}
 
-        ${polState(1060, 482, '自旋/谷分析', '计算偏振度', 'var(--text-primary)')}
+        ${polState(1060, 482, '自旋/能谷', '计算极化度', 'var(--text-primary)')}
 
       </svg>`;
-
-
 
       document.getElementById('pl-circular-diagram').innerHTML = svg;
 
       this._attachTooltips();
 
-
-
       const guideHtml = `
 
         <strong>圆偏振测量指南 (${pType}${dType} 配置)：</strong><br>
 
-        1. <b>入射端（转动）：</b>起偏器 P 固定在 0°。手动旋转激发端 <span style="color:#FF9500;font-weight:700">QWP 1</span> 至 <b>${q1Angle}</b>，产生 <b>${pType}</b> 圆偏振激发光。<br>
+        1. <b>入射端：</b>起偏器 P 固定在 0°（水平线偏振）。<br>
 
-        2. <b>探测端（转动）：</b>将收集端 <span style="color:#FF9500;font-weight:700">QWP 2</span> 手动旋转至 <b>${q2Angle}</b>，检偏器 A 固定在 <b>90°</b>，从而提取 <b>${dType}</b> 的 PL 圆偏振分量。<br>
+        2. <b>第一步调节（QWP）：</b>手动旋转双通路复用的 <span style="color:#FF9500;font-weight:700">QWP λ/4</span>，将其快轴角设为 <b>${q1Angle}</b>。此时激发光通过 QWP 转换为 <b>${pType}</b> 圆偏振光作用于样品。<br>
 
-        3. <b>操作执行：</b>实验前需要手动调节旋转激发端 <span style="color:#FF9500;font-weight:700">QWP 1 (${q1Angle})</span> 和收集端 <span style="color:#FF9500;font-weight:700">QWP 2 (${q2Angle})</span> 的快轴角度。
+        3. <b>第二步调节（检偏器）：</b>样品发射的圆偏振 PL 信号经过相同的 QWP 后，由于双通复用，会被转换回线偏振。在透射端调节 <span style="color:#FF9500;font-weight:700">检偏器 A</span> 至 <b>${analyzerAngle}</b>，从而选择检测 <b>${dType}</b> 的 PL 信号分量。<br>
+
+        4. <b>实验特点：</b>无需在探测端额外放置第二块 1/4 波片，通过在激发 and 收集的共用光路（二向色镜与物镜之间）中放置单一 QWP，并配合检偏器 A 旋转选择偏振方向，即可实现完整的圆偏振 PL / 能谷选择定则测量。<br>
+
+        ${calcGroupHtml}
 
       `;
 
       document.getElementById('pl-circular-operation-guide').innerHTML = guideHtml;
-
-
-
-      document.getElementById('pl-circular-notes').innerHTML = `
-
-        <div style="margin-top:16px;background:var(--bg-primary);border-radius:12px;padding:16px">
-
-          <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:8px">圆偏振 PL 测量要点</div>
-
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-
-            <p style="margin-bottom:10px"><strong>波片校准：</strong></p>
-
-            <ul style="padding-left:20px;margin-bottom:12px">
-
-              <li>QWP₁：调起偏器 P 使输出最大，插入 QWP 旋转至消光，快轴与 P 成 45°</li>
-
-              <li>QWP₂：用已知圆偏振光校准，旋转使检偏器输出不随旋转变化</li>
-
-              <li>波片需针对使用波长选择，宽带测量需 achromatic 波片</li>
-
-            </ul>
-
-            <p style="margin-bottom:10px"><strong>自旋极化与谷极化：</strong></p>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-
-              <div style="background:white;border-radius:8px;padding:12px">
-
-                <div style="font-weight:600;color:var(--accent);margin-bottom:4px">自旋极化 (GaAs, InP)</div>
-
-                <div style="font-size:12px">圆偏振激发选择性激发自旋向上/向下电子。自旋极化率 = (n↑ − n↓)/(n↑ + n↓)，反映自旋弛豫机制。</div>
-
-              </div>
-
-              <div style="background:white;border-radius:8px;padding:12px">
-
-                <div style="font-weight:600;color:var(--orange);margin-bottom:4px">谷极化 (TMD 材料)</div>
-
-                <div style="font-size:12px">MoS₂/WSe₂ 的 K/K' 谷选择定则：σ⁺ 激发 K 谷，σ⁻ 激发 K' 谷。谷极化度反映谷间散射速率。</div>
-
-              </div>
-
-            </div>
-
-            <p style="margin-bottom:10px"><strong>手性材料：</strong></p>
-
-            <ul style="padding-left:20px">
-
-              <li>手性分子的圆偏振发光 (CPL) 不对称因子 g_lum = 2(Iσ⁺ − Iσ⁻)/(Iσ⁺ + Iσ⁻)</li>
-
-              <li>典型 CPL 材料：螺旋烯、手性钙钛矿、手性液晶</li>
-
-              <li>低温 + 磁场可增强自旋极化，延长自旋弛豫时间</li>
-
-            </ul>
-
-          </div>
-
-        </div>
-
-      `;
-
-
 
       this._renderComponentList('circular');
 
@@ -2218,6 +2453,18 @@
 
       const components = {
 
+        principle: [
+
+          { name: '激发吸收 (Absorption)', id: 'pl-abs' },
+
+          { name: '热弛豫 (Relaxation)', id: 'pl-relax' },
+
+          { name: '辐射复合 (Recombination)', id: 'pl-rad' },
+
+          { name: '激子与三子 (Exciton/Trion)', id: 'pl-exciton' }
+
+        ],
+
         regular: [
 
           { name: '激光器', id: 'pl-laser' },
@@ -2228,7 +2475,7 @@
 
           { name: '样品', id: 'pl-sample' },
 
-          { name: '长通滤波器', id: 'pl-lpfilter' },
+          { name: '长通 LP', id: 'pl-lpfilter' },
 
           { name: '光谱仪 + CCD', id: 'pl-spectro' },
 
@@ -2248,7 +2495,7 @@
 
           { name: '样品', id: 'lpl-sample' },
 
-          { name: '长通滤波器', id: 'lpl-lpfilter' },
+          { name: '长通 LP', id: 'lpl-lpfilter' },
 
           { name: '检偏器 A', id: 'lpl-analyzer' },
 
@@ -2262,17 +2509,15 @@
 
           { name: '起偏器 P', id: 'cpl-polarizer' },
 
-          { name: 'λ/4 波片 QWP₁', id: 'cpl-qwp1' },
-
           { name: '二向色镜 DM', id: 'cpl-dm' },
+
+          { name: '1/4波片 QWP', id: 'cpl-qwp1' },
 
           { name: '显微物镜', id: 'cpl-obj' },
 
           { name: '样品', id: 'cpl-sample' },
 
-          { name: '长通滤波器', id: 'cpl-lpfilter' },
-
-          { name: 'λ/4 波片 QWP₂', id: 'cpl-qwp2' },
+          { name: '长通 LP', id: 'cpl-lpfilter' },
 
           { name: '检偏器 A', id: 'cpl-analyzer' },
 

@@ -6,6 +6,12 @@
 (() => {
 
   const TOOLTIPS = {
+    // SHG Principle
+    'shg-fund': '基频光子激发 (Fundamental Excitation)\n入射光子能量为 ℏω，常选用超快飞秒/皮秒脉冲激光器\n激发波长常见为 800nm (Ti:Sapphire) 或 1060nm 左右的红外激光\n由于 SHG 信号强度与入射光强的平方成正比，超快激光的高峰值功率是产生高效倍频的关键。',
+    'shg-crystal': '非线性介质 (Nonlinear Medium / TMDs)\n发生二次谐波所需的介质，必须打破空间反演对称性（如单层 MoS₂ 等二维过渡金属硫族化合物，或 BBO、LBO 等非线性晶体）\n其二阶非线性极化张量 χ⁽²⁾ 不为零。在中心对称材料（如双层 MoS₂、硅、体相材料）中，体相 SHG 禁阻，仅在表面或界面由于对称性破缺产生微弱信号。',
+    'shg-emission': '二次谐波辐射 (Second Harmonic Emission)\n介质中非线性极化强度 P⁽²⁾(2ω) 辐射出的倍频相干光\n发光能量恰好等于入射基频光子能量的两倍（E_SHG = 2 × E_fund）\n波长为基频光的一半（λ_SHG = λ_fund / 2），其偏振和空间方向受相位匹配和晶体取向（非线性张量元）的强调制。',
+    'shg-virtual': '虚拟能级跃迁 (Virtual State Transition)\nSHG 是超快参量过程，其跃迁借助“虚能级”（Virtual States）完成\n电子无需跃迁到真实的导带或激子实能级，不存在非辐射热弛豫过程，因而不产生热损耗（无声子参与）\n整个极化和辐射过程在数飞秒内完成（瞬时响应），这与需要能带内热弛豫和实能级寿命（纳秒级）的荧光（PL）过程有本质区别。',
+
     // Reflective SHG
     'ref-laser': '飞秒/皮秒脉冲激光器\n常用波长：800nm (Ti:Sapphire)、1064nm (Nd:YAG)\n脉宽：<100fs ~ 数ps\n重复频率：80MHz (振荡器) ~ 1kHz (放大器)\n注意：峰值功率密度决定SHG效率，需控制在样品损伤阈值以下',
     'ref-ndf': '中性密度滤波片 (ND Filter)\n功能：连续调节入射激光功率，避免样品损伤\n类型：旋转式可调ND、固定OD值滤波片\n范围：OD 0.1~4 (透过率 80%~0.01%)\n注意：避免使用有色滤波片引入额外波长选择',
@@ -55,9 +61,38 @@
         <!-- Middle Stage (Diagrams) -->
         <div class="dashboard-wide-stage">
           <!-- Tab 1: SHG Principle -->
-          <div class="tab-panel" id="tab-principle">
-            <div class="card-title" style="margin-bottom:8px"><span class="icon">🔆</span> SHG 二次谐波产生原理</div>
-            <div id="shg-principle-diagram"></div>
+          <div class="card tab-panel" id="tab-principle">
+            <div class="card-title"><span class="icon">🔆</span> SHG 二次谐波产生物理原理</div>
+            <div class="help-text" style="margin-bottom:16px">
+              二次谐波产生（Second Harmonic Generation, SHG）是一种非线性光学参量过程。当频率为 ω 的强基频激光照射在非中心对称介质上时，介质内部会产生 2ω 的二阶非线性极化，进而辐射出频率为 2ω、波长为激发光一半的相干光子。
+            </div>
+            <div style="display:grid;grid-template-columns:320px 1fr;gap:20px">
+              <div class="dashboard-control" style="padding:0">
+                <div class="card" style="box-shadow:none;border:none;padding:0;background:transparent">
+                  <div class="card-title" style="font-size:13px"><span class="icon">⚙️</span> 过程简述</div>
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent);margin-bottom:12px">
+                    <strong>倍频三部曲：</strong><br>
+                    1. <b>基频光激发</b>：输入强脉冲基频光子 ℏω 并诱导非线性极化；<br>
+                    2. <b>非线性极化</b>：在非中心对称介质中诱导出二阶极化强度 P⁽²⁾(2ω)；<br>
+                    3. <b>倍频光相干辐射</b>：二阶极化极快辐射出频率为 2ω 的相干倍频光子。
+                  </div>
+                  <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;padding:12px;background:var(--bg-primary);border-radius:8px;border-left:3px solid var(--accent)">
+                    <strong>非线性极化场关系：</strong><br>
+                    <div style="font-family:var(--font-mono);font-size:12px;background:var(--bg-card);padding:6px;border-radius:4px;margin:6px 0;text-align:center;border:1px solid var(--border);color:var(--accent)">
+                      P_i⁽²⁾(2ω) = ε₀ Σ_{j,k} χ_{ijk}⁽²⁾ E_j(ω) E_k(ω)
+                    </div>
+                    <span style="font-size:10px;color:var(--text-tertiary)">
+                      P_i⁽²⁾: 二阶非线性极化强度分量<br>
+                      χ_{ijk}⁽²⁾: 二阶非线性极化率张量元<br>
+                      E_j, E_k: 基频电场分量。因空间反演对称限制，中心对称晶格的体相中恒有 χ⁽²⁾ ≡ 0。
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="dashboard-stage" style="gap:12px">
+                <div id="shg-principle-diagram"></div>
+              </div>
+            </div>
             <div id="shg-principle-text"></div>
           </div>
 
@@ -319,79 +354,110 @@
     // Tab 1: SHG Principle
     // ==========================================
     renderPrinciple() {
-      const W = 1000, H = 400;
+      const W = 1200, H = 500;
       const svg = `
       <svg viewBox="0 0 ${W} ${H}" id="shg-principle-export" style="width:100%;display:block;margin:0 auto">
         ${DIAGRAMS.commonDefs()}
         <rect width="${W}" height="${H}" fill="var(--bg-card)" rx="12" stroke="var(--border)" stroke-width="1.5"/>
         <rect width="${W}" height="${H}" fill="url(#breadboard-grid)" rx="12"/>
 
-        <!-- Two omega photons coming in -->
-        <line x1="80" y1="160" x2="340" y2="160" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="80" y1="160" x2="340" y2="160" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-r)"/>
-        <text x="200" y="140" font-size="16" fill="var(--text-primary)" text-anchor="middle" font-weight="700">ℏω 光子 1</text>
-        <text x="200" y="125" font-size="12" fill="var(--text-secondary)" text-anchor="middle">λ = λ_fund</text>
-        
-        <!-- Linear polarization indicator -->
-        <line x1="170" y1="100" x2="230" y2="100" stroke="#FF3B30" stroke-width="2"/>
-        <line x1="168" y1="108" x2="232" y2="108" stroke="#FF3B30" stroke-width="2"/>
-        <text x="200" y="90" font-size="10" fill="var(--text-secondary)" text-anchor="middle">线偏振</text>
+        <!-- Left Side: Parametric Process Model -->
+        <rect x="30" y="30" width="700" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-dasharray="4,4" opacity="0.5"/>
+        <text x="380" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">二次谐波产生参量过程模型 Parametric Process Model</text>
 
-        <!-- Beam 2 -->
-        <line x1="80" y1="240" x2="340" y2="240" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="80" y1="240" x2="340" y2="240" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-r)"/>
-        <text x="200" y="275" font-size="16" fill="var(--text-primary)" text-anchor="middle" font-weight="700">ℏω 光子 2</text>
-        
-        <!-- NLC Crystal -->
-        <rect x="360" y="120" width="140" height="160" rx="10" fill="var(--bg-card)" stroke="#AF52DE" stroke-width="2.5" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.05))"/>
-        <text x="430" y="142" font-size="13" fill="#AF52DE" text-anchor="middle" font-weight="700">NLC 晶体 (χ⁽²⁾)</text>
+        <!-- Fundamental Input Beams -->
+        <g class="svg-hover-box" data-tip="shg-fund" cursor="pointer">
+          <!-- Wave 1 (Fundamental) -->
+          <path d="M 60 160 Q 85 135, 110 160 T 160 160 T 210 160 T 260 160 T 310 160 T 360 160" fill="none" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
+          <path d="M 60 160 Q 85 135, 110 160 T 360 160" fill="none" stroke="#FF3B30" stroke-width="2"/>
+          <circle cx="360" cy="160" r="4" fill="#FF3B30"/>
+          <text x="210" y="125" font-size="13" fill="var(--text-primary)" text-anchor="middle" font-weight="700">基频光子 1 (ℏω)</text>
+          <text x="210" y="108" font-size="11" fill="var(--text-secondary)" text-anchor="middle">λ = λ_fund</text>
 
-        <!-- Energy conservation annotation -->
-        <rect x="370" y="155" width="120" height="60" rx="8" fill="#AF52DE" opacity="0.08"/>
-        <text x="430" y="175" font-size="13" fill="#AF52DE" text-anchor="middle" font-weight="600">2 × ℏω</text>
-        <text x="430" y="195" font-size="13" fill="#AF52DE" text-anchor="middle" font-weight="600">= ℏ(2ω)</text>
+          <!-- Wave 2 (Fundamental) -->
+          <path d="M 60 270 Q 85 245, 110 270 T 160 270 T 210 270 T 260 270 T 310 270 T 360 270" fill="none" stroke="#FF3B30" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
+          <path d="M 60 270 Q 85 245, 110 270 T 360 270" fill="none" stroke="#FF3B30" stroke-width="2"/>
+          <circle cx="360" cy="270" r="4" fill="#FF3B30"/>
+          <text x="210" y="315" font-size="13" fill="var(--text-primary)" text-anchor="middle" font-weight="700">基频光子 2 (ℏω)</text>
 
-        <!-- SHG photon out -->
-        <line x1="500" y1="200" x2="780" y2="200" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="500" y1="200" x2="780" y2="200" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-g)"/>
-        <text x="640" y="178" font-size="16" fill="#34C759" text-anchor="middle" font-weight="700">ℏ(2ω) SHG 光子</text>
-        <text x="640" y="163" font-size="12" fill="#34C759" text-anchor="middle">λ_SHG = λ_fund / 2</text>
-        
-        <!-- Energy level diagram -->
-        <rect x="780" y="60" width="200" height="320" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
-        <text x="880" y="85" font-size="13" fill="var(--text-primary)" text-anchor="middle" font-weight="700">能级图 Energy Levels</text>
-        
-        <!-- Ground state -->
-        <line x1="810" y1="320" x2="950" y2="320" stroke="var(--text-primary)" stroke-width="2"/>
-        <text x="955" y="324" font-size="10" fill="var(--text-primary)">基态</text>
+          <!-- Bracket indicating combining -->
+          <path d="M 370 150 L 378 150 A 8 8 0 0 1 386 158 L 386 200 A 8 8 0 0 0 394 208 L 394 212 A 8 8 0 0 0 386 220 L 386 262 A 8 8 0 0 1 378 270 L 370 270" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"/>
+        </g>
 
-        <!-- Virtual state 1 (hω) -->
-        <line x1="820" y1="230" x2="940" y2="230" stroke="#AF52DE" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <text x="945" y="234" font-size="9" fill="#AF52DE">虚能级 1</text>
+        <!-- Nonlinear Crystal Medium -->
+        <g class="svg-hover-box" data-tip="shg-crystal" cursor="pointer">
+          <rect x="410" y="100" width="140" height="220" rx="12" fill="var(--bg-primary)" stroke="#AF52DE" stroke-width="2.5" style="filter:drop-shadow(0 4px 12px rgba(142,68,173,0.15))"/>
+          <text x="480" y="132" font-size="13" fill="#AF52DE" text-anchor="middle" font-weight="700">非中心对称介质</text>
+          <text x="480" y="150" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle">χ⁽²⁾ ≠ 0 (如 MoS₂)</text>
 
-        <!-- Virtual state 2 (2hω) -->
-        <line x1="820" y1="140" x2="940" y2="140" stroke="#AF52DE" stroke-width="2" stroke-dasharray="6,3"/>
-        <text x="945" y="144" font-size="9" fill="#AF52DE">虚能级 2</text>
+          <rect x="425" y="172" width="110" height="70" rx="8" fill="#AF52DE" opacity="0.08"/>
+          <text x="480" y="192" font-size="11" fill="#AF52DE" text-anchor="middle" font-weight="700">2 × ℏω → ℏ(2ω)</text>
+          <text x="480" y="210" font-size="9" fill="var(--text-secondary)" text-anchor="middle">二阶非线性极化</text>
+          <text x="480" y="228" font-size="10.5" fill="var(--accent)" text-anchor="middle" font-weight="700">P⁽²⁾ = ε₀χ⁽²⁾E²</text>
 
-        <!-- Step 1 absorption (ω) -->
-        <line x1="860" y1="320" x2="860" y2="230" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-r)"/>
-        <text x="850" y="280" font-size="11" fill="#FF3B30" text-anchor="end" font-weight="700">ω</text>
+          <!-- Lattice illustration points -->
+          <circle cx="445" cy="275" r="3" fill="#AF52DE"/>
+          <circle cx="480" cy="275" r="3" fill="#0071E3"/>
+          <circle cx="515" cy="275" r="3" fill="#AF52DE"/>
+          <line x1="448" y1="275" x2="477" y2="275" stroke="var(--border)" stroke-width="1"/>
+          <line x1="483" y1="275" x2="512" y2="275" stroke="var(--border)" stroke-width="1"/>
+          <circle cx="462.5" cy="295" r="3" fill="#0071E3"/>
+          <circle cx="497.5" cy="295" r="3" fill="#AF52DE"/>
+          <line x1="445" y1="278" x2="460" y2="292" stroke="var(--border)" stroke-width="1"/>
+          <line x1="480" y1="278" x2="465" y2="292" stroke="var(--border)" stroke-width="1"/>
+          <line x1="480" y1="278" x2="495" y2="292" stroke="var(--border)" stroke-width="1"/>
+          <line x1="515" y1="278" x2="500" y2="292" stroke="var(--border)" stroke-width="1"/>
+          <text x="480" y="312" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">非共中心对称格点</text>
+        </g>
 
-        <!-- Step 2 absorption (ω) -->
-        <line x1="860" y1="230" x2="860" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-r)"/>
-        <text x="850" y="190" font-size="11" fill="#FF3B30" text-anchor="end" font-weight="700">ω</text>
+        <!-- SHG Output Beam -->
+        <g class="svg-hover-box" data-tip="shg-emission" cursor="pointer">
+          <path d="M 550 210 Q 575 185, 600 210 T 650 210 T 700 210" fill="none" stroke="#34C759" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
+          <path d="M 550 210 Q 575 185, 600 210 T 700 210" fill="none" stroke="#34C759" stroke-width="2" marker-end="url(#arr-g)"/>
+          <text x="625" y="170" font-size="13" fill="#34C759" text-anchor="middle" font-weight="700">倍频光子 (2ℏω)</text>
+          <text x="625" y="153" font-size="11" fill="#34C759" text-anchor="middle">λ_SHG = λ_fund / 2</text>
+          <text x="625" y="245" font-size="11" fill="var(--text-secondary)" text-anchor="middle">相干偏振辐射</text>
+        </g>
 
-        <!-- SHG emission (2ω) -->
-        <line x1="900" y1="140" x2="900" y2="320" stroke="#34C759" stroke-width="2.5" marker-end="url(#arr-g)"/>
-        <text x="915" y="235" font-size="12" fill="#34C759" font-weight="700">2ω</text>
+        <!-- Right Side: Energy Level Model -->
+        <rect x="760" y="30" width="410" height="440" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="965" y="55" font-size="14" fill="var(--text-primary)" text-anchor="middle" font-weight="700">能级跃迁与参量过程 Energy Level Model</text>
 
-        <!-- Annotation -->
-        <text x="880" y="355" font-size="11" fill="var(--text-secondary)" text-anchor="middle">非共振过程 (瞬时)</text>
+        <g class="svg-hover-box" data-tip="shg-virtual" cursor="pointer">
+          <!-- Ground state -->
+          <line x1="800" y1="360" x2="1130" y2="360" stroke="var(--text-primary)" stroke-width="2.5"/>
+          <text x="1140" y="364" font-size="11" fill="var(--text-primary)" font-weight="700">基态 Ground State (E_0)</text>
+
+          <!-- Virtual state 1 (hω) -->
+          <line x1="820" y1="240" x2="1110" y2="240" stroke="#AF52DE" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="1120" y="244" font-size="10" fill="#AF52DE" font-weight="600">第一虚能级 Virtual State 1</text>
+
+          <!-- Virtual state 2 (2hω) -->
+          <line x1="820" y1="120" x2="1110" y2="120" stroke="#AF52DE" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="1120" y="124" font-size="10" fill="#AF52DE" font-weight="600">第二虚能级 Virtual State 2</text>
+
+          <!-- Step 1 absorption (ω) -->
+          <line x1="875" y1="360" x2="875" y2="240" stroke="#FF3B30" stroke-width="2.5" marker-end="url(#arr-r)"/>
+          <text x="860" y="305" font-size="12" fill="#FF3B30" text-anchor="end" font-weight="700">激发 ℏω</text>
+
+          <!-- Step 2 absorption (ω) -->
+          <line x1="875" y1="240" x2="875" y2="120" stroke="#FF3B30" stroke-width="2.5" marker-end="url(#arr-r)"/>
+          <text x="860" y="185" font-size="12" fill="#FF3B30" text-anchor="end" font-weight="700">激发 ℏω</text>
+
+          <!-- SHG emission (2ω) -->
+          <line x1="1025" y1="120" x2="1025" y2="360" stroke="#34C759" stroke-width="3" marker-end="url(#arr-g)"/>
+          <text x="1040" y="235" font-size="13" fill="#34C759" font-weight="700" text-anchor="start">倍频辐射 2ℏω</text>
+          <text x="1040" y="255" font-size="11" fill="var(--text-secondary)" text-anchor="start">(无热弛豫/声子损耗)</text>
+
+          <!-- Explanatory note -->
+          <text x="965" y="415" font-size="12" fill="var(--text-secondary)" text-anchor="middle">瞬时参量过程响应 | 电子响应时间 &lt; 10 fs</text>
+          <text x="965" y="435" font-size="11" fill="var(--accent)" text-anchor="middle" font-weight="600">不涉及真实带内激发寿命，光子能量完全守恒</text>
+        </g>
 
         <!-- Export Button -->
         <g cursor="pointer" onclick="DIAGRAMS.exportSVG(document.getElementById('shg-principle-export'), 'shg-principle.svg')">
-          <rect x="${W - 100}" y="15" width="85" height="24" rx="12" fill="var(--bg-primary)" stroke="var(--border)"/>
-          <text x="${W - 57}" y="31" font-size="10" fill="var(--accent)" text-anchor="middle" font-weight="600">💾 导出 SVG</text>
+          <rect x="${W - 110}" y="45" width="85" height="24" rx="12" fill="var(--bg-primary)" stroke="var(--border)"/>
+          <text x="${W - 67}" y="61" font-size="10" fill="var(--accent)" text-anchor="middle" font-weight="600">💾 导出 SVG</text>
         </g>
       </svg>`;
 
@@ -400,34 +466,77 @@
 
       document.getElementById('shg-principle-text').innerHTML = `
         <div style="margin-top:20px">
-          <!-- Physical explanation -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-            <div style="background:var(--bg-primary);border-radius:12px;padding:18px">
-              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:10px">非线性极化</div>
+          <!-- Row 1 of Theoretical Explanations -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 二阶非线性极化张量与物理描述
+              </div>
               <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-                <p>当强激光场 E(ω) 作用于非线性介质时，产生二倍频极化项：</p>
-                <div style="background:white;padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:13px;margin:10px 0;color:var(--accent)">
-                  P(2ω) = ε₀ χ⁽²⁾ : E(ω)E(ω)
+                <p><strong>非线性极化响应：</strong></p>
+                <p>当介质暴露在强光电场 <b>E</b>(ω) 中时，总诱导极化强度 <b>P</b> 可以按电场强度幂级数展开。其中二次项即为二阶非线性极化 <b>P</b>⁽²⁾(2ω)，它是发生二次谐波产生 (SHG) 的源项：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  P_i⁽²⁾(2ω) = ε₀ Σ_{j,k} χ_{ijk}⁽²⁾(2ω; ω, ω) E_j(ω) E_k(ω)
                 </div>
-                <p>该极化辐射出频率为 2ω 的相干光，即二次谐波。</p>
+                <p><strong>张量对称性：</strong></p>
+                <p>二阶非线性极化率系数 χ_{ijk}⁽²⁾ 是一个三阶张量，包含 27 个独立分量。由于两个基频光子是简并的，根据内秉排列对称性，j 和 k 可以任意互换。对于特定晶体，应用其固有的点群对称操作后，非零独立分量将大幅减少，这使得 SHG 对晶体的对称结构及取向极为敏感。</p>
               </div>
             </div>
 
-            <div style="background:var(--bg-primary);border-radius:12px;padding:18px">
-              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:10px">对称性要求</div>
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 空间反演对称性限制 (Inversion Symmetry)
+              </div>
               <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-                <p><strong>中心反演对称材料 SHG 禁阻：</strong></p>
-                <p>对于具有中心反演对称性的晶体，χ⁽²⁾ 恒等于 0。因此 <strong>SHG 只在非中心对称材料中发生</strong>：</p>
-                <ul style="padding-left:18px;margin-top:6px">
-                  <li>单层 TMDs (如 MoS₂)</li>
-                  <li>铁电材料、表面/界面</li>
-                </ul>
+                <p><strong>反演对称晶体禁阻：</strong></p>
+                <p>空间反演操作（<b>r</b> → -<b>r</b>）会使奇数阶张量变换符号，而电场和极化强度也变换符号（<b>E</b> → -<b>E</b>，<b>P</b> → -<b>P</b>）。在具有空间反演对称中心（Centrosymmetric）的材料中，物理规律必须在反演操作下保持不变：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  -P_i⁽²⁾ = ε₀ χ_{ijk}⁽²⁾ (-E_j) (-E_k) = ε₀ χ_{ijk}⁽²⁾ E_j E_k = P_i⁽²⁾  ⟹  χ_{ijk}⁽²⁾ ≡ 0
+                </div>
+                <p><strong>对称破缺敏感性：</strong></p>
+                <p>这导致在具有反演对称的中心对称介质（如硅、锗晶体、石墨烯以及偶数层 TMDs 如双层 MoS₂）体相内，二次谐波是完全禁阻的。但在其表面、界面或晶体局域结构缺陷处，由于反演对称性破缺，可以激发出微弱的表面 SHG，这使得二次谐波成为极佳的无损表面/界面探针。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2 of Theoretical Explanations -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 二维材料偏振分辨晶轴测量 (PR-SHG)
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p><strong>单层 TMDs (D_3h 点群) 的极化特征：</strong></p>
+                <p>以单层 MoS₂ 或 WS₂ 为代表的二维过渡金属硫族化合物，属于非中心对称的 D_3h 点群。其 χ⁽²⁾ 张量中仅存在 1 个非零的独立分量：χ_xxx⁽²⁾ = -χ_xyy⁽²⁾ = -χ_yxy⁽²⁾ = -χ_yyx⁽²⁾ (设 x 方向为 Armchair 晶向)。</p>
+                <p>若基频激发光的偏振方向与晶体 Armchair 轴夹角为 θ，采用平行偏振（检偏器与起偏器平行）和垂直偏振（检偏器与起偏器正交）配置扫描 θ，其输出倍频强度满足关系：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  I_{||}⁽²ω⁾ ∝ (cos 3θ)²， I_{⊥}⁽²ω⁾ ∝ (sin 3θ)²
+                </div>
+                <p>在极坐标图上，这呈现为经典的六瓣花瓣（rosette）形状。通过该扫描图案，能够极其精确地识别二维材料的晶格取向，确定 Armchair (0°/60°...) 与 Zigzag (30°/90°...) 方向，以及检测由于宏观拉伸应变带来的晶格剪切畸变。</p>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-primary);border-radius:12px;padding:20px;border:1px solid var(--border)">
+              <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+                <span style="color:var(--accent)">■</span> 圆偏振手性与谷选择定则 (Valley-Selective SHG)
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+                <p><strong>晶体旋转对称与自旋角动量：</strong></p>
+                <p>在单层 TMDs 晶体中，晶格具有三重旋转对称性（C₃），这也向外加的电磁场施加了角动量选择定则。光子自旋角动量（SAM）在右旋圆偏振（σ⁺）下为 +1，在左旋圆偏振（σ⁻）下为 -1。</p>
+                <p>对于 C_N 对称系统，非线性参量过程的角动量守恒定则修正为：</p>
+                <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;margin:8px 0;color:var(--accent);border:1px solid var(--border)">
+                  m_out - 2 × m_in = N × k  (k 为整数)
+                </div>
+                <p>在单层 TMDs (N = 3) 中，当注入两个具有相同角动量的基频光子（如 σ⁺ 激发，m_in = +1 ），出射倍频光子 SAM 必须满足 m_out - 2 = 3k。为满足守恒，m_out 最低阶解只能为 -1（即 k = -1 时，m_out = -1）。</p>
+                <p>因此，<b>σ⁺ 圆偏振基频光只能产生纯 σ⁻ 圆偏振的二次谐波</b>（反之亦然，σ⁻ 产生 σ⁺）。在能谷物理中，这一选择定则能用于无损表征 K 和 K' 能谷的外尔轨道非线性偏振态。</p>
               </div>
             </div>
           </div>
         </div>
       `;
 
+      document.getElementById('shg-principle-diagram').innerHTML = svg;
+      this._attachTooltips();
       this._renderComponentList('principle');
     },
 
@@ -471,11 +580,13 @@
 
         <!-- Paths -->
         <line x1="140" y1="140" x2="660" y2="140" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="140" y1="140" x2="660" y2="140" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arr-r)"/>
-        <line x1="660" y1="140" x2="660" y2="310" stroke="#FF3B30" stroke-width="8" opacity="0.3"/>
+        <line x1="140" y1="140" x2="660" y2="140" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-r)"/>
+        <line x1="660" y1="140" x2="660" y2="310" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
+        <line x1="660" y1="140" x2="660" y2="310" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-r)"/>
         <line x1="660" y1="310" x2="660" y2="140" stroke="#34C759" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
+        <line x1="660" y1="310" x2="660" y2="140" stroke="#34C759" stroke-width="1.8" marker-end="url(#arr-g)"/>
         <line x1="660" y1="140" x2="1040" y2="140" stroke="#34C759" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="660" y1="140" x2="1040" y2="140" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-g)"/>
+        <line x1="660" y1="140" x2="1040" y2="140" stroke="#34C759" stroke-width="1.8" marker-end="url(#arr-g)"/>
 
         <!-- Diagonal line of DM -->
         <line x1="625" y1="175" x2="695" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
@@ -483,14 +594,14 @@
         <!-- Components -->
         ${this._box(30, 100, 110, 80, '激光器 ω', '#FF3B30', 'Pulsed Laser', 'ref-laser')}
         ${this._box(170, 100, 110, 80, 'ND 滤波片', '#FF9500', '功率调节', 'ref-ndf')}
-        ${this._box(310, 100, 110, 80, 'HWP λ/2', '#AF52DE', '偏振旋转', 'ref-hwp')}
+        ${this._box(310, 100, 110, 80, '半波片 HWP', '#AF52DE', '偏振旋转', 'ref-hwp')}
         ${this._box(450, 100, 110, 80, '起偏器 P', '#AF52DE', 'Polarizer', 'ref-polarizer')}
-        ${this._box(600, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'ref-dm')}
-        ${this._box(610, 210, 100, 70, '物镜', '#0071E3', 'Objective', 'ref-obj')}
+        ${this._box(600, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'ref-dm')}
+        ${this._box(610, 210, 100, 70, '显微物镜', '#0071E3', 'Objective', 'ref-obj')}
         ${this._box(600, 310, 120, 70, '样品', '#34C759', 'Sample', 'ref-sample')}
-        ${this._box(760, 100, 110, 80, '滤波器', '#34C759', 'Filter', 'ref-filter')}
+        ${this._box(760, 100, 110, 80, '短通 SP', '#34C759', 'Filter', 'ref-filter')}
         ${this._box(900, 100, 110, 80, '检偏器 A', '#AF52DE', 'Analyzer', 'ref-analyzer')}
-        ${this._box(1040, 90, 130, 100, '检测器', '#1D1D1F', 'Detector', 'ref-spectro')}
+        ${this._box(1040, 90, 130, 100, '光谱仪', '#1D1D1F', 'Detector', 'ref-spectro')}
       </svg>`;
 
       document.getElementById('shg-setup-diagram').innerHTML = svg;
@@ -506,20 +617,21 @@
 
         <!-- Paths -->
         <line x1="120" y1="250" x2="500" y2="250" stroke="#FF3B30" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
+        <line x1="120" y1="250" x2="500" y2="250" stroke="#FF3B30" stroke-width="2" marker-end="url(#arr-r)"/>
         <line x1="560" y1="250" x2="1060" y2="250" stroke="#34C759" stroke-width="6" opacity="0.3" filter="url(#shg-glow)"/>
-        <line x1="560" y1="250" x2="1060" y2="250" stroke="#FFFFFF" stroke-width="1.8" marker-end="url(#arr-g)"/>
+        <line x1="560" y1="250" x2="1060" y2="250" stroke="#34C759" stroke-width="1.8" marker-end="url(#arr-g)"/>
 
         <!-- Components -->
-        ${this._box(20, 210, 100, 80, '激光器', '#FF3B30', '', 'tra-laser')}
-        ${this._box(150, 210, 90, 80, 'HWP', '#AF52DE', '', 'tra-hwp')}
-        ${this._box(270, 210, 90, 80, '起偏器', '#AF52DE', '', 'tra-polarizer')}
-        ${this._box(390, 215, 80, 70, '聚焦物镜', '#0071E3', '', 'tra-obj1')}
+        ${this._box(20, 210, 100, 80, '激光器 ω', '#FF3B30', '', 'tra-laser')}
+        ${this._box(150, 210, 90, 80, '半波片 HWP', '#AF52DE', '', 'tra-hwp')}
+        ${this._box(270, 210, 90, 80, '起偏器 P', '#AF52DE', '', 'tra-polarizer')}
+        ${this._box(390, 215, 80, 70, '显微物镜', '#0071E3', '', 'tra-obj1')}
         ${this._box(500, 210, 60, 80, '样品', '#34C759', '', 'tra-sample')}
-        ${this._box(590, 215, 80, 70, '收集物镜', '#0071E3', '', 'tra-obj2')}
-        ${this._box(700, 210, 90, 80, '二向色镜', '#AF52DE', '', 'tra-dm')}
-        ${this._box(820, 210, 90, 80, '滤波器', '#34C759', '', 'tra-filter')}
-        ${this._box(940, 210, 90, 80, '检偏器', '#AF52DE', '', 'tra-analyzer')}
-        ${this._box(1060, 200, 100, 100, '检测器', '#1D1D1F', '', 'tra-spectro')}
+        ${this._box(590, 215, 80, 70, '显微物镜', '#0071E3', '', 'tra-obj2')}
+        ${this._box(700, 210, 90, 80, '二向色镜 DM', '#AF52DE', '', 'tra-dm')}
+        ${this._box(820, 210, 90, 80, '短通 SP', '#34C759', '', 'tra-filter')}
+        ${this._box(940, 210, 90, 80, '检偏器 A', '#AF52DE', '', 'tra-analyzer')}
+        ${this._box(1060, 200, 100, 100, '光谱仪', '#1D1D1F', '', 'tra-spectro')}
       </svg>`;
 
       document.getElementById('shg-setup-diagram').innerHTML = svg;
@@ -582,17 +694,19 @@
 
           <!-- === Optical components === -->
           ${this._box(40, 100, 110, 80, '激光器 ω', '#FF3B30', 'Pulsed Laser', 'ref-laser')}
-          ${this._box(190, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'ref-polarizer')}
-          ${this._box(340, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'ref-dm')}
-          ${this._box(350, 210, 100, 70, '半波片', '#BF5AF2', 'HWP λ/2', 'ref-hwp')}
-          ${this._box(350, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'ref-obj')}
+          ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'ref-polarizer')}
+          ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'ref-dm')}
+          ${this._box(350, 210, 100, 70, '半波片 HWP', '#BF5AF2', 'HWP λ/2', 'ref-hwp')}
+          ${this._box(350, 295, 100, 70, '显微物镜', '#0071E3', 'Objective', 'ref-obj')}
           ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample', 'ref-sample')}
           ${this._box(500, 100, 110, 80, '短通 SP', '#FF9500', 'Filter', 'ref-filter')}
-          ${this._box(630, 100, 110, 80, '检偏 A', '#BF5AF2', isPara ? '设为 0°' : '设为 90°', 'ref-analyzer')}
+          ${this._box(630, 100, 110, 80, '检偏器 A', '#BF5AF2', isPara ? '设为 0°' : '设为 90°', 'ref-analyzer')}
           ${this._box(760, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'CCD/PMT', 'ref-spectro')}
 
           <!-- Diagonal line on dichroic mirror -->
-          <line x1="365" y1="155" x2="435" y2="85" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射基频光 ↓</text>
+          <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 SHG ↑</text>
 
           <!-- Highlight Overlays for Active Modules -->
           <!-- HWP Highlight Box (操作执行模块) -->
@@ -632,16 +746,16 @@
       } else {
         // Circular polarization configuration
         let q1Angle = '+45°';
-        let q2Angle = '+45°';
         let pType = 'σ⁺';
         let dType = 'σ⁺';
+        let analyzerAngle = '0°';
         
         if (subconfig === 'circ-pm') {
-          q1Angle = '+45°'; q2Angle = '-45°'; pType = 'σ⁺'; dType = 'σ⁻';
+          q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
         } else if (subconfig === 'circ-mp') {
-          q1Angle = '-45°'; q2Angle = '+45°'; pType = 'σ⁻'; dType = 'σ⁺';
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
         } else if (subconfig === 'circ-mm') {
-          q1Angle = '-45°'; q2Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻';
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
         }
 
         setupSvg = `
@@ -658,41 +772,38 @@
           
           <line x1="400" y1="380" x2="400" y2="140" stroke="#34C759" stroke-width="6" stroke-dasharray="6,3" opacity="0.3" filter="url(#shg-glow)"/>
           <line x1="400" y1="380" x2="400" y2="140" stroke="#34C759" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arr-g)"/>
-          <line x1="400" y1="140" x2="900" y2="140" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
-          <line x1="400" y1="140" x2="900" y2="140" stroke="#34C759" stroke-width="2.5" marker-end="url(#arr-g)"/>
+          <line x1="400" y1="140" x2="760" y2="140" stroke="#34C759" stroke-width="8" opacity="0.3" filter="url(#shg-glow)"/>
+          <line x1="400" y1="140" x2="760" y2="140" stroke="#34C759" stroke-width="2.5" marker-end="url(#arr-g)"/>
 
           <!-- === Optical components === -->
           ${this._box(40, 100, 110, 80, '激光器 ω', '#FF3B30', 'Laser', 'tra-laser')}
-          ${this._box(190, 100, 110, 80, '起偏 P', '#AF52DE', '固定 0°', 'ref-polarizer')}
-          ${this._box(340, 100, 120, 80, '二向色镜', '#AF52DE', 'DM', 'ref-dm')}
-          ${this._box(350, 210, 100, 70, 'QWP 1', '#BF5AF2', `快轴 ${q1Angle}`, 'tra-qwp')}
-          ${this._box(350, 295, 100, 70, '物镜', '#0071E3', 'Objective', 'ref-obj')}
+          ${this._box(190, 100, 110, 80, '起偏器 P', '#AF52DE', '固定 0°', 'ref-polarizer')}
+          ${this._box(340, 100, 120, 80, '二向色镜 DM', '#AF52DE', 'DM', 'ref-dm')}
+          ${this._box(350, 210, 100, 70, '1/4波片 QWP', '#BF5AF2', `快轴 ${q1Angle}`, 'tra-qwp')}
+          ${this._box(350, 295, 100, 70, '显微物镜', '#0071E3', 'Objective', 'ref-obj')}
           ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample', 'ref-sample')}
           ${this._box(500, 100, 110, 80, '短通 SP', '#FF9500', 'Filter', 'ref-filter')}
-          ${this._box(630, 100, 110, 80, 'QWP 2', '#BF5AF2', `慢轴 ${q2Angle}`, 'tra-qwp')}
-          ${this._box(760, 100, 110, 80, '检偏 A', '#BF5AF2', '固定 90°', 'ref-analyzer')}
-          ${this._box(900, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'CCD/PMT', 'ref-spectro')}
+          ${this._box(630, 100, 110, 80, '检偏器 A', '#BF5AF2', `转至 ${analyzerAngle}`, 'ref-analyzer')}
+          ${this._box(760, 90, 130, 100, '光谱仪', 'var(--text-primary)', 'CCD/PMT', 'ref-spectro')}
 
           <!-- Diagonal line on dichroic mirror -->
-          <line x1="365" y1="155" x2="435" y2="85" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
+          <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射基频光 ↓</text>
+          <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 SHG ↑</text>
 
           <!-- Highlight Overlays for Active Modules -->
-          <!-- QWP 1 Highlight Box (操作执行模块) -->
+          <!-- QWP Highlight Box (操作执行模块) -->
           <rect x="346" y="206" width="108" height="78" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
           <rect x="346" y="190" width="108" height="15" rx="3" fill="#FF9500"/>
           <text x="400" y="201" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q1Angle} (操作执行)</text>
 
-          <!-- QWP 2 Highlight Box (操作执行模块) -->
+          <!-- Analyzer Highlight Box -->
           <rect x="626" y="96" width="118" height="88" rx="10" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
           <rect x="626" y="80" width="118" height="15" rx="3" fill="#FF9500"/>
-          <text x="685" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${q2Angle} (操作执行)</text>
+          <text x="685" y="91" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 转至 ${analyzerAngle} (操作执行)</text>
 
-          <!-- Analyzer Highlight Box -->
-          <rect x="756" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
-          <text x="815" y="91" font-size="9" fill="#8E8E93" text-anchor="middle" font-weight="700">⚙️ 固定 90°</text>
-
-          <text x="400" y="380" font-size="10" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">↺ 转为 ${pType} 圆偏振</text>
-          <text x="685" y="195" font-size="10" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">↺ 转换待检偏振</text>
+          <text x="400" y="380" font-size="10" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">激发/收集共用 QWP</text>
+          <text x="685" y="195" font-size="10" fill="var(--text-secondary)" text-anchor="middle" font-weight="700">检偏选择线偏分量</text>
 
           <!-- === Polarization timeline-style state annotations at the bottom === -->
           <rect x="30" y="475" width="${W - 60}" height="50" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
@@ -701,20 +812,20 @@
           ${polState(120, 482, '非偏振', '激光', '#AEAEB2')}
           ${polState(240, 482, '↕ 线偏振', '起偏器 P', '#AF52DE')}
           ${polState(350, 482, '经 DM', '反射', '#AF52DE')}
-          ${polState(460, 482, `↻ ${pType} 圆偏振`, 'QWP 1', '#AF52DE')}
-          ${polState(580, 482, '部分圆偏振', 'SHG发射(上行)', '#34C759')}
-          ${polState(700, 482, '经 DM', '透射', '#34C759')}
-          ${polState(820, 482, '圆→线转换', 'QWP 2', '#0071E3')}
-          ${polState(940, 482, `I(${pType}, ${dType})`, '检偏器 A', '#0071E3')}
-          ${polState(1080, 482, '手性分析', '能谷选择定则', 'var(--text-primary)')}
+          ${polState(460, 482, `下行: ${pType}圆偏`, 'QWP λ/4', '#AF52DE')}
+          ${polState(580, 482, '样品发射', 'SHG信号(上行)', '#34C759')}
+          ${polState(700, 482, '圆→线转换', 'QWP λ/4', '#34C759')}
+          ${polState(820, 482, '经 DM', '透射', '#34C759')}
+          ${polState(940, 482, `I(${pType}, ${dType})`, `检偏器 A (${analyzerAngle})`, '#0071E3')}
+          ${polState(1080, 482, '谷选择分析', '能谷物理表征', 'var(--text-primary)')}
         </svg>`;
 
         guideHtml = `
           <strong>圆偏振测量指南 (${pType}${dType} 配置)：</strong><br>
-          1. <b>入射端（转动）：</b>起偏器 P 设为 0°。手动旋转 <span style="color:#FF9500;font-weight:700">QWP 1</span> 至 <b>${q1Angle}</b>，以产生 <b>${pType}</b> 激发光。<br>
-          2. <b>探测端（转动）：</b>将 <span style="color:#FF9500;font-weight:700">QWP 2</span> 手动旋转至 <b>${q2Angle}</b>，检偏器 A 固定在 <b>90°</b>，选择 <b>${dType}</b> 的 SHG 信号分量。<br>
-          3. <b>检偏器 A：</b>固定在 <b>90°</b>（不转动）。<br>
-          4. <b>操作执行：</b>实验前需手动调整旋转激发端 <span style="color:#FF9500;font-weight:700">QWP 1 (${q1Angle})</span> 和收集端 <span style="color:#FF9500;font-weight:700">QWP 2 (${q2Angle})</span> 的快轴角度。
+          1. <b>入射端：</b>起偏器 P 固定在 0°（水平线偏振）。<br>
+          2. <b>第一步调节（QWP）：</b>手动旋转双通路复用的 <span style="color:#FF9500;font-weight:700">QWP λ/4</span>，将其快轴角设为 <b>${q1Angle}</b>。此时激发光通过 QWP 转换为 <b>${pType}</b> 圆偏振光作用于样品。<br>
+          3. <b>第二步调节（检偏器）：</b>样品发射的圆偏振 SHG 信号经过相同的 QWP 后，由于双通复用，会被转换回线偏振。在透射端调节 <span style="color:#FF9500;font-weight:700">检偏器 A</span> 至 <b>${analyzerAngle}</b>，从而选择检测 <b>${dType}</b> 的 SHG 信号分量。<br>
+          4. <b>实验特点：</b>无需在探测端额外放置第二块 1/4 波片，通过在激发 and 收集的共用光路（二向色镜与物镜之间）中放置单一 QWP，并配合检偏器 A 旋转选择偏振方向，即可实现完整的圆偏振 SHG / 能谷选择定则测量。
         `;
       }
 
@@ -835,27 +946,35 @@
 
     _renderComponentList(mode) {
       const components = {
-        principle: [],
+        principle: [
+          { name: '基频光子激发 (Fundamental Excitation)', id: 'shg-fund' },
+          { name: '非中心对称介质 (Nonlinear Medium)', id: 'shg-crystal' },
+          { name: '二次谐波辐射 (Second Harmonic Emission)', id: 'shg-emission' },
+          { name: '虚拟能级跃迁 (Virtual State Transition)', id: 'shg-virtual' }
+        ],
         reflective: [
-          { name: '脉冲激光器', id: 'ref-laser' },
+          { name: '激光器 ω', id: 'ref-laser' },
           { name: 'ND 滤波片', id: 'ref-ndf' },
           { name: '半波片 HWP', id: 'ref-hwp' },
           { name: '起偏器 P', id: 'ref-polarizer' },
           { name: '二向色镜 DM', id: 'ref-dm' },
           { name: '显微物镜', id: 'ref-obj' },
           { name: '样品', id: 'ref-sample' },
-          { name: '短通/带通滤波器', id: 'ref-filter' },
+          { name: '短通 SP', id: 'ref-filter' },
           { name: '检偏器 A', id: 'ref-analyzer' },
-          { name: '探测器', id: 'ref-spectro' },
+          { name: '光谱仪', id: 'ref-spectro' },
         ],
         transmissive: [
-          { name: '脉冲激光器', id: 'tra-laser' },
-          { name: '1/4 波片 QWP', id: 'tra-qwp' },
-          { name: '聚焦物镜', id: 'tra-obj1' },
+          { name: '激光器 ω', id: 'tra-laser' },
+          { name: '半波片 HWP', id: 'tra-hwp' },
+          { name: '起偏器 P', id: 'tra-polarizer' },
+          { name: '显微物镜', id: 'tra-obj1' },
           { name: '样品', id: 'tra-sample' },
-          { name: '收集物镜', id: 'tra-obj2' },
-          { name: '检偏器', id: 'tra-analyzer' },
-          { name: '探测器', id: 'tra-spectro' },
+          { name: '显微物镜', id: 'tra-obj2' },
+          { name: '二向色镜 DM', id: 'tra-dm' },
+          { name: '短通 SP', id: 'tra-filter' },
+          { name: '检偏器 A', id: 'tra-analyzer' },
+          { name: '光谱仪', id: 'tra-spectro' },
         ],
         polarization: [
           { name: 'HWP/QWP', id: 'tra-qwp' },
