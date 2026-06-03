@@ -53,8 +53,8 @@
                 <span class="form-label-unit">nm</span>
               </div>
               <div class="input-slider-row">
-                <input type="range" class="slider" id="wl-slider" min="100" max="15000" value="550" step="1">
-                <input type="number" class="input-field small" id="wl-input" value="550" min="0.01" max="1000000" step="any">
+                <input type="range" class="slider" id="wl-slider" min="100" max="15000" value="532" step="1">
+                <input type="number" class="input-field small" id="wl-input" value="532" min="0.01" max="1000000" step="any">
               </div>
               <div class="range-limits"><span>100 nm</span><span>15000 nm</span></div>
             </div>
@@ -66,8 +66,8 @@
                 <span class="form-label-unit">eV</span>
               </div>
               <div class="input-slider-row">
-                <input type="range" class="slider" id="ev-slider" min="0.01" max="12.4" value="2.254" step="0.01">
-                <input type="number" class="input-field small" id="ev-input" value="2.254" min="0.0001" max="1000" step="any">
+                <input type="range" class="slider" id="ev-slider" min="0.01" max="12.4" value="2.330" step="0.01">
+                <input type="number" class="input-field small" id="ev-input" value="2.330" min="0.0001" max="1000" step="any">
               </div>
               <div class="range-limits"><span>0.01 eV</span><span>12.4 eV</span></div>
             </div>
@@ -79,8 +79,8 @@
                 <span class="form-label-unit">THz</span>
               </div>
               <div class="input-slider-row">
-                <input type="range" class="slider" id="freq-slider" min="20" max="3000" value="545" step="1">
-                <input type="number" class="input-field small" id="freq-input" value="545" min="0.001" max="100000" step="any">
+                <input type="range" class="slider" id="freq-slider" min="20" max="3000" value="564" step="1">
+                <input type="number" class="input-field small" id="freq-input" value="563.5" min="0.001" max="100000" step="any">
               </div>
               <div class="range-limits"><span>20 THz</span><span>3000 THz</span></div>
             </div>
@@ -92,8 +92,8 @@
                 <span class="form-label-unit">cm⁻¹</span>
               </div>
               <div class="input-slider-row">
-                <input type="range" class="slider" id="wavenum-slider" min="100" max="50000" value="18182" step="1">
-                <input type="number" class="input-field small" id="wavenum-input" value="18182" min="1" max="1000000" step="any">
+                <input type="range" class="slider" id="wavenum-slider" min="100" max="50000" value="18797" step="1">
+                <input type="number" class="input-field small" id="wavenum-input" value="18797" min="1" max="1000000" step="any">
               </div>
               <div class="range-limits"><span>100 cm⁻¹</span><span>50000 cm⁻¹</span></div>
             </div>
