@@ -49,7 +49,7 @@
       interface: { name: '折射界面', icon: '📐', params: [
         { key: 'R', label: '曲率半径 R', unit: 'mm', default: 100 },
         { key: 'n1', label: '入射折射率 n₁', unit: '', default: 1.0 },
-        { key: 'n2', label: '折射折射率 n₂', unit: '', default: 1.5 }
+        { key: 'n2', label: '出射折射率 n₂', unit: '', default: 1.5 }
       ]},
     },
 

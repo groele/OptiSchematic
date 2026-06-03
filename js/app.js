@@ -49,7 +49,7 @@ const App = (() => {
 
     const container = document.createElement('div');
     // Setups and diagrams use wide layout, calculators use split grid layout
-    const diagramTools = ['lasers', 'raman', 'pl', 'setups', 'shg', 'spectrometer'];
+    const diagramTools = ['lasers', 'raman', 'pl', 'setups', 'shg', 'spectrometer', 'polarization'];
     container.className = diagramTools.includes(toolId)
       ? 'dashboard-wide-layout'
       : 'dashboard-grid';
@@ -94,6 +94,11 @@ const App = (() => {
             <h3>透镜计算器</h3>
             <p>薄透镜成像、组合透镜、光线追迹图</p>
           </div>
+          <div class="welcome-tool-card" onclick="App.switchTo('abcd')">
+            <div class="card-icon">📐</div>
+            <h3>ABCD 矩阵追迹</h3>
+            <p>自由空间、透镜、反射镜与界面的矩阵级联和光线追迹</p>
+          </div>
           <div class="welcome-tool-card" onclick="App.switchTo('gaussian')">
             <div class="card-icon">📡</div>
             <h3>高斯光束计算器</h3>
@@ -123,6 +128,11 @@ const App = (() => {
             <div class="card-icon">💡</div>
             <h3>PL 光致发光</h3>
             <p>常规/线偏振/圆偏振 PL 光路与对比</p>
+          </div>
+          <div class="welcome-tool-card" onclick="App.switchTo('polarization')">
+            <div class="card-icon">🧭</div>
+            <h3>偏振检测对比</h3>
+            <p>常规强度、线偏振与圆偏振检测的光路和强度响应</p>
           </div>
           <div class="welcome-tool-card" onclick="App.switchTo('shg')">
             <div class="card-icon">🔆</div>

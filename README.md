@@ -18,6 +18,7 @@ The application runs entirely in the browser (client-side) with no backend datab
     *   **Wavelength & Energy Channel**: Dynamic conversions between wavelength (nm), energy (eV), frequency (THz), and wavenumber ($cm^{-1}$).
     *   **Gaussian Beam Profiler**: Simulates beam waist radius, Rayleigh length, divergence angle, and renders dynamic beam propagation profiles.
     *   **Lens Tracer**: Thick/thin lens combinations and real-time geometric ray tracing.
+    *   **ABCD Matrix Ray Tracer**: Matrix-based propagation through free space, lenses, mirrors, and refractive interfaces.
     *   **Laser Pulse Calculator**: Computes pulse energy, peak power, and power density from average power, rep-rate, and pulse duration (ns/ps/fs).
     *   **Grating & Spectrometer Calculator**: Solves the grating diffraction equation ($d \cdot \sin\theta_m = m\lambda$) and plots efficiency curves.
 *   **Publication-Grade Export**: Support for exporting high-quality vector `.svg` diagrams directly from the simulation canvas to use in scientific papers or presentations.
@@ -30,9 +31,11 @@ The application runs entirely in the browser (client-side) with no backend datab
 1.  **Raman Spectroscopy (`raman.js`)**: Conventional, Confocal, and Polarization-resolved (linear/circular) setups. Includes 3D spatial filtering annotations and Rayleigh vs. Stokes scattering principles.
 2.  **PL (Photoluminescence) Spectroscopy (`pl.js`)**: Reflective co-axial emission collection setups, with linear and circular polarization waveplate configurations and degree of polarization calculators.
 3.  **Nonlinear SHG (Second Harmonic Generation) (`shg.js`)**: Excitation-polarization angle curves ($I_{SHG}(\theta)$ polar plots), transmissive/reflective modes, and 2D materials TMD crystal axis orientation determination.
-4.  **Laser Principles & Time Scales (`lasers.js`)**: Explains stimulated emission, population inversion, and mode-locking. Rearranged in a physically accurate resonator layout (*Pump $\rightarrow$ HR $\rightarrow$ Gain Medium $\rightarrow$ OC $\rightarrow$ Output*).
-5.  **Spectrometer Principles (`spectrometer.js`)**: Interactive Czerny-Turner path with collimating and focusing concave mirrors, grating efficiency analysis, and detector arrays.
-6.  **Advanced Scientific Setups (`setups.js`)**: Scientific reference optical paths for Time-Resolved PL (TRPL), ultrafast Pump-Probe, Cryogenic Magneto-Optics, and *in-situ* electric/ferroelectric tuning.
+4.  **Polarization Detection (`polarization.js`)**: Side-by-side intensity, linear-polarization, and circular-polarization detection schemes with Malus-law response.
+5.  **ABCD Matrix Ray Tracing (`abcd.js`)**: Modular geometric-optics propagation with presets for beam expansion, 4f imaging, and focusing systems.
+6.  **Laser Principles & Time Scales (`lasers.js`)**: Explains stimulated emission, population inversion, and mode-locking. Rearranged in a physically accurate resonator layout (*Pump $\rightarrow$ HR $\rightarrow$ Gain Medium $\rightarrow$ OC $\rightarrow$ Output*).
+7.  **Spectrometer Principles (`spectrometer.js`)**: Interactive Czerny-Turner path with collimating and focusing concave mirrors, grating efficiency analysis, and detector arrays.
+8.  **Advanced Scientific Setups (`setups.js`)**: Scientific reference optical paths for Time-Resolved PL (TRPL), ultrafast Pump-Probe, Cryogenic Magneto-Optics, and *in-situ* electric/ferroelectric tuning.
 
 ---
 
@@ -41,7 +44,7 @@ The application runs entirely in the browser (client-side) with no backend datab
 *   **HTML5 & CSS3**: Pure CSS custom properties for Apple-inspired light/dark theme synchronization, glassmorphism card UI, and layout grids.
 *   **Vanilla JavaScript**: Modular registration framework (`App.registerTool`) with no heavy framework overhead.
 *   **SVG (Scalable Vector Graphics)**: Rich HSL-tailored colored paths, arrow markers, glowing filters (`#pl-glow`, `#shg-glow`), and interactive hitboxes.
-*   **Chart.js**: Dynamic plotting of laser waveforms, pulse peak powers, grating efficiency envelopes, and SHG polarization polar plots.
+*   **Local Canvas Chart Adapter**: Dynamic plotting of laser waveforms, pulse peak powers, grating efficiency envelopes, and SHG polarization polar plots without remote scripts, so the Chrome extension can run under Manifest V3 CSP.
 
 ---
 
@@ -73,6 +76,7 @@ Simply clone the repository and double-click **`index.html`** to open the tool d
     *   **快速换算通道**：动态实现波长 (nm) $\leftrightarrow$ 能量 (eV) $\leftrightarrow$ 频率 (THz) $\leftrightarrow$ 波数 ($cm^{-1}$) 互转。
     *   **高斯光束分析**：输入束腰、波长可实时模拟光束传播剖面、瑞利长度及发散角。
     *   **透镜成像计算**：支持薄/厚透镜组合的几何光线追迹模拟。
+    *   **ABCD 矩阵追迹**：支持自由空间、透镜、反射镜和折射界面的矩阵级联与光线追迹。
     *   **脉冲激光峰值功率计算器**：根据平均功率、重复频率及脉冲宽度（ns/ps/fs）换算单脉冲能量、峰值功率和功率密度。
     *   **光栅方程与光谱仪分辨率**：根据光栅方程 ($d \cdot \sin\theta_m = m\lambda$) 仿真不同衍射级次的色散与光栅效率曲线。
 *   **双色主题切换**：支持深色模式与浅色模式，图表与矢量图色彩可随系统主题优雅过渡。
@@ -84,9 +88,11 @@ Simply clone the repository and double-click **`index.html`** to open the tool d
 1.  **Raman 拉曼光谱 (`raman.js`)**：常规拉曼、共聚焦拉曼与偏振分辨拉曼。包含共聚焦空间滤波原理（针孔滤除离焦杂光）及瑞利/斯托克斯散射物理过程。
 2.  **PL 光致发光 (`pl.js`)**：同轴后向散射收集光路，配备线偏振、圆偏振片组合测试及偏振度计算。
 3.  **SHG 二次谐波非线性光学 (`shg.js`)**：支持反射式、透射式及偏振分辨 SHG。动态模拟入射偏振角度与二次谐波强度关系（极坐标图极图极化模式），用于提取二维 TMD 材料（如单层 $MoS_2$, $WSe_2$）的晶轴方向。
-4.  **激光器原理与时间尺度 (`lasers.js`)**：受激辐射与粒子数反转机制。提供物理结构正确的谐振腔布局示意图（*泵浦源 $\rightarrow$ 全反镜 $\rightarrow$ 增益介质 $\rightarrow$ 输出耦合镜 $\rightarrow$ 激光输出*），以及连续与超快脉冲波形对比。
-5.  **光谱仪原理 (`spectrometer.js`)**：Czerny-Turner 光谱仪光路，入射光发散/准直、光栅色散及聚焦镜成像的动态演绎。准直镜与聚焦镜采用标准的凹面反射镜矢量图标。
-6.  **高级光路与参考 (`setups.js`)**：科研级时间分辨 PL (TRPL)、飞秒泵浦-探测 (Pump-Probe)、低温强磁场磁光系统，以及电学/铁电原位调控光谱方案。
+4.  **偏振检测对比 (`polarization.js`)**：对比常规强度检测、线偏振检测和圆偏振检测，展示 Malus 定律响应和 QWP/检偏器配置。
+5.  **ABCD 矩阵追迹 (`abcd.js`)**：模块化几何光学传输计算，支持扩束、4f 成像和聚焦系统预设。
+6.  **激光器原理与时间尺度 (`lasers.js`)**：受激辐射与粒子数反转机制。提供物理结构正确的谐振腔布局示意图（*泵浦源 $\rightarrow$ 全反镜 $\rightarrow$ 增益介质 $\rightarrow$ 输出耦合镜 $\rightarrow$ 激光输出*），以及连续与超快脉冲波形对比。
+7.  **光谱仪原理 (`spectrometer.js`)**：Czerny-Turner 光谱仪光路，入射光发散/准直、光栅色散及聚焦镜成像的动态演绎。准直镜与聚焦镜采用标准的凹面反射镜矢量图标。
+8.  **高级光路与参考 (`setups.js`)**：科研级时间分辨 PL (TRPL)、飞秒泵浦-探测 (Pump-Probe)、低温强磁场磁光系统，以及电学/铁电原位调控光谱方案。
 
 ---
 
@@ -95,7 +101,7 @@ Simply clone the repository and double-click **`index.html`** to open the tool d
 *   **HTML5 & CSS3**：采用原生 CSS 变量实现主题切换及响应式网格布局。
 *   **原生 JavaScript (ES6+)**：采用轻量级路由与模块注册机制 (`App.registerTool`)，响应极速。
 *   **SVG 矢量绘图**：包含多种发光波段的辉光滤镜 (`#pl-glow`, `#shg-glow`)、反射面及高精物理器件矢量图。
-*   **Chart.js**：用于实时仿真激光脉冲时间波形、脉宽-峰值功率对比图、光栅效率包络及二次谐波偏振极坐标图。
+*   **本地图表适配层**：用于实时仿真激光脉冲时间波形、脉宽-峰值功率对比图、光栅效率包络及二次谐波偏振极坐标图；不依赖远程脚本，适配 Manifest V3 扩展安全策略。
 
 ---
 

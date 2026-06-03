@@ -17,7 +17,6 @@
 .card:hover {
   box-shadow: var(--shadow-md);
   border-color: rgba(0, 113, 227, 0.15);
-  transform: translateY(-2px);
 }
 
 .card-title {
@@ -172,6 +171,7 @@
 /* --- Toggle / Segmented Control --- */
 .toggle-group {
   display: flex;
+  flex-wrap: wrap;
   background: var(--bg-primary);
   border-radius: var(--radius-sm);
   padding: 3px;
@@ -180,6 +180,7 @@
 
 .toggle-btn {
   flex: 1;
+  min-width: max-content;
   padding: 7px 12px;
   border: none;
   background: transparent;
@@ -331,6 +332,15 @@
 
 .chart-container canvas {
   max-height: 320px;
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  min-width: 680px;
 }
 
 /* --- Formula Display --- */
@@ -575,3 +585,25 @@
   transform: translateX(4px);
 }
 
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .toggle-btn {
+    min-width: 0;
+    flex: 1 1 120px;
+    white-space: normal;
+  }
+
+  .input-slider-row,
+  .quick-conv-row {
+    flex-wrap: wrap;
+  }
+
+  .input-field.small {
+    width: 100%;
+    min-width: 0;
+  }
+}
