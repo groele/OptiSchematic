@@ -94,16 +94,6 @@ const App = (() => {
             <h3>透镜计算器</h3>
             <p>薄透镜成像、组合透镜、光线追迹图</p>
           </div>
-          <div class="welcome-tool-card" onclick="App.switchTo('abcd')">
-            <div class="card-icon">📐</div>
-            <h3>ABCD 矩阵追迹</h3>
-            <p>自由空间、透镜、反射镜与界面的矩阵级联和光线追迹</p>
-          </div>
-          <div class="welcome-tool-card" onclick="App.switchTo('gaussian')">
-            <div class="card-icon">📡</div>
-            <h3>高斯光束计算器</h3>
-            <p>束腰、瑞利长度、发散角、光束剖面</p>
-          </div>
           <div class="welcome-tool-card" onclick="App.switchTo('wavelength')">
             <div class="card-icon">⚡</div>
             <h3>波长与能量换算</h3>

@@ -429,118 +429,7 @@ const OPTICS = (() => {
   }
 
   // ============================================
-  // 5. ABCD Matrix Ray Tracing
-  // ============================================
-
-  const Matrix = {
-    create(A, B, C, D) { return { A, B, C, D }; },
-
-    multiply(m2, m1) {
-      return {
-        A: m2.A * m1.A + m2.B * m1.C,
-        B: m2.A * m1.B + m2.B * m1.D,
-        C: m2.C * m1.A + m2.D * m1.C,
-        D: m2.C * m1.B + m2.D * m1.D
-      };
-    },
-
-    apply(m, r, theta) {
-      return { r: m.A * r + m.B * theta, theta: m.C * r + m.D * theta };
-    },
-
-    freeSpace(L) { return { A: 1, B: L, C: 0, D: 1 }; },
-    thinLens(f) { return { A: 1, B: 0, C: -1 / f, D: 1 }; },
-    curvedMirror(R) { return { A: 1, B: 0, C: -2 / R, D: 1 }; },
-    flatInterface(n1, n2) { return { A: 1, B: 0, C: 0, D: n1 / n2 }; },
-    curvedInterface(R, n1, n2) {
-      return { A: 1, B: 0, C: -(n2 - n1) / (R * n2), D: n1 / n2 };
-    },
-    identity() { return { A: 1, B: 0, C: 0, D: 1 }; },
-
-    toString(m) {
-      return `┌ ${m.A.toFixed(4).padStart(10)}  ${m.B.toFixed(4).padStart(10)} ┐\n└ ${m.C.toFixed(6).padStart(10)}  ${m.D.toFixed(4).padStart(10)} ┘`;
-    },
-
-    effectiveFocalLength(m) {
-      if (Math.abs(m.C) < 1e-15) return Infinity;
-      return -1 / m.C;
-    },
-
-    /**
-     * Back focal distance: distance from rear principal plane to focal point
-     * BFD = -A/C for the system matrix (sign convention: positive = to the right)
-     */
-    backFocalDistance(m) {
-      if (Math.abs(m.C) < 1e-15) return Infinity;
-      return -m.A / m.C;
-    },
-
-    /**
-     * Front focal distance: distance from front principal plane to front focal point
-     * FFD = D/C
-     */
-    frontFocalDistance(m) {
-      if (Math.abs(m.C) < 1e-15) return Infinity;
-      return m.D / m.C;
-    },
-
-    /**
-     * Get matrix for an element definition
-     */
-    elementMatrix(el) {
-      switch (el.type) {
-        case 'freespace': return Matrix.freeSpace(el.params.length);
-        case 'lens': return Matrix.thinLens(el.params.f);
-        case 'mirror': return Matrix.curvedMirror(el.params.R);
-        case 'interface': return Matrix.curvedInterface(el.params.R, el.params.n1, el.params.n2);
-        default: return Matrix.identity();
-      }
-    },
-
-    /**
-     * Compute total system matrix from element list
-     */
-    systemMatrix(elements) {
-      let total = Matrix.identity();
-      for (const el of elements) {
-        total = Matrix.multiply(Matrix.elementMatrix(el), total);
-      }
-      return total;
-    },
-
-    /**
-     * Trace a single ray through elements, returning z,r points
-     */
-    traceSingleRay(elements, r0, theta0) {
-      const points = [{ z: 0, r: r0 }];
-      let r = r0, theta = theta0, z = 0;
-
-      for (const el of elements) {
-        if (el.type === 'freespace') {
-          const L = el.params.length;
-          const steps = Math.max(10, Math.round(L / 2));
-          const dz = L / steps;
-          for (let i = 1; i <= steps; i++) {
-            points.push({ z: z + dz * i, r: r + theta * dz * i });
-          }
-          z += L;
-          // Matrix for free space: r_new = r + theta*L, theta unchanged
-          r = r + theta * L;
-        } else {
-          const m = Matrix.elementMatrix(el);
-          const res = Matrix.apply(m, r, theta);
-          r = res.r;
-          theta = res.theta;
-          points.push({ z, r });
-        }
-      }
-
-      return { points, finalR: r, finalTheta: theta, finalZ: z };
-    }
-  };
-
-  // ============================================
-  // 6. Laser & SHG Formulas
+  // 5. Laser & SHG Formulas
   // ============================================
 
   /**
@@ -708,8 +597,6 @@ const OPTICS = (() => {
     wavelengthToAngularK, eVToJoules, joulesToEV,
     eVToKJMol, eVToKcalMol, wavelengthToColor,
     wavelengthAllParams,
-
-    Matrix,
 
     // Laser & SHG
     laserPeakPower, laserPulseEnergy, formatPeakPower, formatPulseEnergy,
