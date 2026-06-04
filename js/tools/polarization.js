@@ -96,7 +96,7 @@
             <div class="card-title"><span class="icon">📐</span> 传播数学公式</div>
             <div style="background:var(--bg-primary);border-radius:12px;padding:16px;font-family:var(--font-mono);font-size:13px;line-height:1.8">
               <div style="color:var(--text-secondary);font-weight:700;margin-bottom:8px">当前配置公式：</div>
-              <div id="pol-math-formula" style="font-size:15px;color:var(--accent);font-weight:700;background:white;padding:12px;border-radius:8px;text-align:center;border:1px solid var(--border)">
+              <div id="pol-math-formula" style="font-size:15px;color:var(--accent);font-weight:700;background:var(--bg-card);padding:12px;border-radius:8px;text-align:center;border:1px solid var(--border)">
                 I_det = I_0 · cos²(θ - φ)
               </div>
               <div id="pol-math-desc" style="font-size:12px;color:var(--text-tertiary);margin-top:8px">
@@ -249,7 +249,7 @@
 
       // Mousemove for tooltips
       document.addEventListener('mousemove', (e) => {
-        if (this._tooltipEl && this._tooltipEl.style.display === 'block') {
+        if (this._tooltipEl && parseFloat(this._tooltipEl.style.opacity) > 0) {
           const x = Math.min(e.clientX + 16, window.innerWidth - 360);
           const y = Math.min(e.clientY + 16, window.innerHeight - 200);
           this._tooltipEl.style.left = x + 'px';

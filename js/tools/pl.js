@@ -354,7 +354,7 @@
 
                     <div style="font-weight:700;color:var(--text-secondary);margin-bottom:6px">圆偏振度 (Circular Polarization):</div>
 
-                    <div style="font-size:14px;color:var(--accent);font-weight:700;background:white;padding:8px;border-radius:6px;text-align:center;border:1px solid var(--border)">
+                    <div style="font-size:14px;color:var(--accent);font-weight:700;background:var(--bg-card);padding:8px;border-radius:6px;text-align:center;border:1px solid var(--border)">
 
                       P_circ = (Iσ⁺ − Iσ⁻) / (Iσ⁺ + Iσ⁻)
 
@@ -1303,7 +1303,8 @@
 
         <line x1="400" y1="140" x2="500" y2="140" stroke="#34C759" stroke-width="2.5" marker-end="url(#pl-arr-g)"/>
 
-        <text x="470" y="128" font-size="11" fill="#34C759" text-anchor="middle" font-weight="700">PL 信号</text>
+        <rect x="434" y="58" width="72" height="18" rx="5" fill="var(--bg-card)" stroke="#34C759" stroke-width="0.8" opacity="0.96"/>
+        <text x="470" y="71" font-size="10" fill="#34C759" text-anchor="middle" font-weight="700">PL 信号</text>
 
 
 
@@ -1337,11 +1338,8 @@
 
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
 
-        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
-
-        <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
-
-        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
+        <rect x="427" y="82" width="74" height="18" rx="5" fill="var(--bg-card)" stroke="#34C759" stroke-width="0.8" opacity="0.96"/>
+        <text x="464" y="95" font-size="9" fill="#34C759" text-anchor="middle" font-weight="700">透射 PL ↑</text>
 
 
 
@@ -1629,7 +1627,8 @@
 
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
 
-        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
+        <rect x="427" y="82" width="74" height="18" rx="5" fill="var(--bg-card)" stroke="#34C759" stroke-width="0.8" opacity="0.96"/>
+        <text x="464" y="95" font-size="9" fill="#34C759" text-anchor="middle" font-weight="700">透射 PL ↑</text>
 
 
 
@@ -1665,9 +1664,11 @@
 
         <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
 
-        <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF9500"/>
+        <line x1="454" y1="222" x2="465" y2="216" stroke="#FF9500" stroke-width="1.2"/>
 
-        <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
+        <rect x="465" y="204" width="138" height="22" rx="6" fill="var(--bg-card)" stroke="#FF9500" stroke-width="1" opacity="0.96"/>
+
+        <text x="534" y="219" font-size="9" fill="#FF9500" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
 
 
 
@@ -1775,7 +1776,7 @@
 
             <p style="margin-bottom:10px"><strong>G 因子修正：</strong></p>
 
-            <div style="background:white;padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12px;margin:8px 0;color:var(--accent)">
+            <div style="background:var(--bg-card);padding:10px 14px;border-radius:8px;font-family:var(--font-mono);font-size:12px;margin:8px 0;color:var(--accent)">
 
               P_corrected = [P_raw − G·P_raw²] / [1 − G·P_raw]<br>
 
@@ -1823,42 +1824,30 @@
 
       const subconfig = document.querySelector('#pl-circular-subconfig .active')?.dataset.sub || 'circ-pp';
 
-      let q1Angle = '+45°';
-
-      let pType = 'σ⁺';
-
-      let dType = 'σ⁺';
-
-      let analyzerAngle = '0°';
-
-      let calcGroupHtml = '';
-
-      if (pType === 'σ⁺') {
-
+      let q1Angle = '+45°';
+      let pType = 'σ⁺';
+      let dType = 'σ⁺';
+      let analyzerAngle = '0°';
+      let calcGroupHtml = '';
+
+      // Determine polarization type from subconfig FIRST, then build formula
+      if (subconfig === 'circ-pm') {
+        q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
+      } else if (subconfig === 'circ-mp') {
+        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
+      } else if (subconfig === 'circ-mm') {
+        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
+      }
+      // circ-pp: defaults already set above (σ⁺σ⁺)
+
+      if (pType === 'σ⁺') {
         calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁺</b> 圆偏振光激发下，本配置 <b>σ⁺σ⁺</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^+\\sigma^+}$）与 <b>σ⁺σ⁻</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^+\\sigma^-}$）组成<b>同一对照组</b>。利用公式计算谷极化度/圆偏振度：<br>
 
-        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
-
-      } else {
-
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
+      } else {
         calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁻</b> 圆偏振光激发下，本配置 <b>σ⁻σ⁻</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^-\\sigma^-}$）与 <b>σ⁻σ⁺</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^-\\sigma^+}$）组成<b>同一对照组</b>。利用公式计算谷极化度/圆偏振度：<br>
 
-        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
-
-      }
-
-      if (subconfig === 'circ-pm') {
-
-        q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
-
-      } else if (subconfig === 'circ-mp') {
-
-        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
-
-      } else if (subconfig === 'circ-mm') {
-
-        q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
-
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
       }
 
       const polState = (x, y, label, desc, color) => `
@@ -1991,7 +1980,8 @@
 
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
 
-        <text x="430" y="195" font-size="9" fill="#34C759" text-anchor="start" font-weight="600">透射 PL ↑</text>
+        <rect x="427" y="82" width="74" height="18" rx="5" fill="var(--bg-card)" stroke="#34C759" stroke-width="0.8" opacity="0.96"/>
+        <text x="464" y="95" font-size="9" fill="#34C759" text-anchor="middle" font-weight="700">透射 PL ↑</text>
 
 
 
@@ -2191,7 +2181,7 @@
 
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">
 
-          <div style="background:white;border:2px solid #AF52DE;border-radius:12px;padding:20px;text-align:center">
+          <div style="background:var(--bg-card);border:2px solid #AF52DE;border-radius:12px;padding:20px;text-align:center">
 
             <div style="font-size:15px;font-weight:700;color:#AF52DE;margin-bottom:14px">常规 PL</div>
 
@@ -2235,7 +2225,7 @@
 
 
 
-          <div style="background:white;border:2px solid #0071E3;border-radius:12px;padding:20px;text-align:center">
+          <div style="background:var(--bg-card);border:2px solid #0071E3;border-radius:12px;padding:20px;text-align:center">
 
             <div style="font-size:15px;font-weight:700;color:#0071E3;margin-bottom:14px">线偏振 PL</div>
 
@@ -2293,7 +2283,7 @@
 
 
 
-          <div style="background:white;border:2px solid #FF9500;border-radius:12px;padding:20px;text-align:center">
+          <div style="background:var(--bg-card);border:2px solid #FF9500;border-radius:12px;padding:20px;text-align:center">
 
             <div style="font-size:15px;font-weight:700;color:#FF9500;margin-bottom:14px">圆偏振 PL</div>
 
@@ -2470,6 +2460,7 @@
           { name: '激光器', id: 'pl-laser' },
 
           { name: '二向色镜 DM', id: 'pl-dm' },
+          { name: 'ND 衰减片', id: 'pl-ndfilter' },
 
           { name: '显微物镜', id: 'pl-obj' },
 

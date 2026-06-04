@@ -538,13 +538,13 @@
       <div style="background:var(--bg-primary);border-radius:12px;padding:18px;margin-bottom:16px">
         <div style="font-size:15px;font-weight:700;color:${Charts.COLORS.orange};margin-bottom:10px">狭缝宽度优化 Slit Width Optimization</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
-          <div style="background:white;padding:14px;border-radius:10px;border-left:3px solid ${Charts.COLORS.blue}">
+          <div style="background:var(--bg-card);padding:14px;border-radius:10px;border-left:3px solid ${Charts.COLORS.blue}">
             <div style="font-size:14px;font-weight:600;color:${Charts.COLORS.blue};margin-bottom:6px">窄狭缝 (10~50 μm)</div>
             <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">
               高分辨率<br>适合精细结构分析<br>适合强信号样品<br>信噪比较低
             </div>
           </div>
-          <div style="background:white;padding:14px;border-radius:10px;border-left:3px solid ${Charts.COLORS.orange}">
+          <div style="background:var(--bg-card);padding:14px;border-radius:10px;border-left:3px solid ${Charts.COLORS.orange}">
             <div style="font-size:14px;font-weight:600;color:${Charts.COLORS.orange};margin-bottom:6px">宽狭缝 (100~300 μm)</div>
             <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">
               通光量大<br>适合弱信号检测<br>信噪比高<br>分辨率较低
@@ -568,7 +568,7 @@
           ${BLAZE_DATA.map(b => {
             const colors = ['#AF52DE', Charts.COLORS.blue, Charts.COLORS.orange, Charts.COLORS.red];
             const ci = BLAZE_DATA.indexOf(b);
-            return `<div style="background:white;padding:14px;border-radius:10px;border-left:3px solid ${colors[ci]}">
+            return `<div style="background:var(--bg-card);padding:14px;border-radius:10px;border-left:3px solid ${colors[ci]}">
               <div style="font-size:16px;font-weight:700;color:${colors[ci]};margin-bottom:4px">${b.lambda} nm 闪耀</div>
               <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">
                 <div><strong>高效波段：</strong>${b.range}</div>
@@ -593,7 +593,7 @@
             { icon: '💡', title: '强度校准', desc: '仪器响应随波长变化', fix: '用标准灯（黑体辐射）校正' },
             { icon: '⚡', title: '宇宙射线', desc: '高能粒子击中 CCD 产生尖峰', fix: '多次采集取中值滤除' },
           ].map(item => `
-            <div style="background:white;padding:12px;border-radius:8px">
+            <div style="background:var(--bg-card);padding:12px;border-radius:8px">
               <div style="font-size:14px;font-weight:600;margin-bottom:4px">${item.icon} ${item.title}</div>
               <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px">${item.desc}</div>
               <div style="font-size:12px;color:var(--green)"><strong>解决：</strong>${item.fix}</div>

@@ -600,7 +600,7 @@
         <div style="margin-bottom:16px;padding:14px;border-radius:10px;background:var(--bg-primary)">
           <div style="font-size:15px;font-weight:700;color:${c.color};margin-bottom:8px">${c.icon} ${c.title}</div>
           <div style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:8px">${c.text}</div>
-          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-primary);background:white;padding:8px 12px;border-radius:6px;border-left:3px solid ${c.color}">${c.formula}</div>
+          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-primary);background:var(--bg-card);padding:8px 12px;border-radius:6px;border-left:3px solid ${c.color}">${c.formula}</div>
         </div>
       `).join('');
     },
@@ -923,7 +923,7 @@
               <div style="margin-bottom:10px"><strong style="color:var(--text-primary)">输出模式：</strong>${laser.output}</div>
               <div style="margin-bottom:8px"><strong style="color:var(--green)">优点：</strong>${laser.pros}</div>
               <div style="margin-bottom:8px"><strong style="color:var(--red)">局限：</strong>${laser.cons}</div>
-              <div style="background:white;padding:10px 12px;border-radius:8px;border-left:3px solid ${colorInfo.color};margin-top:10px">
+              <div style="background:var(--bg-card);padding:10px 12px;border-radius:8px;border-left:3px solid ${colorInfo.color};margin-top:10px">
                 <strong style="color:var(--accent)">适合测试场景：</strong>${laser.useCase}
               </div>
             </div>

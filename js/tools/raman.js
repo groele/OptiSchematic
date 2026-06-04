@@ -120,6 +120,10 @@
 
     'pr-spectro': '光谱仪 + CCD\n记录不同偏振配置下的 Raman 光谱\n四分量测量：I_VV, I_VH, I_HH, I_HV\n需做仪器偏振响应校正 (G 因子)\nG = I_VV / I_VH (非偏振光源标定)',
 
+    'pr-dm': '二向色镜 DM (Dichroic Mirror — 偏振 Raman)\n功能：反射激发光（短波长），透射收集拉曼散射信号（长波长）\n偏振 Raman 中需注意：部分二向色镜对不同偏振方向的反/透射率存在差异\n建议选用偏振不敏感型二向色镜，或在 G 因子标定时矫正其偏振效应\n关键参数：截止波长介于激发光与拉曼光谱之间，反射率 >98% @ 激发波长，透过率 >90% @ 拉曼信号',
+
+    'tra-qwp': '四分之一波片 λ/4 (Quarter-wave Plate — 圆偏振 Raman)\n功能：将线偏振光转换为圆偏振光，或将圆偏振光转换为线偏振光\n快轴 +45°：将水平线偏振转换为右旋圆偏振 σ⁺\n快轴 -45°：将水平线偏振转换为左旋圆偏振 σ⁻\n应用：产生 σ⁺/σ⁻ 圆偏振激发，探测谷极化 (Valley Polarization) 与手性 Raman 选择定则\n需针对激发波长选择零级消色差波片',
+
 
 
 
@@ -164,6 +168,9 @@
 
     'cr-spectro': '光谱仪 + CCD\n同常规 Raman 配置\n共聚焦 mapping 中每像素对应一条 Raman 光谱\n数据量大：典型 100×100 像素 = 10000 条光谱\n需高速读出 CCD 或 EMCCD 以缩短采集时间',
 
+    'cr-lens-l1': '聚焦透镜 L1 (Focus Lens)\n功能：将拉曼散射平行光束聚焦至共聚焦针孔处\n参数：焦距通常为 100~300mm，与光谱仪入口匹配\n需考虑色差补偿（消色差双合透镜优先）',
+
+    'cr-lens-l2': '准直透镜 L2 (Collimation Lens)\n功能：将经过共聚焦针孔的发散光重新准直\n参数：焦距与光谱仪入口焦距匹配以保持光束平行\n注意：L1/L2 焦距比决定光斑在针孔处的大小',
 
 
   };
@@ -1664,7 +1671,8 @@
         <!-- Raman backscattered beam (Vertical, Sample up to DM) -->
         <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" opacity="0.3" filter="url(#rm-glow)"/>
         <line x1="400" y1="395" x2="400" y2="140" stroke="#FF5E00" stroke-width="3.5" stroke-dasharray="7,4" marker-end="url(#rm-arr-o)"/>
-        <text x="455" y="290" font-size="11" fill="#FF5E00" text-anchor="middle" font-weight="600">Raman 散射 λₛ</text>
+        <rect x="421" y="300" width="104" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+        <text x="473" y="313" font-size="10" fill="#FF5E00" text-anchor="middle" font-weight="700">Raman 散射 λₛ</text>
 
         <!-- Raman Scattered Beam in detection arm (Solid blue line, style unified with Polarization Raman) -->
         <line x1="400" y1="140" x2="1000" y2="140" stroke="#0071E3" stroke-width="8" opacity="0.3" filter="url(#rm-glow)"/>
@@ -1672,28 +1680,30 @@
 
         <!-- Rayleigh scattered (rejected by Notch Filter) -->
         <line x1="575" y1="140" x2="575" y2="210" stroke="#FF3B30" stroke-width="2.5" stroke-dasharray="5,3" opacity="0.8"/>
-        <text x="575" y="225" font-size="10" fill="#FF3B30" text-anchor="middle" opacity="0.7">瑞利散射 (被滤除)</text>
+        <rect x="518" y="186" width="114" height="18" rx="5" fill="var(--bg-card)" stroke="#FF3B30" stroke-width="0.8" opacity="0.96"/>
+        <text x="575" y="199" font-size="9.5" fill="#FF3B30" text-anchor="middle" font-weight="700">瑞利散射 (被滤除)</text>
 
         <!-- Diagonal line on dichroic mirror -->
         <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2.5" stroke-dasharray="5,3"/>
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
-        <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
+        <rect x="424" y="82" width="86" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+        <text x="467" y="95" font-size="9" fill="#FF5E00" text-anchor="middle" font-weight="700">透射拉曼 ↑</text>
 
         <!-- === Raman Physics Principle Box === -->
-        <rect x="520" y="220" width="300" height="170" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
-        <text x="520" y="245" font-size="13" fill="var(--text-primary)" font-weight="700">Raman 散射物理过程</text>
+        <rect x="590" y="245" width="300" height="170" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="590" y="270" font-size="13" fill="var(--text-primary)" font-weight="700">Raman 散射物理过程</text>
 
-        <circle cx="550" cy="275" r="10" fill="#FF3B30" opacity="0.1"/><text x="550" y="279" font-size="11" fill="#FF3B30" text-anchor="middle" font-weight="700">1</text>
-        <text x="570" y="279" font-size="11" fill="var(--text-primary)" font-weight="600">瑞利散射 (Rayleigh) - 弹性</text>
-        <text x="570" y="293" font-size="10" fill="var(--text-secondary)">散射光波长 = 激发光波长 (占总散射 99.99%)</text>
+        <circle cx="620" cy="300" r="10" fill="#FF3B30" opacity="0.1"/><text x="620" y="304" font-size="11" fill="#FF3B30" text-anchor="middle" font-weight="700">1</text>
+        <text x="640" y="304" font-size="11" fill="var(--text-primary)" font-weight="600">瑞利散射 (Rayleigh) - 弹性</text>
+        <text x="640" y="318" font-size="10" fill="var(--text-secondary)">散射光波长 = 激发光波长 (占总散射 99.99%)</text>
 
-        <circle cx="550" cy="315" r="10" fill="#FF5E00" opacity="0.1"/><text x="550" y="319" font-size="11" fill="#FF5E00" text-anchor="middle" font-weight="700">2</text>
-        <text x="570" y="319" font-size="11" fill="var(--text-primary)" font-weight="600">斯托克斯散射 (Stokes) - 红移</text>
-        <text x="570" y="333" font-size="10" fill="var(--text-secondary)">分子吸收能量跃迁，散射光能量降低 (主拉曼峰)</text>
+        <circle cx="620" cy="340" r="10" fill="#FF5E00" opacity="0.1"/><text x="620" y="344" font-size="11" fill="#FF5E00" text-anchor="middle" font-weight="700">2</text>
+        <text x="640" y="344" font-size="11" fill="var(--text-primary)" font-weight="600">斯托克斯散射 (Stokes) - 红移</text>
+        <text x="640" y="358" font-size="10" fill="var(--text-secondary)">分子吸收能量跃迁，散射光能量降低 (主拉曼峰)</text>
 
-        <circle cx="550" cy="355" r="10" fill="#0071E3" opacity="0.1"/><text x="550" y="359" font-size="11" fill="#0071E3" text-anchor="middle" font-weight="700">3</text>
-        <text x="570" y="359" font-size="11" fill="var(--text-primary)" font-weight="600">反斯托克斯 (Anti-Stokes) - 蓝移</text>
-        <text x="570" y="373" font-size="10" fill="var(--text-secondary)">激发态分子释放能量，散射光能量升高 (强度弱)</text>
+        <circle cx="620" cy="380" r="10" fill="#0071E3" opacity="0.1"/><text x="620" y="384" font-size="11" fill="#0071E3" text-anchor="middle" font-weight="700">3</text>
+        <text x="640" y="384" font-size="11" fill="var(--text-primary)" font-weight="600">反斯托克斯 (Anti-Stokes) - 蓝移</text>
+        <text x="640" y="398" font-size="10" fill="var(--text-secondary)">激发态分子释放能量，散射光能量升高 (强度弱)</text>
 
         <!-- === Components === -->
         ${this._box(50, 100, 110, 80, '激光器', '#FF3B30', 'Laser Source', 'rm-laser')}
@@ -1793,7 +1803,8 @@
           <!-- Diagonal line on dichroic mirror -->
           <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
           <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
-          <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
+          <rect x="424" y="82" width="86" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+          <text x="467" y="95" font-size="9" fill="#FF5E00" text-anchor="middle" font-weight="700">透射拉曼 ↑</text>
 
 
 
@@ -1809,8 +1820,9 @@
           <!-- Highlight Overlays for Active Modules -->
           <!-- HWP Highlight Box (操作执行模块) -->
           <rect x="346" y="196" width="108" height="53" rx="8" fill="none" stroke="#FF5E00" stroke-width="2.5" stroke-dasharray="4,2"/>
-          <rect x="346" y="180" width="108" height="15" rx="3" fill="#FF5E00"/>
-          <text x="400" y="191" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
+          <line x1="454" y1="222" x2="465" y2="216" stroke="#FF5E00" stroke-width="1.2"/>
+          <rect x="465" y="204" width="138" height="22" rx="6" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="1" opacity="0.96"/>
+          <text x="534" y="219" font-size="9" fill="#FF5E00" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
 
           <!-- Analyzer A Highlight Box -->
           <rect x="646" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
@@ -1840,25 +1852,28 @@
         `;
       } else {
         // Circular polarization setup
-        let q1Angle = '+45°';
-        let pType = 'σ⁺';
-        let dType = 'σ⁺';
-        let analyzerAngle = '0°';
-        let calcGroupHtml = '';
-        if (pType === 'σ⁺') {
+        let q1Angle = '+45°';
+        let pType = 'σ⁺';
+        let dType = 'σ⁺';
+        let analyzerAngle = '0°';
+        let calcGroupHtml = '';
+
+        // Determine polarization type from subconfig FIRST, then build formula
+        if (subconfig === 'circ-pm') {
+          q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
+        } else if (subconfig === 'circ-mp') {
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
+        } else if (subconfig === 'circ-mm') {
+          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
+        }
+        // circ-pp: defaults already set above (σ⁺σ⁺)
+
+        if (pType === 'σ⁺') {
           calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁺</b> 圆偏振光激发下，本配置 <b>σ⁺σ⁺</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^+\\sigma^+}$）与 <b>σ⁺σ⁻</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^+\\sigma^-}$）组成<b>同一对照组</b>。利用公式计算手性度/圆偏振度：<br>
-          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
-        } else {
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁺σ⁺) - I(σ⁺σ⁻)] / [I(σ⁺σ⁺) + I(σ⁺σ⁻)]</span>`;
+        } else {
           calcGroupHtml = `• <b>极化度计算（圆偏振自由度）：</b>在 <b>σ⁻</b> 圆偏振光激发下，本配置 <b>σ⁻σ⁻</b>（检偏 A 调至 0°，对应共偏振 $I_{\\sigma^-\\sigma^-}$）与 <b>σ⁻σ⁺</b>（检偏 A 调至 90°，对应交叉偏振 $I_{\\sigma^-\\sigma^+}$）组成<b>同一对照组</b>。利用公式计算手性度/圆偏振度：<br>
-          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
-        }
-        
-        if (subconfig === 'circ-pm') {
-          q1Angle = '+45°'; pType = 'σ⁺'; dType = 'σ⁻'; analyzerAngle = '90°';
-        } else if (subconfig === 'circ-mp') {
-          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁺'; analyzerAngle = '90°';
-        } else if (subconfig === 'circ-mm') {
-          q1Angle = '-45°'; pType = 'σ⁻'; dType = 'σ⁻'; analyzerAngle = '0°';
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--orange);padding-left:12px;display:block;margin:6px 0">P_circ = [I(σ⁻σ⁻) - I(σ⁻σ⁺)] / [I(σ⁻σ⁻) + I(σ⁻σ⁺)]</span>`;
         }
 
         svg = `
@@ -1921,7 +1936,8 @@
           <!-- Diagonal line on dichroic mirror -->
           <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2" stroke-dasharray="4,3"/>
           <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
-          <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
+          <rect x="424" y="82" width="86" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+          <text x="467" y="95" font-size="9" fill="#FF5E00" text-anchor="middle" font-weight="700">透射拉曼 ↑</text>
 
           <!-- Polarization annotations -->
           <line x1="240" y1="90" x2="240" y2="110" stroke="#AF52DE" stroke-width="2"/>
@@ -2041,7 +2057,8 @@
         <!-- Raman backscattered beam (Vertical, Sample up to DM) -->
         <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="7.5" opacity="0.3" filter="url(#cr-glow)"/>
         <line x1="400" y1="380" x2="400" y2="140" stroke="#FF5E00" stroke-width="3.5" stroke-dasharray="7,4" marker-end="url(#cr-arr-o)"/>
-        <text x="455" y="290" font-size="11" fill="#FF5E00" text-anchor="middle" font-weight="600">Raman 散射 λₛ</text>
+        <rect x="421" y="258" width="104" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+        <text x="473" y="271" font-size="10" fill="#FF5E00" text-anchor="middle" font-weight="700">Raman 散射 λₛ</text>
 
         <!-- Horizontal Raman signal beam: DM to Focus Lens L1 -->
         <line x1="400" y1="140" x2="670" y2="140" stroke="#FF5E00" stroke-width="7.5" opacity="0.3" filter="url(#cr-glow)"/>
@@ -2068,7 +2085,8 @@
         <!-- Diagonal line on dichroic mirror -->
         <line x1="365" y1="175" x2="435" y2="105" stroke="#AF52DE" stroke-width="2.5" stroke-dasharray="5,3"/>
         <text x="350" y="195" font-size="9" fill="#AF52DE" text-anchor="start" font-weight="600">反射激发光 ↓</text>
-        <text x="430" y="195" font-size="9" fill="#FF5E00" text-anchor="start" font-weight="600">透射拉曼 ↑</text>
+        <rect x="424" y="82" width="86" height="18" rx="5" fill="var(--bg-card)" stroke="#FF5E00" stroke-width="0.8" opacity="0.96"/>
+        <text x="467" y="95" font-size="9" fill="#FF5E00" text-anchor="middle" font-weight="700">透射拉曼 ↑</text>
 
         <!-- === Confocal Filtering Principle Box === -->
         <rect x="550" y="220" width="330" height="170" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
@@ -2092,9 +2110,9 @@
         ${this._box(350, 295, 100, 70, '高 NA 物镜', '#0071E3', 'Objective', 'cr-objective')}
         ${this._box(340, 380, 120, 70, '样品', '#34C759', 'Sample Stage', 'cr-sample')}
         ${this._box(475, 100, 110, 80, '陷波滤波器', '#AF52DE', 'Notch Filter', 'cr-notch')}
-        ${this._box(620, 100, 100, 80, '聚焦透镜 L1', '#0071E3', 'Focus Lens', 'rm-collect')}
+        ${this._box(620, 100, 100, 80, '聚焦透镜 L1', '#0071E3', 'Focus Lens', 'cr-lens-l1')}
         ${this._box(740, 100, 80, 80, '共焦针孔', '#AF52DE', 'Pinhole', 'cr-pinhole')}
-        ${this._box(840, 100, 100, 80, '准直透镜 L2', '#0071E3', 'Collimation', 'rm-collect')}
+        ${this._box(840, 100, 100, 80, '准直透镜 L2', '#0071E3', 'Collimation', 'cr-lens-l2')}
         ${this._box(950, 100, 110, 80, '长通 LP', '#FF5E00', 'LP Filter', 'cr-lpfilter')}
         ${this._box(1060, 90, 130, 100, '光谱仪', '#1D1D1F', '+ CCD 检测器', 'cr-spectro')}
 
@@ -2285,7 +2303,7 @@
 
 
 
-        <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
 
 
 
@@ -2377,7 +2395,7 @@
 
 
 
-        <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
 
 
 
@@ -2505,7 +2523,7 @@
 
 
 
-        <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
 
 
 

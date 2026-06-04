@@ -711,8 +711,9 @@
           <!-- Highlight Overlays for Active Modules -->
           <!-- HWP Highlight Box (操作执行模块) -->
           <rect x="346" y="206" width="108" height="78" rx="8" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-dasharray="4,2"/>
-          <rect x="346" y="190" width="108" height="15" rx="3" fill="#FF9500"/>
-          <text x="400" y="201" font-size="8.5" fill="#FFFFFF" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
+          <line x1="454" y1="246" x2="465" y2="238" stroke="#FF9500" stroke-width="1.2"/>
+          <rect x="465" y="226" width="138" height="22" rx="6" fill="var(--bg-card)" stroke="#FF9500" stroke-width="1" opacity="0.96"/>
+          <text x="534" y="241" font-size="9" fill="#FF9500" text-anchor="middle" font-weight="700">🔄 旋转扫描 (操作执行)</text>
 
           <!-- Analyzer A Highlight Box -->
           <rect x="626" y="96" width="118" height="88" rx="10" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-dasharray="4,4"/>
